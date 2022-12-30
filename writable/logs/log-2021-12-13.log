@@ -1,0 +1,9 @@
+CRITICAL - 2021-12-13 04:50:41 --> Invalid file: frontend/homepage/home/index_test.php
+#0 /home/z9xvktuzkojp/public_html/vendor/codeigniter4/framework/system/View/View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('frontend/homepa...')
+#1 /home/z9xvktuzkojp/public_html/vendor/codeigniter4/framework/system/Common.php(1119): CodeIgniter\View\View->render('frontend/homepa...', Array, true)
+#2 /home/z9xvktuzkojp/public_html/app/Controllers/Frontend/Homepage/Home.php(92): view('frontend/homepa...', Array)
+#3 /home/z9xvktuzkojp/public_html/vendor/codeigniter4/framework/system/CodeIgniter.php(918): App\Controllers\Frontend\Homepage\Home->index_test()
+#4 /home/z9xvktuzkojp/public_html/vendor/codeigniter4/framework/system/CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend\Homepage\Home))
+#5 /home/z9xvktuzkojp/public_html/vendor/codeigniter4/framework/system/CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 /home/z9xvktuzkojp/public_html/index.php(48): CodeIgniter\CodeIgniter->run()
+#7 {main}

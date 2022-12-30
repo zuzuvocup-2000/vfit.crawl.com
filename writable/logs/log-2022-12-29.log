@@ -1,0 +1,66 @@
+CRITICAL - 2022-12-29 08:26:09 --> Class 'Config\Database' not found
+#0 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Debug\Toolbar.php(96): CodeIgniter\Debug\Toolbar\Collectors\Database->__construct()
+#1 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Config\Services.php(856): CodeIgniter\Debug\Toolbar->__construct()
+#2 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Config\BaseService.php(123): CodeIgniter\Config\Services::toolbar()
+#3 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Config\Services.php(848): CodeIgniter\Config\BaseService::getSharedInstance()
+#4 V:\DATN\code\OpenServer\domains\vfit.crawl.com\app\Config\Events.php(44): CodeIgniter\Config\Services::toolbar()
+#5 [internal function]: CodeIgniter\Events\Events::Config\{closure}()
+#6 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Events\Events.php(188): call_user_func()
+#7 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\CodeIgniter.php(293): CodeIgniter\Events\Events::trigger()
+#8 V:\DATN\code\OpenServer\domains\vfit.crawl.com\index.php(47): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2022-12-29 08:26:09 --> Class 'Config\Database' not found
+#0 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Debug\Toolbar.php(96): CodeIgniter\Debug\Toolbar\Collectors\Database->__construct()
+#1 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Config\Services.php(856): CodeIgniter\Debug\Toolbar->__construct()
+#2 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Config\BaseService.php(123): CodeIgniter\Config\Services::toolbar()
+#3 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Config\Services.php(848): CodeIgniter\Config\BaseService::getSharedInstance()
+#4 V:\DATN\code\OpenServer\domains\vfit.crawl.com\app\Config\Events.php(44): CodeIgniter\Config\Services::toolbar()
+#5 [internal function]: CodeIgniter\Events\Events::Config\{closure}()
+#6 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Events\Events.php(188): call_user_func()
+#7 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\CodeIgniter.php(293): CodeIgniter\Events\Events::trigger()
+#8 V:\DATN\code\OpenServer\domains\vfit.crawl.com\index.php(47): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2022-12-29 08:31:29 --> Unable to connect to the database.
+#0 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->initialize()
+#1 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1860): CodeIgniter\Database\BaseConnection->query()
+#2 V:\DATN\code\OpenServer\domains\vfit.crawl.com\app\Models\AutoloadModel.php(76): CodeIgniter\Database\BaseBuilder->get()
+#3 V:\DATN\code\OpenServer\domains\vfit.crawl.com\app\Helpers\mydatafrontend_helper.php(133): App\Models\AutoloadModel->_get_where()
+#4 V:\DATN\code\OpenServer\domains\vfit.crawl.com\app\Controllers\FrontendController.php(28): get_general()
+#5 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\CodeIgniter.php(891): App\Controllers\FrontendController->initController()
+#6 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->createController()
+#7 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest()
+#8 V:\DATN\code\OpenServer\domains\vfit.crawl.com\index.php(47): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2022-12-29 21:50:47 --> Unable to connect to the database.
+#0 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->initialize()
+#1 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1860): CodeIgniter\Database\BaseConnection->query()
+#2 V:\DATN\code\OpenServer\domains\vfit.crawl.com\app\Models\AutoloadModel.php(76): CodeIgniter\Database\BaseBuilder->get()
+#3 V:\DATN\code\OpenServer\domains\vfit.crawl.com\app\Helpers\mydatafrontend_helper.php(133): App\Models\AutoloadModel->_get_where()
+#4 V:\DATN\code\OpenServer\domains\vfit.crawl.com\app\Controllers\FrontendController.php(28): get_general()
+#5 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\CodeIgniter.php(891): App\Controllers\FrontendController->initController()
+#6 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->createController()
+#7 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest()
+#8 V:\DATN\code\OpenServer\domains\vfit.crawl.com\index.php(47): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2022-12-29 21:51:31 --> Unable to connect to the database.
+#0 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->initialize()
+#1 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1860): CodeIgniter\Database\BaseConnection->query()
+#2 V:\DATN\code\OpenServer\domains\vfit.crawl.com\app\Models\AutoloadModel.php(76): CodeIgniter\Database\BaseBuilder->get()
+#3 V:\DATN\code\OpenServer\domains\vfit.crawl.com\app\Helpers\mydatafrontend_helper.php(133): App\Models\AutoloadModel->_get_where()
+#4 V:\DATN\code\OpenServer\domains\vfit.crawl.com\app\Controllers\FrontendController.php(28): get_general()
+#5 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\CodeIgniter.php(891): App\Controllers\FrontendController->initController()
+#6 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->createController()
+#7 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest()
+#8 V:\DATN\code\OpenServer\domains\vfit.crawl.com\index.php(47): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2022-12-29 21:51:50 --> Unable to connect to the database.
+#0 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->initialize()
+#1 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1860): CodeIgniter\Database\BaseConnection->query()
+#2 V:\DATN\code\OpenServer\domains\vfit.crawl.com\app\Models\AutoloadModel.php(76): CodeIgniter\Database\BaseBuilder->get()
+#3 V:\DATN\code\OpenServer\domains\vfit.crawl.com\app\Helpers\mydatafrontend_helper.php(133): App\Models\AutoloadModel->_get_where()
+#4 V:\DATN\code\OpenServer\domains\vfit.crawl.com\app\Controllers\FrontendController.php(28): get_general()
+#5 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\CodeIgniter.php(891): App\Controllers\FrontendController->initController()
+#6 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->createController()
+#7 V:\DATN\code\OpenServer\domains\vfit.crawl.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest()
+#8 V:\DATN\code\OpenServer\domains\vfit.crawl.com\index.php(47): CodeIgniter\CodeIgniter->run()
+#9 {main}

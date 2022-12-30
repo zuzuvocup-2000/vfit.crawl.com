@@ -1,0 +1,13 @@
+CRITICAL - 2022-12-26 00:29:44 --> Too few arguments to function pre(), 0 passed in E:\OpenServer\domains\gomarket\app\Views\backend\article\article\index.php on line 307 and at least 1 expected
+#0 E:\OpenServer\domains\gomarket\app\Views\backend\article\article\index.php(307): pre()
+#1 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\View\View.php(246): include('E:\\OpenServer\\d...')
+#2 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\Common.php(1119): CodeIgniter\View\View->render('backend/article...', Array, true)
+#3 E:\OpenServer\domains\gomarket\app\Views\backend\dashboard\layout\home.php(46): view('backend/article...')
+#4 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\View\View.php(246): include('E:\\OpenServer\\d...')
+#5 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\Common.php(1119): CodeIgniter\View\View->render('backend/dashboa...', Array, true)
+#6 E:\OpenServer\domains\gomarket\app\Controllers\Backend\Article\Article.php(98): view('backend/dashboa...', Array)
+#7 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\CodeIgniter.php(918): App\Controllers\Backend\Article\Article->index()
+#8 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Backend\Article\Article))
+#9 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 E:\OpenServer\domains\gomarket\index.php(47): CodeIgniter\CodeIgniter->run()
+#11 {main}

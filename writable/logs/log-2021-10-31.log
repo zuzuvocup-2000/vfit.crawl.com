@@ -1,0 +1,129 @@
+CRITICAL - 2021-10-31 04:29:32 --> Unknown column 'password' in 'field list'
+#0 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(331): mysqli->query('INSERT INTO `cl...')
+#1 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Database\BaseConnection.php(741): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `cl...')
+#2 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Database\BaseConnection.php(669): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `cl...')
+#3 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(2249): CodeIgniter\Database\BaseConnection->query('INSERT INTO `cl...', Array, false)
+#4 G:\OpenServer\domains\ht.hoconline.com\app\Models\AutoloadModel.php(90): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 G:\OpenServer\domains\ht.hoconline.com\app\Controllers\Ajax\Frontend\Auth.php(132): App\Models\AutoloadModel->_insert(Array)
+#6 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(918): App\Controllers\Ajax\Frontend\Auth->send_otp_signup()
+#7 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Ajax\Frontend\Auth))
+#8 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 G:\OpenServer\domains\ht.hoconline.com\index.php(48): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2021-10-31 04:34:42 --> Undefined variable: store
+#0 G:\OpenServer\domains\ht.hoconline.com\app\Controllers\Ajax\Frontend\Auth.php(134): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'G:\\OpenServer\\d...', 134, Array)
+#1 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(918): App\Controllers\Ajax\Frontend\Auth->send_otp_signup()
+#2 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Ajax\Frontend\Auth))
+#3 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 G:\OpenServer\domains\ht.hoconline.com\index.php(48): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-31 10:28:19 --> syntax error, unexpected ')'
+#0 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Common.php(1119): CodeIgniter\View\View->render('frontend/homepa...', Array, true)
+#1 G:\OpenServer\domains\ht.hoconline.com\app\Views\frontend\homepage\layout\home.php(69): view('frontend/homepa...')
+#2 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\View\View.php(246): include('G:\\OpenServer\\d...')
+#3 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Common.php(1119): CodeIgniter\View\View->render('frontend/homepa...', Array, true)
+#4 G:\OpenServer\domains\ht.hoconline.com\app\Controllers\Frontend\Homepage\Home.php(38): view('frontend/homepa...', Array)
+#5 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(918): App\Controllers\Frontend\Homepage\Home->index()
+#6 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend\Homepage\Home))
+#7 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 G:\OpenServer\domains\ht.hoconline.com\index.php(48): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2021-10-31 21:57:11 --> syntax error, unexpected 'pre' (T_STRING)
+#0 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Autoloader\Autoloader.php(296): CodeIgniter\Autoloader\Autoloader->requireFile('G:\\OpenServer\\d...')
+#1 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Autoloader\Autoloader.php(258): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers...')
+#2 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers...')
+#3 [internal function]: spl_autoload_call('App\\Controllers...')
+#4 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\View\Cell.php(266): class_exists('\\App\\Controller...', true)
+#5 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\View\Cell.php(110): CodeIgniter\View\Cell->determineClass('\\App\\Controller...')
+#6 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Common.php(1140): CodeIgniter\View\Cell->render('\\App\\Controller...', 'id=4, page=1', 0, NULL)
+#7 G:\OpenServer\domains\ht.hoconline.com\app\Controllers\Frontend\Homepage\Router.php(59): view_cell('\\App\\Controller...', 'id=4, page=1')
+#8 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(918): App\Controllers\Frontend\Homepage\Router->index('meet-your-instr...')
+#9 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend\Homepage\Router))
+#10 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 G:\OpenServer\domains\ht.hoconline.com\index.php(48): CodeIgniter\CodeIgniter->run()
+#12 {main}
+CRITICAL - 2021-10-31 22:00:06 --> Undefined property: App\Controllers\Frontend\Product\Lesson::$session
+#0 G:\OpenServer\domains\ht.hoconline.com\app\Controllers\Frontend\Product\Lesson.php(20): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined prope...', 'G:\\OpenServer\\d...', 20, Array)
+#1 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\View\Cell.php(180): App\Controllers\Frontend\Product\Lesson->index('4', '1')
+#2 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Common.php(1140): CodeIgniter\View\Cell->render('\\App\\Controller...', 'id=4, page=1', 0, 'AppControllersF...')
+#3 G:\OpenServer\domains\ht.hoconline.com\app\Controllers\Frontend\Homepage\Router.php(59): view_cell('\\App\\Controller...', 'id=4, page=1')
+#4 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(918): App\Controllers\Frontend\Homepage\Router->index('meet-your-instr...')
+#5 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend\Homepage\Router))
+#6 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 G:\OpenServer\domains\ht.hoconline.com\index.php(48): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-10-31 22:00:26 --> Return value of CodeIgniter\View\Cell::render() must be of the type string, object returned
+#0 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Common.php(1140): CodeIgniter\View\Cell->render('\\App\\Controller...', 'id=4, page=1', 0, 'AppControllersF...')
+#1 G:\OpenServer\domains\ht.hoconline.com\app\Controllers\Frontend\Homepage\Router.php(59): view_cell('\\App\\Controller...', 'id=4, page=1')
+#2 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(918): App\Controllers\Frontend\Homepage\Router->index('meet-your-instr...')
+#3 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend\Homepage\Router))
+#4 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 G:\OpenServer\domains\ht.hoconline.com\index.php(48): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2021-10-31 22:01:24 --> Return value of CodeIgniter\View\Cell::render() must be of the type string, object returned
+#0 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Common.php(1140): CodeIgniter\View\Cell->render('\\App\\Controller...', 'id=4, page=1', 0, 'AppControllersF...')
+#1 G:\OpenServer\domains\ht.hoconline.com\app\Controllers\Frontend\Homepage\Router.php(59): view_cell('\\App\\Controller...', 'id=4, page=1')
+#2 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(918): App\Controllers\Frontend\Homepage\Router->index('meet-your-instr...')
+#3 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend\Homepage\Router))
+#4 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 G:\OpenServer\domains\ht.hoconline.com\index.php(48): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2021-10-31 22:01:34 --> Return value of CodeIgniter\View\Cell::render() must be of the type string, object returned
+#0 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Common.php(1140): CodeIgniter\View\Cell->render('\\App\\Controller...', 'id=4, page=1', 0, 'AppControllersF...')
+#1 G:\OpenServer\domains\ht.hoconline.com\app\Controllers\Frontend\Homepage\Router.php(59): view_cell('\\App\\Controller...', 'id=4, page=1')
+#2 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(918): App\Controllers\Frontend\Homepage\Router->index('meet-your-instr...')
+#3 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend\Homepage\Router))
+#4 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 G:\OpenServer\domains\ht.hoconline.com\index.php(48): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2021-10-31 22:27:39 --> Undefined property: App\Controllers\Frontend\Product\Lesson::$require
+#0 G:\OpenServer\domains\ht.hoconline.com\app\Controllers\Frontend\Product\Lesson.php(118): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined prope...', 'G:\\OpenServer\\d...', 118, Array)
+#1 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(918): App\Controllers\Frontend\Product\Lesson->buy()
+#2 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend\Product\Lesson))
+#3 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 G:\OpenServer\domains\ht.hoconline.com\index.php(48): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-31 22:28:43 --> syntax error, unexpected '}'
+#0 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Autoloader\Autoloader.php(296): CodeIgniter\Autoloader\Autoloader->requireFile('G:\\OpenServer\\d...')
+#1 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Autoloader\Autoloader.php(258): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers...')
+#2 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers...')
+#3 [internal function]: spl_autoload_call('App\\Controllers...')
+#4 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(869): class_exists('\\App\\Controller...', true)
+#5 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(394): CodeIgniter\CodeIgniter->startController()
+#6 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 G:\OpenServer\domains\ht.hoconline.com\index.php(48): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-10-31 22:31:16 --> syntax error, unexpected '}'
+#0 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Autoloader\Autoloader.php(296): CodeIgniter\Autoloader\Autoloader->requireFile('G:\\OpenServer\\d...')
+#1 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Autoloader\Autoloader.php(258): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers...')
+#2 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers...')
+#3 [internal function]: spl_autoload_call('App\\Controllers...')
+#4 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(869): class_exists('\\App\\Controller...', true)
+#5 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(394): CodeIgniter\CodeIgniter->startController()
+#6 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 G:\OpenServer\domains\ht.hoconline.com\index.php(48): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-10-31 22:31:24 --> Undefined variable: general
+#0 G:\OpenServer\domains\ht.hoconline.com\app\Views\frontend\homepage\layout\home.php(19): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'G:\\OpenServer\\d...', 19, Array)
+#1 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\View\View.php(246): include('G:\\OpenServer\\d...')
+#2 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\Common.php(1119): CodeIgniter\View\View->render('frontend/homepa...', Array, true)
+#3 G:\OpenServer\domains\ht.hoconline.com\app\Controllers\Frontend\Product\Lesson.php(125): view('frontend/homepa...', Array)
+#4 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(918): App\Controllers\Frontend\Product\Lesson->buy()
+#5 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend\Product\Lesson))
+#6 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 G:\OpenServer\domains\ht.hoconline.com\index.php(48): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-10-31 22:54:52 --> Undefined variable: session
+#0 G:\OpenServer\domains\ht.hoconline.com\app\Controllers\Frontend\Product\Lesson.php(137): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'G:\\OpenServer\\d...', 137, Array)
+#1 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(918): App\Controllers\Frontend\Product\Lesson->buy()
+#2 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend\Product\Lesson))
+#3 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 G:\OpenServer\domains\ht.hoconline.com\index.php(48): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-31 22:57:27 --> Undefined variable: member
+#0 G:\OpenServer\domains\ht.hoconline.com\app\Controllers\Frontend\Product\Lesson.php(151): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'G:\\OpenServer\\d...', 151, Array)
+#1 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(918): App\Controllers\Frontend\Product\Lesson->buy()
+#2 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend\Product\Lesson))
+#3 G:\OpenServer\domains\ht.hoconline.com\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 G:\OpenServer\domains\ht.hoconline.com\index.php(48): CodeIgniter\CodeIgniter->run()
+#5 {main}

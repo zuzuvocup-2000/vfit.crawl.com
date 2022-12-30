@@ -1,0 +1,34 @@
+CRITICAL - 2022-12-24 21:58:49 --> Undefined variable: totalTime
+#0 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\Debug\Toolbar\Views\toolbar.tpl.php(56): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'E:\\OpenServer\\d...', 56, Array)
+#1 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\Debug\Toolbar.php(498): include('E:\\OpenServer\\d...')
+#2 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\Debug\Toolbar.php(455): CodeIgniter\Debug\Toolbar->format(Array, 'html')
+#3 E:\OpenServer\domains\gomarket\app\Config\Events.php(44): CodeIgniter\Debug\Toolbar->respond()
+#4 [internal function]: CodeIgniter\Events\Events::Config\{closure}()
+#5 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\Events\Events.php(188): call_user_func(Object(Closure))
+#6 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\CodeIgniter.php(293): CodeIgniter\Events\Events::trigger('pre_system')
+#7 E:\OpenServer\domains\gomarket\index.php(47): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2022-12-24 22:47:41 --> syntax error, unexpected '}', expecting end of file
+#0 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\Common.php(1119): CodeIgniter\View\View->render('backend/article...', Array, true)
+#1 E:\OpenServer\domains\gomarket\app\Views\backend\dashboard\layout\home.php(44): view('backend/article...')
+#2 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\View\View.php(246): include('E:\\OpenServer\\d...')
+#3 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\Common.php(1119): CodeIgniter\View\View->render('backend/dashboa...', Array, true)
+#4 E:\OpenServer\domains\gomarket\app\Controllers\Backend\Article\Article.php(98): view('backend/dashboa...', Array)
+#5 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\CodeIgniter.php(918): App\Controllers\Backend\Article\Article->index()
+#6 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Backend\Article\Article))
+#7 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 E:\OpenServer\domains\gomarket\index.php(47): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2022-12-24 22:48:03 --> Undefined variable: val
+#0 E:\OpenServer\domains\gomarket\app\Views\backend\article\article\index.php(103): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'E:\\OpenServer\\d...', 103, Array)
+#1 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\View\View.php(246): include('E:\\OpenServer\\d...')
+#2 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\Common.php(1119): CodeIgniter\View\View->render('backend/article...', Array, true)
+#3 E:\OpenServer\domains\gomarket\app\Views\backend\dashboard\layout\home.php(44): view('backend/article...')
+#4 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\View\View.php(246): include('E:\\OpenServer\\d...')
+#5 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\Common.php(1119): CodeIgniter\View\View->render('backend/dashboa...', Array, true)
+#6 E:\OpenServer\domains\gomarket\app\Controllers\Backend\Article\Article.php(98): view('backend/dashboa...', Array)
+#7 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\CodeIgniter.php(918): App\Controllers\Backend\Article\Article->index()
+#8 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Backend\Article\Article))
+#9 E:\OpenServer\domains\gomarket\vendor\codeigniter4\framework\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 E:\OpenServer\domains\gomarket\index.php(47): CodeIgniter\CodeIgniter->run()
+#11 {main}
