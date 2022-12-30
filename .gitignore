@@ -15,3 +15,8 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 /vendor/
+
+#nestJS
+/backend/dist
+/backend/node_modules
+/backend/.env
