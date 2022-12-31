@@ -4,16 +4,16 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateUserRequest {
   @IsNotEmpty()
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ required: true })
   name: string;
 
   @IsNotEmpty()
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ required: true })
   email: string;
 
   @IsNotEmpty()
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ required: true })
   password: string;
 }

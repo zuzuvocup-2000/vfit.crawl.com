@@ -19,7 +19,4 @@ define('HTSEARCH', 'tim-kiem');
 define('HTCONTACT', 'contact-us');
 define('HTMAP', 'contact-map');
 
-define('HTDBHOST', 'localhost');
-define('HTDBUSER', 'root');
-define('HTDBPASS', '');
-define('HTDBNAME', 'crawl_data');
+

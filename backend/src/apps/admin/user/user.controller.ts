@@ -1,6 +1,12 @@
-import { Controller, Body, Get, Post } from '@nestjs/common';
+import {
+  Controller,
+  Body,
+  Get,
+  Post,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserRequest } from './dto/create-user.request';
 import {
   ApiBadRequestResponse,
   ApiResponse,
@@ -10,17 +16,27 @@ import {
 import { BadRequestResponse } from '../../../common/response/bad-request.response';
 import { CreateUserResponse } from './dto/create-user.response';
 import { UnauthorizedResponse } from '../../../common/response/unauthorized.response';
+import { CreateUserRequest } from './dto/create-user.request';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+  ) {}
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get(':email')
+  getUserByEmail(@Param() param) {
+    return this.userService.getUserByEmail(param.email);
+  }
 
   @Get()
   async index() {
     return await this.userService.findAll();
   }
 
-  @Post()
+  @Post('/signup')
   @ApiBadRequestResponse({
     schema: {
       oneOf: refs(BadRequestResponse),
@@ -28,7 +44,7 @@ export class UserController {
   })
   @ApiUnauthorizedResponse({ type: UnauthorizedResponse })
   @ApiResponse({ status: 200, type: CreateUserResponse })
-  async create(@Body() createUserRequest: CreateUserRequest) {
+  async signup(@Body() createUserRequest: CreateUserRequest) {
     return new CreateUserResponse(
       await this.userService.create(createUserRequest),
     );

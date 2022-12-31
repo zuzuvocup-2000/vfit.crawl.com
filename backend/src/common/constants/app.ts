@@ -84,3 +84,7 @@ export const NUMBER_DATE_LOOP_CRAWL_SITEMAP = 7;
 export const TEXT_SCHEMA_PRODUCT = {
   TYPE_PRODUCT: "product",
 };
+
+export const JWT_CONSTANTS = {
+  secret: 'vanhfithau',
+}

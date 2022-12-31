@@ -5,6 +5,7 @@ import { UserModule } from './user/user.module';
 import { SitemapModule } from './sitemap/sitemap.module';
 import { SiteController } from './site/site.controller';
 import { SiteModule } from './site/site.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { SiteModule } from './site/site.module';
     UserModule,
     SitemapModule,
     SiteModule,
+    AuthModule,
   ],
   controllers: [AdminController, SiteController],
 })

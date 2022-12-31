@@ -26,7 +26,7 @@ const addSwaggerDocs = (app: INestApplication) => {
 export default async () => {
   if (process.env.APPS.includes(APP.ADMIN)) {
     const adminApp = await NestFactory.create(AdminModule);
-    adminApp.setGlobalPrefix('v1');
+    adminApp.setGlobalPrefix('admin');
     adminApp.enableCors();
     addSwaggerDocs(adminApp);
     await adminApp.listen(process.env.PORT_ADMIN);
@@ -38,13 +38,4 @@ export default async () => {
     await crawlApp.listen(process.env.PORT_CRAWL);
     console.log(`Crawler is running on: ${await crawlApp.getUrl()}`);
   }
-
-  // if (process.env.APPS.includes(APP.GATEWAY)) {
-  //   const gatewayApp = await NestFactory.create(GatewayModule);
-  //   gatewayApp.setGlobalPrefix('v1');
-  //   gatewayApp.enableCors();
-  //   addSwaggerDocs(gatewayApp);
-  //   await gatewayApp.listen(process.env.PORT_GETWAY);
-  //   console.log(`Gateway is running on: ${await gatewayApp.getUrl()}`);
-  // }
 };
