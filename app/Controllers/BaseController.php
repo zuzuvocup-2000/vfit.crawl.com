@@ -1,13 +1,5 @@
 <?php
-
 namespace App\Controllers;
-
-use CodeIgniter\Controller;
-use CodeIgniter\HTTP\CLIRequest;
-use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\HTTP\ResponseInterface;
-use Psr\Log\LoggerInterface;
 
 /**
  * Class BaseController
@@ -18,15 +10,18 @@ use Psr\Log\LoggerInterface;
  *     class Home extends BaseController
  *
  * For security be sure to declare any new methods as protected or private.
+ *
+ * @package CodeIgniter
  */
-abstract class BaseController extends Controller
+
+use CodeIgniter\Controller;
+use App\Models\AutoloadModel;
+use App\Libraries\Authentication;
+use App\Libraries\Pagination;
+use App\Libraries\Mobile_Detect;
+
+class BaseController extends Controller
 {
-    /**
-     * Instance of the main Request object.
-     *
-     * @var CLIRequest|IncomingRequest
-     */
-    protected $request;
 
     /**
      * An array of helpers to be loaded automatically upon
@@ -35,18 +30,40 @@ abstract class BaseController extends Controller
      *
      * @var array
      */
-    protected $helpers = [];
-
+    protected $helpers = ['form','url','myauthentication','mystring','nestedtset', 'myurl', 'mypagination'];
+    public $currentTime;
+    public $AutoloadModel;
+    public $request;
+    protected $pagination;
+    public $authentication;
+    public $defaulLanguage;
+    public $currentLanguage;
     /**
      * Constructor.
      */
-    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
+        //--------------------------------------------------------------------
         // Preload any models, libraries, etc, here.
+        //--------------------------------------------------------------------
+        $this->AutoloadModel = new AutoloadModel();
+        $this->authentication = new Authentication();
+        $this->pagination = new Pagination();
+        // E.g.:
+        // $this->session = \Config\Services::session();
+        // $this->db = \Config\Database::connect();
+        $this->request = \Config\Services::request();
 
-        // E.g.: $this->session = \Config\Services::session();
+        //
+        $this->client = new \CodeIgniter\HTTP\CURLRequest(
+            new \Config\App(),
+            new \CodeIgniter\HTTP\URI(),
+            new \CodeIgniter\HTTP\Response(new \Config\App())
+        );
+        $this->currentTime =  gmdate('Y-m-d H:i:s', time() + 7*3600);
+        helper($this->helpers);
     }
 }

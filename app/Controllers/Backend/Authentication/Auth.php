@@ -2,67 +2,55 @@
 namespace App\Controllers\Backend\Authentication;
 use App\Controllers\BaseController;
 use App\Libraries\Mailbie;
+use App\Models\UserModel;
 
 class Auth extends BaseController{
 	protected $data;
 	
 
 	public function __construct(){
+		$this->usermodel = new UserModel();
 		$this->data = [];
 	}
 
 	public function login(){
-		if($this->request->getMethod() == 'post'){
-			$validate = [
-				'email' => 'required|valid_email',
-				'password' => 'required|min_length[6]|checkAuth['.$this->request->getVar('email').']|checkActive['.$this->request->getVar('email').']',
-			];
-			$errorValidate = [
-				'password' => [
-					'checkAuth' => 'Email Hoặc Mật khẩu không chính xác!',
-					'checkActive' => 'Tài khoản của bạn đang bị khóa!',
-				],
-			];
+		$session = session();
 
- 		 	if ($this->validate($validate, $errorValidate)){
-		 		$user = $this->AutoloadModel->_get_where([
-		 			'table' => 'user',
-		 			'select' => 'id, fullname, email, (SELECT permission FROM user_catalogue WHERE user_catalogue.id = user.catalogueid) as permission',
-		 			'where' => ['email' => $this->request->getVar('email'),'deleted_at' => 0]
-		 		]);
-		 		$cookieAuth = [
-		 			'id' => $user['id'],
-		 			'fullname' => $user['fullname'],
-		 			'email' => $user['email'],
-		 			// 'permission' => base64_encode($user['permission']),
-		 		];
-		 		setcookie(AUTH.'backend', json_encode($cookieAuth), time() + 1*24*3600, "/");
-		 		$_update = [
-		 			'last_login' => gmdate('Y-m-d H:i:s', time() + 7*3600),
-					'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-					'remote_addr' => $_SERVER['REMOTE_ADDR']
-		 		];
-		 		$flag = $this->AutoloadModel->_update([
-		 			'table' => 'user',
-		 			'where' => ['id' => $user['id']],
-		 			'data' => $_update
-		 		]);
-		 		if($flag > 0){
-		 			$session = session();
-		 			$session->setFlashdata('message-success', 'Đăng nhập Thành Công');
-		 			return redirect()->to(BASE_URL.'backend/dashboard/dashboard/index');
-		 		}
-	        }else{
-	        	$this->data['validate'] = $this->validator->listErrors();
-	        }
-		}
-		return view('backend/authentication/login', $this->data);
+		$email = $this->request->getVar('email');
+        $password = $this->request->getVar('password');
+		$user = $this->usermodel->get_user_by_email($email);
+		if($user){
+            $pass = $user['password'];
+            $authenticatePassword = password_verify($password, $pass);
+            if($authenticatePassword){
+                $ses_data = [
+                    'id' => $user['_id'],
+                    'name' => $user['name'],
+                    'email' => $user['email'],
+                    'isLoggedIn' => TRUE
+                ];
+
+                $session->set($ses_data);
+                return redirect()->to(BASE_URL.'dashboard');
+            
+            }else{
+                $session->setFlashdata('message-danger', 'Mật khẩu không chính xác!');
+                return redirect()->to(BASE_URL);
+            }
+        }else{
+            $session->setFlashdata('message-danger', 'Email không tồn tại!');
+            return redirect()->to(BASE_URL);
+        }
+	}	
+
+	public function login_view(){
+		return view('backend/authentication/login');
 	}
 
 	public function logout(){
-	 	unset($_COOKIE[AUTH.'backend']); 
-        setcookie(AUTH.'backend', null, -1, '/'); 
-        return redirect()->to(BASE_URL.BACKEND_DIRECTORY);
+        $session = session();
+        $session->destroy();
+        return redirect()->to('/login');
 	}
 
 	public function forgot(){

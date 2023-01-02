@@ -10,7 +10,8 @@
         <link href="<?php echo ASSET_BACKEND; ?>css/animate.css" rel="stylesheet">
         <link href="<?php echo ASSET_BACKEND; ?>css/style.css" rel="stylesheet">
         <link href="<?php echo ASSET_BACKEND; ?>css/customize.css" rel="stylesheet">
-        
+        <link href="<?php echo ASSET_BACKEND; ?>css/customize.css" rel="stylesheet">
+        <link href="<?php echo ASSET_BACKEND; ?>css/plugins/toastr/toastr.min.css" rel="stylesheet">
     </head>
     <body class="gray-bg">
         <div class="container">
@@ -20,13 +21,13 @@
                 
                 <div class="card-body d-flex flex-column justify-content-center">
                     <h4 class="title text-center mt-4 pb-3 title-login">Đăng nhập</h4>
-                    <form class='col-sm-10 col-12 mx-auto' action="backend/authentication/auth/login" method="post" >
+                    <form class='col-sm-10 col-12 mx-auto' action="login" method="post" >
                         <?php echo  (!empty($validate) && isset($validate)) ? '<div class="alert alert-danger">'.$validate.'</div>'  : '' ?>
                         <div class='form-group '>
                             <input type="email" class="form-control " name="email" placeholder="Nhập vào email của bạn">
                         </div>
                         <div class='form-group py-3 ' >
-                            <input type="password" class="form-control" name="password" placeholder='******'>
+                            <input type="password" class="form-control" name="password" autocomplete="true" placeholder='******'>
                         </div>
                         <a href="/backend/authentication/auth/forgot" class="mb-3 display-block">
                             <small>Quên mật khẩu?</small>
@@ -38,5 +39,13 @@
                 </div>
             </div>
         </div>
+        <style>
+            #toast-container>.toast-error:before {
+                content: none;
+            }
+        </style>    
+        <script src="public/backend/js/jquery-3.1.1.min.js"></script>
+        <script src="public/backend/js/plugins/toastr/toastr.min.js"></script>
+        <?php echo view('backend/dashboard/common/notification') ?>
     </body>
 </html>

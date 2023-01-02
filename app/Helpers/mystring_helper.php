@@ -1,4 +1,10 @@
 <?php
+if(!function_exists('std_object_to_array')){
+	function std_object_to_array($object){
+		return json_decode(json_encode($object), true);
+	}
+}
+
 if(!function_exists('price')){
 	function price($price = 0, $price_sale = 0){
 		$finalPrice = ($price_sale > 0) ? $price_sale : $price;

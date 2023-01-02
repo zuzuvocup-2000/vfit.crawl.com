@@ -47,7 +47,6 @@
             
         </div>
        
-       
     </div>
     <!-- Mainly scripts -->
     <?php  

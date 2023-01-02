@@ -13,15 +13,13 @@ class Login implements FilterInterface
 
 	public function __construct(){
 		$this->AutoloadModel = new AutoloadModel();
-        $this->auth = (isset($_COOKIE[AUTH.'backend'])) ? $_COOKIE[AUTH.'backend'] : '';
         helper(['mystring']);
 	}
 
     public function before(RequestInterface $request, $arguments = null)
     {
-        $this->auth = json_decode($this->auth, TRUE);
-        if(isset($this->auth) && is_array($this->auth) && count($this->auth)){
-            return redirect()->to(BASE_URL.'backend/dashboard/dashboard/index');
+        if(session()->get('isLoggedIn') == true){
+            return redirect()->to(BASE_URL.'dashboard');
         }
     }
 

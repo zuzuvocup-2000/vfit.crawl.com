@@ -4,6 +4,7 @@
 	HT VIETNAM FILE CONFIG
 */
 require('config.php');
+require('constant/api.php');
 // Valid PHP Version?
 $minPHPVersion = '7.2';
 if (phpversion() < $minPHPVersion)
