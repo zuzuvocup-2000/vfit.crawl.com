@@ -34,6 +34,9 @@
                     V-FIT
                 </div>
             </li>
+            <li class="">
+                <a href="<?php echo base_url('website') ?>"><i class="fa fa-globe" aria-hidden="true"></i><span class="nav-label">QL Website</span> </a>
+            </li>
         </ul>
     </div>
 </nav>

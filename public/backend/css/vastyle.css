@@ -965,3 +965,8 @@ input[type=file]:focus, input[type=checkbox]:focus, input[type=radio]:focus{
 #add_combo .select2-container--default .select2-search--inline .select2-search__field {
     width: 100% !important;
 }
+
+.nav-header {
+    background-repeat: no-repeat;
+    padding-bottom: 0;
+}

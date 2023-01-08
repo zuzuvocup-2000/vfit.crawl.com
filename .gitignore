@@ -21,3 +21,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /backend/dist
 /backend/node_modules
 /backend/.env
+/backend/storage/*

@@ -32,6 +32,7 @@ $routes->get('/login', 'Backend/Authentication/Auth::login_view',['filter' => 'l
 $routes->post('/login', 'Backend/Authentication/Auth::login',['filter' => 'login' ]);
 $routes->get('/logout', 'Backend/Authentication/Auth::logout');
 $routes->get('/dashboard', 'Backend/Dashboard/Dashboard::index',['filter' => 'auth' ]);
+$routes->get('/website', 'Backend/Website/Website::index',['filter' => 'auth' ]);
 
 // $routes->get('([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)'.HTSUFFIX, 'Frontend\Homepage\Router::silo/$1/$2');
 

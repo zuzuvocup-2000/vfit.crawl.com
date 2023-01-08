@@ -1,17 +1,15 @@
 <?php
     helper('form');
     $baseController = new App\Controllers\BaseController();
-    $language = $baseController->currentLanguage();
-    $languageList = get_list_language(['currentLanguage' => $language]);
 ?>
 <div class="row wrapper border-bottom white-bg page-heading">
    <div class="col-lg-8">
-      <h2><?php echo translate('cms_lang.post.post_title', $language) ?></h2>
+      <h2>Quản lý Website</h2>
       <ol class="breadcrumb" style="margin-bottom:10px;">
          <li>
-            <a href="<?php echo base_url('backend/dashboard/dashboard/index') ?>"><?php echo translate('cms_lang.post.post_home', $language) ?></a>
+            <a href="<?php echo base_url('backend/dashboard/dashboard/index') ?>">Trang chủ</a>
          </li>
-         <li class="active"><strong><?php echo translate('cms_lang.post.post_title', $language) ?></strong></li>
+         <li class="active"><strong>Quản lý Website</strong></li>
       </ol>
    </div>
 </div>
@@ -20,23 +18,11 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5><?php echo translate('cms_lang.post.post_title', $language) ?> </h5>
+                    <h5>Quản lý Website </h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
-                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#" class="delete-all" data-module="<?php echo $module; ?>"><?php echo translate('cms_lang.post.post_deleteall', $language) ?></a>
-                            </li>
-                            <li><a href="#" class="clone-all" data-toggle="modal" data-target="#clone_modal" data-module="<?php echo $module; ?>">Sao chép</a>
-                            <li><a href="#" class="status" data-value="0" data-field="publish" data-module="<?php echo $module; ?>" title="Cập nhật trạng thái bài viết"><?php echo translate('cms_lang.post.post_deactive', $language) ?></a>
-                            </li>
-                            <li><a href="#" class="status" data-value="1" data-field="publish" data-module="<?php echo $module; ?>" data-title="Cập nhật trạng thái bài viết"><?php echo translate('cms_lang.post.post_active', $language) ?></a>
-                            </li>
-                        </ul>
                         <a class="close-link">
                             <i class="fa fa-times"></i>
                         </a>
@@ -48,34 +34,31 @@
                             <div class="perpage">
                                 <div class="uk-flex uk-flex-middle mb10">
                                     <select name="perpage" class="form-control input-sm perpage filter mr10">
-                                        <option value="20">20 <?php echo translate('cms_lang.post.post_record', $language) ?></option>
-                                        <option value="30">30 <?php echo translate('cms_lang.post.post_record', $language) ?></option>
-                                        <option value="40">40 <?php echo translate('cms_lang.post.post_record', $language) ?></option>
-                                        <option value="50">50 <?php echo translate('cms_lang.post.post_record', $language) ?></option>
-                                        <option value="60">60 <?php echo translate('cms_lang.post.post_record', $language) ?></option>
-                                        <option value="70">70 <?php echo translate('cms_lang.post.post_record', $language) ?></option>
-                                        <option value="80">80 <?php echo translate('cms_lang.post.post_record', $language) ?></option>
-                                        <option value="90">90 <?php echo translate('cms_lang.post.post_record', $language) ?></option>
-                                        <option value="100">100 <?php echo translate('cms_lang.post.post_record', $language) ?></option>
+                                        <option value="20">20 bản ghi</option>
+                                        <option value="30">30 bản ghi</option>
+                                        <option value="40">40 bản ghi</option>
+                                        <option value="50">50 bản ghi</option>
+                                        <option value="60">60 bản ghi</option>
+                                        <option value="70">70 bản ghi</option>
+                                        <option value="80">80 bản ghi</option>
+                                        <option value="90">90 bản ghi</option>
+                                        <option value="100">100 bản ghi</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="toolbox">
                                 <div class="uk-flex uk-flex-middle uk-flex-space-between">
-                                    <div class="form-row cat-wrap">
-                                        <?php echo form_dropdown('catalogueid', $dropdown, set_value('catalogueid', (isset($_GET['catalogueid'])) ? $_GET['catalogueid'] : ''), 'class="form-control m-b select2 mr10" style="width:220px;"');?>
-                                    </div>
                                     <div class="uk-search uk-flex uk-flex-middle mr10 ml10">
                                         <div class="input-group">
-                                            <input type="text" name="keyword" value="<?php echo (isset($_GET['keyword'])) ? $_GET['keyword'] : ''; ?>" placeholder="<?php echo translate('cms_lang.post.post_placeholder', $language) ?>" class="form-control">
+                                            <input type="text" name="keyword" value="<?php echo (isset($_GET['keyword'])) ? $_GET['keyword'] : ''; ?>" placeholder="Nhập từ khóa để tìm kiếm..." class="form-control">
                                             <span class="input-group-btn">
-                                                <button type="submit" name="search" value="search" class="btn btn-primary mb0 btn-sm"><?php echo translate('cms_lang.post.post_search', $language) ?>
+                                                <button type="submit" name="search" value="search" class="btn btn-primary mb0 btn-sm">Tìm kiếm
                                             </button>
                                             </span>
                                         </div>
                                     </div>
                                     <div class="uk-button" style="background: transparent !important;">
-                                        <a href="<?php echo base_url('backend/article/article/create') ?>" class="btn btn-danger btn-sm"><i class="fa fa-plus mr10"></i><?php echo translate('cms_lang.post.post_add', $language) ?></a>
+                                        <a href="<?php echo base_url('website/create') ?>" class="btn btn-danger btn-sm"><i class="fa fa-plus mr10"></i>Thêm mới Website</a>
                                     </div>
                                 </div>
                             </div>
@@ -89,14 +72,14 @@
                                     <input type="checkbox" id="checkbox-all">
                                     <label for="check-all" class="labelCheckAll"></label>
                                 </th>
-                                <th class="text-center">ID</th>
-                                <th class="text-center">URL</th>
-                                <th class="text-center" style="width:103px;">Run crawl product</th>
-                                <th class="text-center" style="width:103px;">Run crawl category</th>
-                                <th class="text-center" style="width:103px;">Config article</th>
-                                <th class="text-center" style="width:103px;">Config catalogue</th>
-                                <th class="text-center" style="width:103px;">Config sitemap</th>
-                                <th class="text-center" style="width:103px;">Actions</th>
+                                <th class="text-center" style="width: 35px;">STT</th>
+                                <th class="text-center">URL Website</th>
+                                <th class="text-center" style="width:120px;">Run crawl product</th>
+                                <th class="text-center" style="width:120px;">Run crawl category</th>
+                                <th class="text-center" style="width:120px;">Config article</th>
+                                <th class="text-center" style="width:120px;">Config catalogue</th>
+                                <th class="text-center" style="width:120px;">Config sitemap</th>
+                                <th class="text-center" style="width:120px;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -153,7 +136,7 @@
                             </tr>
                             <?php }}else{ ?>
                                 <tr>
-                                    <td colspan="100%"><span class="text-danger"><?php echo translate('cms_lang.post.empty', $language) ?></span></td>
+                                    <td colspan="100%"><span class="text-danger">Không có bản ghi cần hiển thị...</span></td>
                                 </tr>
                             <?php } ?>
                         </tbody>
@@ -167,27 +150,6 @@
         </div>
     </div>
 </div>
-<div id="clone_modal" class="modal fade va-general">  
-      <div class="modal-dialog">  
-           <div class="modal-content">  
-                <div class="modal-header">
-                    <div class="uk-flex uk-flex-space-between uk-flex-middle" >
-                        <h4 class="modal-title">Nhập số lượng cần Sao chép</h4>  
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>  
-                    </div>  
-                </div>  
-                <div class="modal-body">  
-                    <form method="post" id="clone_general" class="uk-clearfix" data-max-0="3">  
-                        <div class="va-input-general mb15">
-                            <label>Số lượng</label>  
-                            <input type="text" name="quantity" id="quantity" class="form-control" />  
-                        </div>
-                        <input type="submit"  value="Sao chép" data-module="<?php echo $module ?>" class="btn btn-success clone-btn float-right" />  
-                    </form>  
-                </div>   
-           </div>  
-      </div>  
- </div> 
     <div id="my-id" class="uk-modal">
         <div class="uk-modal-dialog">
             <a class="uk-modal-close uk-close"></a>
@@ -261,7 +223,7 @@
                         </tr>
                         <?php }}else{ ?>
                             <tr>
-                                <td colspan="100%"><span class="text-danger"><?php echo translate('cms_lang.post.empty', $language) ?></span></td>
+                                <td colspan="100%"><span class="text-danger">Không có bản ghi cần hiển thị...</span></td>
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -326,7 +288,7 @@
                     </tr>
                     <?php }}else{ ?>
                         <tr>
-                            <td colspan="100%"><span class="text-danger"><?php echo translate('cms_lang.post.empty', $language) ?></span></td>
+                            <td colspan="100%"><span class="text-danger">Không có bản ghi cần hiển thị...</span></td>
                         </tr>
                     <?php } ?>
                 </tbody>
@@ -402,7 +364,7 @@
                     </tr>
                     <?php }}else{ ?>
                         <tr>
-                            <td colspan="100%"><span class="text-danger"><?php echo translate('cms_lang.post.empty', $language) ?></span></td>
+                            <td colspan="100%"><span class="text-danger">Không có bản ghi cần hiển thị...</span></td>
                         </tr>
                     <?php } ?>
                 </tbody>
