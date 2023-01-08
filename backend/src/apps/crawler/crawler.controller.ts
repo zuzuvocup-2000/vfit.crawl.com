@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Controller, Post } from '@nestjs/common';
 import { CrawlerService } from './crawler.service';
 import { CrawlerSitemapService } from './crawlerSitemap.service';
 import { WriteFileExcelService } from './writeFileExcel.service';
@@ -13,7 +13,7 @@ export class CrawlerController {
 
   @Post()
   async index() {
-    return await this.crawlerService.crawlerSitemap();
+    return await this.crawlerSitemapService.crawlerSitemap();
   }
 
   /**
@@ -22,6 +22,16 @@ export class CrawlerController {
    * */
   @Post('check-sitemap-pending')
   async checkSitemapPending() {
-    return await this.crawlerService.crawlerSitemapPending();
+    return await this.crawlerSitemapService.crawlerSitemapPending();
+  }
+
+  /**
+    * Crawler Catalogue With DOM.
+    * @Body {array} sitemap info.
+    * @return {boolean}
+  */
+  @Post('/crawl-catalogue')
+  async crawlerCatalogue() {
+    return await this.crawlerService.crawlDataFromUrls();
   }
 }

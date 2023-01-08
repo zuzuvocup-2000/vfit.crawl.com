@@ -2,15 +2,13 @@
 import { HttpService } from '@nestjs/axios';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import {
-  CRAWL,
-  TYPE_SITE_MAP,
-  // DICTIONARY_SITEMAP,
-  STATUS_SITE_MAP,
+  STATUS_URL,
 } from 'src/common/constants/app';
-import { toJson } from 'xml2json';
-import { Site } from '../admin/site/schema/site.schema';
 import { CrawlerRepository } from './crawler.repository';
 import * as https from 'https';
+import { parse } from 'muninn';
+import { Url } from '../admin/sitemap/schema/url.schema';
+import { ARTICLE_CONFIG_TYPE_ENUM, CATALOGUE_CONFIG_TYPE_ENUM } from 'src/common/constants/enum';
 
 @Injectable()
 export class CrawlerService {
@@ -19,248 +17,122 @@ export class CrawlerService {
     private readonly crawlerRepository: CrawlerRepository,
   ) {}
 
-  /*
-   * Crawler Sitemap Pending.
-   * @return {boolean}
-   */
-  async crawlerSitemapPending(): Promise<boolean> {
-    try {
-      // Get sitemap pending
-      const sitemaps = await this.crawlerRepository.getSitePendingCrawl();
-      sitemaps.forEach(async (sitemap) => {
-        await this.checkTypeSitemap(sitemap.url, sitemap['site'], sitemap.status);
-      });
-      return true;
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  /**
+    * Crawler data from urls
+    * @return {unknown} response
+    */
+  async crawlDataFromUrls(): Promise<unknown> {
+    const allUrls = await this.crawlerRepository.getAllUrlsActive();
+    for (let index = 0; index < allUrls.length; index++) {
+      const urlItem = allUrls[index];
+      const configCatalogue = await this.crawlerRepository.getConfigCatalogueBySiteId(urlItem);
+      const configArticle = await this.crawlerRepository.getConfigArticleBySiteId(urlItem);
+      if ((typeof configCatalogue !== 'undefined' && configCatalogue.length > 0) || (typeof configArticle !== 'undefined' && configArticle.length > 0)) {
+        const responseSite = await this.getResponseAxios(urlItem.url);
+        if (responseSite && responseSite['status'] === HttpStatus.OK) {
+          // Set option and crawl data article by html dom
+          const isCrawlArticle = await this.crawlDataArticle(urlItem, responseSite['data'], configArticle);
 
-  /*
-   * Crawler Sitemap.
-   * @return {boolean}
-   */
-  async crawlerSitemap(): Promise<boolean> {
-    try {
-      // Get site crawl
-      const sites = await this.crawlerRepository.getSiteCrawlSitemap();
-      for (let site of sites) {
-        let sitemaps = [];
-        let statusSite = false;
-        // Get info Robots.txt
-        const robotData = await this.getResponseAxios(
-          `${site.url}/${CRAWL.ROBOTS}`,
-        );
-        // Get Sitemap
-        if (robotData && robotData['status'] === HttpStatus.OK) {
-          sitemaps = robotData['data'].match(/Sitemap: http.*?.*/gm);
-          if (sitemaps && sitemaps.length > 0) sitemaps = sitemaps.filter(i => i.includes(site.url.replace('https://', '')));
-        }
-        // // Check dictionary sitemaps if not isset in robots.txt
-        // if (!sitemaps || sitemaps.length === 0) {
-        //   sitemaps = [];
-        //   for (let i = 0; i < DICTIONARY_SITEMAP.length; i++) {
-        //     const sitemap = await this.getResponseAxios(
-        //       `${sites[index].url}/${DICTIONARY_SITEMAP[i]}`,
-        //     );
-        //     if (sitemap && sitemap['data']) {
-        //       const obj = toJson(sitemap['data'], { object: true });
-        //       if (obj['urlset'] || obj['sitemapindex']) {
-        //         sitemaps.push(`${sites[index].url}/${DICTIONARY_SITEMAP[i]}`);
-        //       }
-        //     }
-        //   }
-        // }
-
-        // Import status sitemap to DB
-        if (sitemaps && sitemaps.length > 0) {
-          const sitemapFilter = sitemaps.filter(i => !i.includes(CRAWL.EXAMPLE));
-          // update site with sitemap
-          for (let i = 0; i < sitemapFilter.length; i++) {
-            const url = sitemapFilter[i].replace(CRAWL.SITE_MAP, '').replace('.gz', '');
-            await this.checkTypeSitemap(url, site, STATUS_SITE_MAP.ACTIVE);
+          if (!isCrawlArticle) {
+            // Set option and crawl data catalogue by html dom
+            await this.crawlDataCatalogue(urlItem, responseSite['data'], configCatalogue);
           }
-          statusSite = true;
-        }
-        await this.crawlerRepository.updateSiteWithSitemap(site.url, statusSite);
-      }
-      return true;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  /*
-   * Check Type Sitemap.
-   * @param {string} url sitemap.
-   * @param {object} site info.
-   * @return {void}
-   */
-  async checkTypeSitemap(url: string, site: Site, statusSitemap: number): Promise<void> {
-    try {
-      const sitemap = await this.httpService.axiosRef.get(`${url}`, {
-        httpsAgent: new https.Agent({
-          rejectUnauthorized: false,
-          keepAlive: false,
-        }),
-      });
-
-      if (sitemap && sitemap['status'] === HttpStatus.OK) {
-        // convert xml to object
-        const obj = toJson(sitemap['data'], { object: true });
-        if (obj['urlset']) {
-          const sitemapUrlset = obj['urlset'].url.length > 0 ? obj['urlset'].url : [obj['urlset'].url];
-          await this.sitemapBulkWriteUrl(sitemapUrlset, site);
-          if ( statusSitemap === STATUS_SITE_MAP.PENDING ) { await this.updateStatusSitemap(url, STATUS_SITE_MAP.ACTIVE); }
-        }
-
-        if (obj['sitemapindex']) {
-          const sitemapindex = obj['sitemapindex'].sitemap.length > 0 ? obj['sitemapindex'].sitemap : [obj['sitemapindex'].sitemap];
-          await this.hanldeSitemapIndex(sitemapindex, site);
+        } else {
+          await this.crawlerRepository.updateStatusUrl(urlItem['url'], STATUS_URL.INACTIVE);
         }
       }
-    } catch (error) {
-      await this.updateStatusSitemap(url, STATUS_SITE_MAP.PENDING);
-      console.log(error);
     }
+
+    return true;
   }
 
-  /*
-   * Hanlde Sitemap Index.
-   * @param {sitemaps} list sitemap.
-   * @param {object} site info.
-   * @return {void}
-   */
-  async hanldeSitemapIndex(sitemaps, site: Site): Promise<void> {
-    try {
-      await this.sitemapBulkWriteIndex(
-        await this.checkSitemapIsNotEmpty(sitemaps),
-        site,
-      );
-      sitemaps.forEach(async (sitemap) => {
-        const url = sitemap.loc && sitemap.loc.length > 0 ? sitemap.loc.replace('.gz', '') : sitemap;
-        if ( typeof url === 'string' && this.checkUrlSitemap(url, site.url) == true ) {
-          await this.checkTypeSitemap(url, site, STATUS_SITE_MAP.ACTIVE);
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  /*
-   * Check sitemap only current site
-   * @param {string} urlSitemap.
-   * @param {string} urlSite.
-   * @return {boolean}
-   */
-  checkUrlSitemap(urlSitemap: string, urlSite: string) {
-    try {
-      urlSite = urlSite.replace('https://', '');
-      return urlSitemap.includes(urlSite);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  /*
-   * Create or Update Sitemap Type Index.
-   * @param {sitemaps} list sitemap.
-   * @param {object} site info.
-   * @return {void}
-   */
-  async sitemapBulkWriteIndex(sitemaps, site: Site): Promise<void> {
-    try {
-      await this.crawlerRepository.sitemapBulkWrite( sitemaps, site, TYPE_SITE_MAP.INDEX );
-      console.log('upsert sitemap done');
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  /*
-   * Create Sitemap Type Url.
-   * @param {sitemaps} list sitemap.
-   * @param {object} site info.
-   * @return {void}
-   */
-  async sitemapBulkWriteUrl(sitemaps, site: Site): Promise<void> {
-    try {
-      await this.crawlerRepository.urlsBulkWrite( sitemaps, site, TYPE_SITE_MAP.URL );
-      console.log('upsert sitemap done');
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  /*
-   * Update Status Sitemap.
-   * @param {url} list sitemap.
-   * @return {void}
-   */
-  async updateStatusSitemap(url: string, status: number): Promise<void> {
-    try {
-      await this.crawlerRepository.updateStatusSitemap(url, status);
-      console.log('update status sitemap error');
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  /*
-   * Update Site With Sitemap.
-   * @param {site} site info.
-   * @param {boolean} statusSitemap.
-   * @return {void}
-   */
-  async updateSiteWithSitemap( site: Site, statusSitemap: boolean ): Promise<void> {
-    try {
-      await this.crawlerRepository.updateSiteWithSitemap( site['id'], statusSitemap );
-      console.log('update status sitemap error');
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  /*
-   * Get response data when send axios
-   * @param {string} url.
-   * @return {unknown} response
-   */
+  /**
+    * Get response data when send axios
+    * @param {string} url
+    * @return {unknown} response
+    */
   async getResponseAxios(url: string): Promise<unknown> {
     try {
-      const response = await this.httpService.axiosRef.get(url, {
+      return await this.httpService.axiosRef.get(url, {
         httpsAgent: new https.Agent({
           rejectUnauthorized: false,
           keepAlive: false,
         }),
       });
-      return response;
     } catch (error) {
       console.log(error);
     }
   }
 
-  /*
-   * Check item sitemap if empty remove item
-   * @param {sitemapList} list.
-   * @return {unknown} sitemapList
-   */
-  checkSitemapIsNotEmpty(sitemapList) {
-    try {
-      if (sitemapList.length > 0) {
-        for (let index = 0; index < sitemapList.length; index++) {
-          if ( (typeof sitemapList[index] === 'object' && sitemapList[index].loc && sitemapList[index].loc.length == 0) ||
-            (typeof sitemapList[index] === 'object' && !sitemapList[index].loc) ||
-            (typeof sitemapList[index] === 'object' && typeof sitemapList[index].loc === 'object')
-          ) {
-            sitemapList.splice(index, 1);
-          }
+  /**
+    * Set config to crawl data
+    * @param {object} url.
+    * @return {object} config
+    */
+  async crawlDataCatalogue(url: Url, data, configCatalogue): Promise<boolean> {
+    if (configCatalogue) {
+      for (let index = 0; index < configCatalogue.length; index++) {
+        const element = configCatalogue[index];
+        // Set config selector
+        const config = {
+          schema: {
+            title: (element.records[0].dataType == CATALOGUE_CONFIG_TYPE_ENUM.TITLE ? element.records[0].selector : ''),
+          },
+        };
+        Object.keys(config.schema).forEach(keyItem => !config.schema[keyItem] && delete config.schema[keyItem]);
+        // Crawl data and check to upsert
+        const resultCatalogueCrawl = parse(data, config);
+        if (resultCatalogueCrawl.title) {
+          await this.crawlerRepository.upsertCatalogue(url, resultCatalogueCrawl, STATUS_URL.CRAWLING);
+        } else {
+          await this.crawlerRepository.updateStatusUrl(url['url'], STATUS_URL.INACTIVE);
         }
       }
-      return sitemapList;
-    } catch (error) {
-      console.log(error);
     }
+    return false;
+  }
+
+  async crawlDataArticle(url: Url, data, configArticle): Promise<boolean> {
+    let isCrawl = false;
+    if (configArticle) {
+      for (let index = 0; index < configArticle.length; index++) {
+        const element = configArticle[index];
+        const title = element.records.filter((obj) => {return obj.dataType === ARTICLE_CONFIG_TYPE_ENUM.TITLE;});
+        const description = element.records.filter((obj) => {return obj.dataType === ARTICLE_CONFIG_TYPE_ENUM.DESCRIPTION;});
+        const content = element.records.filter((obj) => {return obj.dataType === ARTICLE_CONFIG_TYPE_ENUM.CONTENT;});
+        const image = element.records.filter((obj) => {return obj.dataType === ARTICLE_CONFIG_TYPE_ENUM.IMAGE;});
+        // const review = element.records.filter((obj) => {return obj.dataType === ARTICLE_CONFIG_TYPE_ENUM.RATE;});
+        const config:unknown = {
+          schema: {
+            title: title.length > 0 ? title[0]['selector'] : undefined,
+            description: {
+              selector: description.length > 0 ? description[0]['selector'] : undefined,
+              html: true
+            },
+            content: {
+              selector: content.length > 0 ? content[0]['selector'] : undefined,
+              html: true
+            },
+            image: {
+              selector: image.length > 0 ? image[0]['selector'] : undefined,
+              type: 'array',
+              schema: {
+                src: 'img@src',
+              },
+            },
+          },
+        };
+        Object.keys(config['schema']).forEach(keyItem => !config['schema'][keyItem] && delete config['schema'][keyItem]);
+        Object.keys(config['schema']).forEach(keyItem => typeof (config['schema'][keyItem]) === 'object' && config['schema'][keyItem].selector === undefined && delete config['schema'][keyItem]);
+
+        const resultArticleCrawl = parse(data, config);
+        if (resultArticleCrawl.title) {
+          await this.crawlerRepository.upsertArticle(url, resultArticleCrawl, STATUS_URL.CRAWLING);
+          isCrawl = true;
+        }
+      }
+      return isCrawl ? true : false;
+    }
+    return false;
   }
 }

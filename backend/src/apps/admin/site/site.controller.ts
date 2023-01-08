@@ -148,10 +148,11 @@ export class SiteController {
   @ApiConsumes(FormDataRequest)
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
-    await this.siteService.readExcelFromFile(file);
+    const data = await this.siteService.readExcelFromFile(file);
     return {
       status: CODES.SUCCESS,
       message: SUCCESS_MESSAGE.DEFAULT,
+      data: data,
     };
   }
 }

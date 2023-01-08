@@ -12,6 +12,10 @@ import { CrawlerController } from './crawler.controller';
 import { Url, UrlSchema } from '../admin/sitemap/schema/url.schema';
 import { CrawlerSitemapService } from './crawlerSitemap.service';
 import { WriteFileExcelService } from './writeFileExcel.service';
+import { CatalogueConfig, CatalogueConfigSchema } from '../admin/config-catalogue/schema/catalogue-config.schema';
+import { ArticleConfig, ArticleConfigSchema } from '../admin/config-article/schema/article-config.schema';
+import { Catalogue, CatalogueSchema } from '../admin/catalogue/schema/catalogue.schema';
+import { Article, ArticleSchema } from '../admin/article/schema/article.schema';
 
 @Module({
   imports: [
@@ -19,6 +23,10 @@ import { WriteFileExcelService } from './writeFileExcel.service';
       { name: Url.name, schema: UrlSchema },
       { name: Sitemap.name, schema: SitemapSchema },
       { name: Site.name, schema: SiteSchema },
+      { name: CatalogueConfig.name, schema: CatalogueConfigSchema },
+      { name: ArticleConfig.name, schema: ArticleConfigSchema },
+      { name: Catalogue.name, schema: CatalogueSchema },
+      { name: Article.name, schema: ArticleSchema },
     ]),
     CommonModule,
     HttpModule,

@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
+import { STATUS_URL } from 'src/common/constants/app';
 
 @Schema()
 export class Url {
@@ -10,20 +11,14 @@ export class Url {
   @Prop({ required: true })
   url: string;
 
-  @Prop({ required: true })
-  type: number;
-
-  @Prop({ required: true })
-  urlType: string;
-
-  @Prop({ required: false, type: mongoose.Schema.Types.ObjectId })
-  updatedBy: string;
-
-  @Prop({ required: false })
+  @Prop({ required: false, default: STATUS_URL.ACTIVE })
   status: number;
 
+  @Prop({ required: true, default: false })
+  isCrawl: boolean;
+
   @Prop({ required: true, default: Date.now })
-  crawlerAt: Date;
+  createdAt: Date;
 }
 
 export type UrlDocument = Url & Document;

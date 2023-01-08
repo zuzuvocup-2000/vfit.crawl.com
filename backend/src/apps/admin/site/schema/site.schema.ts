@@ -1,11 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { TYPE_CRAWL } from 'src/common/constants/app';
+import { TYPE_CRAWL } from 'src/common/constants/enum';
 
 @Schema()
 export class Site {
   @Prop({ required: false, type: mongoose.Schema.Types.ObjectId, ref: 'Site' })
-  _id: string
+  _id: string;
 
   @Prop({ required: true })
   url: string;
@@ -16,29 +16,23 @@ export class Site {
   @Prop({ required: false })
   sitemap: boolean;
 
-  @Prop({ required: false })
-  platform: string;
-
-  @Prop({ required: false })
-  updateBy: string;
-
-  @Prop({ required: true })
-  platformId: number;
-
   @Prop({ required: false, enum: TYPE_CRAWL })
   typeCrawl: string;
 
-  @Prop({ required: true, default: Date.now })
-  updatedAt: Date;
+  @Prop({ required: false })
+  isCrawl: boolean;
 
-  @Prop({ required: true, default: Date.now })
-  createdAt: Date;
-
-  @Prop({ required: true, default: Date.now })
+  @Prop({ required: false, default: Date.now })
   crawlUrlAt: Date;
 
-  @Prop({ required: true, default: Date.now })
-  crawlSitemapAt: Date;
+  @Prop({ required: false, default: Date.now })
+  createdAt: Date;
+
+  @Prop({ required: false, default: Date.now })
+  updatedAt: Date;
+
+  @Prop({ required: false })
+  crawlDataAt: Date;
 }
 export type SiteDocument = Site & Document;
 
