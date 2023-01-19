@@ -18,12 +18,12 @@ class Auth implements FilterInterface
         if(!session()->get('isLoggedIn')) {
             return redirect()->to(BASE_URL.BACKEND_DIRECTORY);
         }
-        $user = $this->usermodel->get_user(session()->get('id')['$oid']);
-        if(!$user){
-            $session = session();
-            $session->destroy();
-            return redirect()->to(BASE_URL.BACKEND_DIRECTORY);
-        }
+        // $user = $this->usermodel->get_user(session()->get('id')['$oid']);
+        // if(!$user){
+        //     $session = session();
+        //     $session->destroy();
+        //     return redirect()->to(BASE_URL.BACKEND_DIRECTORY);
+        // }
     }
 
     //--------------------------------------------------------------------

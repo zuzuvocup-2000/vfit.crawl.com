@@ -1,46 +1,59 @@
 <?php 
 namespace App\Controllers\Backend\Authentication;
 use App\Controllers\BaseController;
-use App\Libraries\Mailbie;
-use App\Models\UserModel;
 
 class Auth extends BaseController{
 	protected $data;
 	
 
 	public function __construct(){
-		$this->usermodel = new UserModel();
+		$this->authService = service('AuthService');
 		$this->data = [];
 	}
 
 	public function login(){
-		$session = session();
+		try{
+	        $session = session();
+			$validate = [
+				'email' => 'required|valid_email',
+				'password' => 'required|min_length[6]',
+			];
+			$errorValidate = [
+				'email' => [
+					'valid_email' => 'Định dạng Email không hợp lệ!',
+					'required' => 'Xin vui lòng nhập vào trường Email!',
+				],
+				'password' => [
+					'required' => 'Xin vui lòng nhập vào trường mật khẩu!',
+					'min_length' => 'Mật khẩu phải lớn hơn 6 kí tự!',
+				],
+			];
+			if ($this->validate($validate, $errorValidate)){
+				$dataLogin = $this->authService->login([
+					'email' => $this->request->getPost('email'),
+					'password' => $this->request->getPost('password')
+				]);
+				
+		        if($dataLogin['code'] == 200){
+					$ses_data = [
+	                    'isLoggedIn' => TRUE,
+	                    'accessToken' => $dataLogin['accessToken'],
+	                    'name' => $dataLogin['name'],
+	                    'email' => $dataLogin['email'],
+	                ];
+	                $session->set($ses_data);
+	                return redirect()->to(BASE_URL.'dashboard');
+		        }else{
+		           $this->data['validate'] = $dataLogin['message'];
+		        }
+	        }else{
+	        	$this->data['validate'] = $this->validator->listErrors();
+	        }
 
-		$email = $this->request->getVar('email');
-        $password = $this->request->getVar('password');
-		$user = $this->usermodel->get_user_by_email($email);
-		if($user){
-            $pass = $user['password'];
-            $authenticatePassword = password_verify($password, $pass);
-            if($authenticatePassword){
-                $ses_data = [
-                    'id' => $user['_id'],
-                    'name' => $user['name'],
-                    'email' => $user['email'],
-                    'isLoggedIn' => TRUE
-                ];
-
-                $session->set($ses_data);
-                return redirect()->to(BASE_URL.'dashboard');
-            
-            }else{
-                $session->setFlashdata('message-danger', 'Mật khẩu không chính xác!');
-                return redirect()->to(BASE_URL);
-            }
-        }else{
-            $session->setFlashdata('message-danger', 'Email không tồn tại!');
-            return redirect()->to(BASE_URL);
-        }
+	        return view('backend/authentication/login', $this->data);
+	    }catch(\Exception $e ){
+         	echo $e->getMessage();die();
+      	}
 	}	
 
 	public function login_view(){
@@ -54,99 +67,54 @@ class Auth extends BaseController{
 	}
 
 	public function forgot(){
-
 		helper(['mymail']);
+		$session = session();
 		if($this->request->getMethod() == 'post'){
 			$validate = [
 				'email' => 'required|valid_email|check_email',
 			];
 			$errorValidate = [
 				'email' => [
+					'valid_email' => 'Định dạng Email không hợp lệ!',
+					'required' => 'Xin vui lòng nhập vào trường Email!',
 					'check_email' => 'Email không tồn tại trong hệ thống!',
 				],
 			];
 			if ($this->validate($validate, $errorValidate)){
-		 		$user = $this->AutoloadModel->_get_where([
-		 			'select' => 'id, fullname, email',
-		 			'table' => 'user',
-		 			'where' => ['email' => $this->request->getVar('email'),'deleted_at' => 0],
-		 		]);
-
-		 		$otp = $this->otp(); 
-		 		$otp_live = $this->otp_time();
-		 		$mailbie = new MailBie();
-		 		$otpTemplate = otp_template([
-		 			'fullname' => $user['fullname'],
-		 			'otp' => $otp,
-		 		]);
-
-		 		$flag = $mailbie->send([
-		 			'to' => $user['email'],
-		 			'subject' => 'Quên mật khẩu cho tài khoản: '.$user['email'],
-		 			'messages' => $otpTemplate,
-		 		]);
-
-		 		$update = [
-		 			'otp' => $otp,
-		 			'otp_live' => $otp_live,
-		 		];
-		 		$countUpdate = $this->AutoloadModel->_update([
-		 			'table' => 'user',
-		 			'data' => $update,
-		 			'where' => ['id' => $user['id']],
-		 		]);
-
-		 		if($countUpdate > 0 && $flag == true){
-		 			return redirect()->to(BASE_URL.'backend/authentication/auth/verify?token='.base64_encode(json_encode($user)));
-		 		}
+				$user = $this->authService->sendOtpForgotPassword($this->request->getPost('email'));
+				$session->setFlashdata('message-success', 'Mã OTP đã được gửi vào Email của bạn!');
+	 			return redirect()->to(BASE_URL.'verify?token='.base64_encode(json_encode([
+	 				'email' => $user['data']['email'],
+	 				'name' => $user['data']['name'],
+	 				'_id' => $user['data']['_id'],
+	 			])));
 	        }else{
 	        	$this->data['validate'] = $this->validator->listErrors();
 	        }
 		}
-
 
 		return view('backend/authentication/forgot', $this->data);
 	}
 
 	public function verify(){
 		helper('text');
+		$session = session();
 		if($this->request->getMethod() == 'post'){
 			$validate = [
 				'otp' => 'required|check_otp',
 			];
 			$errorValidate = [
 				'otp' => [
+					'required' => 'Xin vui lòng nhập vào trường OTP',
 					'check_otp' => 'Mã OTP không chính xác hoặc đã hết thời gian sử dụng!',
 				],
 			];
 			if ($this->validate($validate, $errorValidate)){
-				$user = json_decode(base64_decode($_GET['token']), TRUE);
-		 		$salt = random_string('alnum', 168);
-		 		$password = random_string('numeric', 6);
-		 		$password_encode = password_encode($password, $salt);
-
-		 		$update = [
-		 			'password' => $password_encode,
-		 			'salt' => $salt,
-		 		];
-
-		 		$flag = $this->AutoloadModel->_update([
-		 			'table' => 'user',
-		 			'data' => $update,
-		 			'where' => ['id' => $user['id']]
-		 		]);
-		 		if($flag > 0){
-		 			$mailbie = new Mailbie();
-				 	$mailFlag = $mailbie->send([
-			 			'to' => $user['email'],
-			 			'subject' => 'Quên mật khẩu cho tài khoản: '.$user['email'],
-			 			'messages' => '<h3>Mật khẩu mới của bạn là: '.$password.'</h3><div><a target="_blank" href="'.base_url(BACKEND_DIRECTORY).'">Click vào đây để tiến hành đăng nhập</a></div>',
-			 		]);
-			 		if($mailFlag == true){
-			 			return redirect()->to(BASE_URL.BACKEND_DIRECTORY);
-			 		}
+				$user = $this->authService->resetPassword($_GET['token']);
+		 		if($user == true) {
+		 			$session->setFlashdata('message-success', 'Mật khẩu mới đã được gửi vào Email của bạn!');
+		 			return redirect()->to(BASE_URL);
 		 		}
-
 	        }else{
 	        	$this->data['validate'] = $this->validator->listErrors();
 	        }
@@ -154,16 +122,4 @@ class Auth extends BaseController{
 
 		return view('backend/authentication/verify', $this->data);
 	}
-
-	private function otp(){
-		helper(['text']);
-		$otp = random_string('numeric', 6);
-		return $otp;
-	}
-
-	private function otp_time(){
-		$timeToLive = gmdate('Y-m-d H:i:s', time() + 7*3600 + 300);
-		return $timeToLive;
-	}
-
 }

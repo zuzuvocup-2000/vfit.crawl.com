@@ -11,7 +11,8 @@ class Dashboard extends BaseController{
 	}
 
 	public function index(){
-		
+		$this->data['title'] = 'Trang chủ';
+		$this->data['module'] = 'home';
 		$this->data['template'] = 'backend/dashboard/home/index';
 		return view('backend/dashboard/layout/home', $this->data);
 	}

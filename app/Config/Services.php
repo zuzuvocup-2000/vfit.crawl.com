@@ -17,16 +17,26 @@ require_once SYSTEMPATH . 'Config/Services.php';
  * method format you should use for your service methods. For more examples,
  * see the core Services file at system/Config/Services.php.
  */
-class Services extends CoreServices
-{
+class Services extends CoreServices{
 
-	//    public static function example($getShared = true)
-	//    {
-	//        if ($getShared)
-	//        {
-	//            return static::getSharedInstance('example');
-	//        }
-	//
-	//        return new \CodeIgniter\Example();
-	//    }
+    public static function AuthService($param = [], $getShared = true){
+        if ($getShared){
+            return static::getSharedInstance('AuthService', $param);
+        }
+        return new \App\Services\AuthService($param);
+    }
+    
+    public static function UserService($param = [], $getShared = true){
+        if ($getShared){
+            return static::getSharedInstance('UserService', $param);
+        }
+        return new \App\Services\UserService($param);
+    }
+
+    public static function WebsiteService($param = [], $getShared = true){
+        if ($getShared){
+            return static::getSharedInstance('WebsiteService', $param);
+        }
+        return new \App\Services\WebsiteService($param);
+    }
 }

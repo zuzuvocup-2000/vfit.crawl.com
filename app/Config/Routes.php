@@ -30,15 +30,21 @@ $routes->get('/', 'Backend/Authentication/Auth::login_view',['filter' => 'login'
 $routes->get('/admin', 'Backend/Authentication/Auth::login_view',['filter' => 'login' ]);
 $routes->get('/login', 'Backend/Authentication/Auth::login_view',['filter' => 'login' ]);
 $routes->post('/login', 'Backend/Authentication/Auth::login',['filter' => 'login' ]);
-$routes->get('/logout', 'Backend/Authentication/Auth::logout');
-$routes->get('/dashboard', 'Backend/Dashboard/Dashboard::index',['filter' => 'auth' ]);
+$routes->get('/logout', 'Backend/Authentication/Auth::logout', ['filter' => 'auth' ]);
 $routes->get('/website', 'Backend/Website/Website::index',['filter' => 'auth' ]);
-
-// $routes->get('([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)'.HTSUFFIX, 'Frontend\Homepage\Router::silo/$1/$2');
-
 $routes->get(BACKEND_DIRECTORY, 'Backend/Authentication/Auth::login', ['filter' => 'login' ]);
-$routes->get('backend/authentication/auth/forgot', 'Backend/Authentication/Auth::forgot', ['filter' => 'login' ]);
-$routes->get('backend/authentication/auth/logout', 'Backend/Authentication/Auth::logout', ['filter' => 'auth' ]);
+$routes->match(['get','post'],'forgot', 'Backend/Authentication/Auth::forgot', ['filter' => 'login' ]);
+$routes->match(['get','post'],'verify', 'Backend/Authentication/Auth::verify', ['filter' => 'login' ]);
+
+$routes->get('/dashboard', 'Backend/Dashboard/Dashboard::index',['filter' => 'auth' ]);
+
+
+// User
+$routes->get('/profile', 'Backend/User/User::profile',['filter' => 'auth' ]);
+
+// User
+$routes->get('/website/index', 'Backend/Website/Website::index',['filter' => 'auth' ]);
+
 
 /**
  * --------------------------------------------------------------------

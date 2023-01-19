@@ -1,12 +1,16 @@
-<?php
-    $baseController = new App\Controllers\BaseController();
-    $language = $baseController->currentLanguage();
-?>
-<div class="footer">
-    <div class="pull-right">
-    	<?php echo translate('cms_lang.footer.ft_welcome', $language) ?>
+<footer class="footer pt-3">
+    <div class="container-fluid">
+        <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+                <div class="copyright text-center text-sm text-muted text-lg-start">
+                    ©
+                    <script>
+                        document.write(new Date().getFullYear());
+                    </script>
+                    , được tạo  <i class="fa fa-heart"></i> bởi
+                    <a href="https://www.facebook.com/vanh2kk/" class="font-weight-bold" target="_blank"><?php echo NAME_AUTHOR ?></a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <strong>Copyright</strong> <?php echo translate('cms_lang.footer.ft_company', $language) ?> <?php echo date('Y'); ?>
-    </div>
-</div>
+</footer>

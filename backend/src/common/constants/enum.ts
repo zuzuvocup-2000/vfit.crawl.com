@@ -24,7 +24,13 @@ export enum TYPE_CRITERIA {
   IMAGE = 'IMAGE',
 }
 
-export const TYPE_CRAWL = {
-  DOM: 'DOM',
-  BROWSER: 'BROWSER',
-};
+export enum TYPE_CRAWL {
+  DOM = 'DOM',
+  BROWSER = 'BROWSER',
+}
+
+export enum CRITERIA_TYPE_ENUM {
+  CONTENT = 'CONTENT',
+  RATE = 'RATE',
+  IMAGE = 'IMAGE'
+}

@@ -1,42 +1,63 @@
-<nav class="navbar-default navbar-static-side" role="navigation">
-    <?php
-    $user = authentication();
-    // $uri = service('uri');
-    // $uri = current_url(true);
-    // $uriModule = $uri->getSegment(2);
-    // $uriModule_name = $uri->getSegment(3);
-    $baseController = new App\Controllers\BaseController();
-    ?>
-    <div class="sidebar-collapse">
-        <ul class="nav metismenu" id="side-menu">
-            <li class="nav-header">
-                <div class="dropdown profile-element">
-                    <span>
-                        <img alt="image" class="img-circle" src="public/avatar.png" style="min-width:48px;height:48px;" />
-                    </span>
-                    <a data-toggle="dropdown" class="dropdown-toggle display-block" href="<?php echo site_url('profile') ?>" style="margin-top: 15px;">
-                        <span class="clear"> <span class="block m-t-xs">
-                            <strong class="font-bold" style="color:#fff">
-                            <?php echo $user['name'] ?>
-                            </strong>
-                        </span>
-                        <span class="text-muted text-xs block">Quản trị viên
-                            <b class="caret" style="color: #8095a8"></b>
-                        </span>
-                    </a>
-                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="<?php echo base_url('backend/user/profile/profile/'.$user['_id']['$oid']) ?>">Đổi mật khẩu</a></li>
-                        <li class="divider"></li>
-                        <li><a href="<?php echo base_url('logout') ?>">Đăng xuất</a></li>
-                    </ul>
-                </div>
-                <div class="logo-element">
-                    V-FIT
-                </div>
+<?php
+    $uri = service('uri');
+    $uri = current_url(true);
+    $uriSegment = $uri->getSegment(1);
+?>
+<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
+    <div class="sidenav-header">
+        <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+        <a class="navbar-brand m-0" href="">
+            <img src="public/logo.png" class="navbar-brand-img h-100" alt="main_logo" />
+            <span class="ms-1 font-weight-bold"><?php echo NAME_PROJECT ?></span>
+        </a>
+    </div>
+    <hr class="horizontal dark mt-0" />
+    <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link <?php echo $uriSegment == 'dashboard' ? 'active' : '' ?>" href="">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Trang chủ</span>
+                </a>
             </li>
-            <li class="">
-                <a href="<?php echo base_url('website') ?>"><i class="fa fa-globe" aria-hidden="true"></i><span class="nav-label">QL Website</span> </a>
+            <li class="nav-item">
+                <a class="nav-link <?php echo $uriSegment == 'statistic' ? 'active' : '' ?>" href="template/pages/virtual-reality.html">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-chart-pie-35 text-info text-sm opacity-10"></i>
+                        <i class="ni ni-app text-info text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Báo cáo thống kê</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?php echo $uriSegment == 'website' ? 'active' : '' ?>" href="/website/index">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-world-2 text-danger text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Quản lý Website</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?php echo $uriSegment == 'criteria' ? 'active' : '' ?>" href="template/pages/billing.html">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-key-25 text-success text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Quản lý tiêu chí</span>
+                </a>
+            </li>
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Tài khoản</h6>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?php echo $uriSegment == 'profile' ? 'active' : '' ?>" href="/profile">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1"><?php echo session()->get('name') ?></span>
+                </a>
             </li>
         </ul>
     </div>
-</nav>
+</aside>

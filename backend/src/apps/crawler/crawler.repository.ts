@@ -123,8 +123,7 @@ export class CrawlerRepository {
 
   async upsertCatalogue(
     url: Url,
-    result: any,
-    _status: number,
+    result: any
   ): Promise<boolean> {
     try {
       await this.catalogueModel.updateOne(
@@ -141,7 +140,6 @@ export class CrawlerRepository {
         { upsert: true },
       );
 
-      await this.updateStatusUrl(url.url, _status);
       console.log('upsert catalogue done');
       return true;
     } catch (error) {
@@ -152,7 +150,6 @@ export class CrawlerRepository {
   async upsertArticle(
     url: Url,
     result: any,
-    _status: number,
   ): Promise<boolean> {
     try {
       await this.articleModel.updateOne(
@@ -171,7 +168,6 @@ export class CrawlerRepository {
         { upsert: true },
       );
 
-      await this.updateStatusUrl(url.url, _status);
       console.log('upsert article done');
       return true;
     } catch (error) {

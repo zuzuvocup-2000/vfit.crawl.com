@@ -71,6 +71,7 @@ export class CrawlerService {
     */
   async crawlDataCatalogue(url: Url, data, configCatalogue): Promise<boolean> {
     if (configCatalogue) {
+      let isCrawl = false;
       for (let index = 0; index < configCatalogue.length; index++) {
         const element = configCatalogue[index];
         // Set config selector
@@ -83,11 +84,11 @@ export class CrawlerService {
         // Crawl data and check to upsert
         const resultCatalogueCrawl = parse(data, config);
         if (resultCatalogueCrawl.title) {
-          await this.crawlerRepository.upsertCatalogue(url, resultCatalogueCrawl, STATUS_URL.CRAWLING);
-        } else {
-          await this.crawlerRepository.updateStatusUrl(url['url'], STATUS_URL.INACTIVE);
+          await this.crawlerRepository.upsertCatalogue(url, resultCatalogueCrawl);
+          isCrawl = true;
         }
       }
+      if (!isCrawl) await this.crawlerRepository.updateStatusUrl(url['url'], STATUS_URL.INACTIVE);
     }
     return false;
   }
@@ -124,10 +125,9 @@ export class CrawlerService {
         };
         Object.keys(config['schema']).forEach(keyItem => !config['schema'][keyItem] && delete config['schema'][keyItem]);
         Object.keys(config['schema']).forEach(keyItem => typeof (config['schema'][keyItem]) === 'object' && config['schema'][keyItem].selector === undefined && delete config['schema'][keyItem]);
-
         const resultArticleCrawl = parse(data, config);
         if (resultArticleCrawl.title) {
-          await this.crawlerRepository.upsertArticle(url, resultArticleCrawl, STATUS_URL.CRAWLING);
+          await this.crawlerRepository.upsertArticle(url, resultArticleCrawl);
           isCrawl = true;
         }
       }

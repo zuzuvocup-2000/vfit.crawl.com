@@ -6,7 +6,6 @@ export const APP = {
 export const STATUS_URL = {
   INACTIVE: 0,
   ACTIVE: 1,
-  CRAWLING: 2
 };
 
 export const STATUS_SITE = {
@@ -19,7 +18,6 @@ export const STATUS_SITE_MAP = {
   ACTIVE: 1,
   INACTIVE: 0,
   PENDING: 2,
-  CRAWL: 3
 };
 
 export const STATUS_CONFIG = {
@@ -48,7 +46,7 @@ export const DICTIONARY_SITEMAP = [
   'sitemap.xml',
   'sitemap_index.xml',
   'sitemap/sitemap.xml',
-]
+];
 
 export const TYPE_SITE_MAP = {
   INDEX: 0,
@@ -76,4 +74,4 @@ export const URL_CRAWL_SITEMAP = {
 
 export const JWT_CONSTANTS = {
   secret: 'vanhfithau',
-}
+};
