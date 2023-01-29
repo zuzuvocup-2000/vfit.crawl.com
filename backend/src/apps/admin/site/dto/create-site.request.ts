@@ -1,5 +1,6 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { TYPE_CRAWL } from 'src/common/constants/enum';
 
 export class CreateSiteRequest {
   @IsNotEmpty()
@@ -7,18 +8,15 @@ export class CreateSiteRequest {
   @ApiProperty()
   url: string;
 
+  @ApiProperty({
+    enum: TYPE_CRAWL,
+  })
+  @IsNotEmpty()
+  @IsEnum(TYPE_CRAWL)
+  typeCrawl: TYPE_CRAWL;
+
   @IsNotEmpty()
   @IsNumber()
   @ApiProperty()
   status: number;
-
-  @IsNotEmpty()
-  @IsString()
-  @ApiProperty()
-  platform: string;
-
-  @IsNotEmpty()
-  @IsNumber()
-  @ApiProperty()
-  platformId: number;
 }

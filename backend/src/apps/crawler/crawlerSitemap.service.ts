@@ -9,6 +9,7 @@ import { toJson } from 'xml2json';
 import { Site } from '../admin/site/schema/site.schema';
 import { CrawlerRepository } from './crawler.repository';
 import * as https from 'https';
+import { TYPE_SITE } from 'src/common/constants/enum';
 
 @Injectable()
 export class CrawlerSitemapService {
@@ -41,7 +42,7 @@ export class CrawlerSitemapService {
   async crawlerSitemap(): Promise<boolean> {
     try {
       // Get site crawl
-      const sites = await this.crawlerRepository.getSiteCrawlSitemap();
+      const sites = await this.crawlerRepository.getSiteCrawlUrl(TYPE_SITE.SITEMAP);
       for (const site of sites) {
         let sitemaps = [];
         let statusSite = false;

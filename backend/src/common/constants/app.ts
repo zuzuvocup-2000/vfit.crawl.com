@@ -75,3 +75,6 @@ export const URL_CRAWL_SITEMAP = {
 export const JWT_CONSTANTS = {
   secret: 'vanhfithau',
 };
+
+export const CHECK_URL_DISABLED = ['javascript:void', '#', 'facebook.com', 'youtube.com'];
+

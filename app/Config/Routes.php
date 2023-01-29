@@ -26,25 +26,28 @@ $routes->setAutoRoute(true);
  * --------------------------------------------------------------------
  */
 
-$routes->get('/', 'Backend/Authentication/Auth::login_view',['filter' => 'login' ]);
-$routes->get('/admin', 'Backend/Authentication/Auth::login_view',['filter' => 'login' ]);
-$routes->get('/login', 'Backend/Authentication/Auth::login_view',['filter' => 'login' ]);
-$routes->post('/login', 'Backend/Authentication/Auth::login',['filter' => 'login' ]);
-$routes->get('/logout', 'Backend/Authentication/Auth::logout', ['filter' => 'auth' ]);
-$routes->get('/website', 'Backend/Website/Website::index',['filter' => 'auth' ]);
-$routes->get(BACKEND_DIRECTORY, 'Backend/Authentication/Auth::login', ['filter' => 'login' ]);
-$routes->match(['get','post'],'forgot', 'Backend/Authentication/Auth::forgot', ['filter' => 'login' ]);
-$routes->match(['get','post'],'verify', 'Backend/Authentication/Auth::verify', ['filter' => 'login' ]);
-
-$routes->get('/dashboard', 'Backend/Dashboard/Dashboard::index',['filter' => 'auth' ]);
+$routes->get('/', 'Backend\Authentication\Auth::login_view',['filter' => 'login' ]);
+$routes->get('/admin', 'Backend\Authentication\Auth::login_view',['filter' => 'login' ]);
+$routes->get('/login', 'Backend\Authentication\Auth::login_view',['filter' => 'login' ]);
+$routes->post('/login', 'Backend\Authentication\Auth::login',['filter' => 'login' ]);
+$routes->get('/logout', 'Backend\Authentication\Auth::logout', ['filter' => 'auth' ]);
+$routes->get(BACKEND_DIRECTORY, 'Backend\Authentication\Auth::login', ['filter' => 'login' ]);
+$routes->match(['get','post'],'forgot', 'Backend\Authentication\Auth::forgot', ['filter' => 'login' ]);
+$routes->match(['get','post'],'verify', 'Backend\Authentication\Auth::verify', ['filter' => 'login' ]);
+$routes->get('/dashboard', 'Backend\Dashboard\Dashboard::index',['filter' => 'auth' ]);
 
 
 // User
 $routes->get('/profile', 'Backend/User/User::profile',['filter' => 'auth' ]);
 
-// User
-$routes->get('/website/index', 'Backend/Website/Website::index',['filter' => 'auth' ]);
-
+// Website
+$routes->group('/website', ['filter' => 'auth'] , function($routes){
+    $routes->add('/', 'Backend\Website\Website::index');
+    $routes->add('index', 'Backend\Website\Website::index');
+    $routes->add('create', 'Backend\Website\Website::create');
+    $routes->add('update/([a-zA-Z0-9-]+)', 'Backend\Website\Website::update/$1');
+    $routes->add('delete/([a-zA-Z0-9-]+)', 'Ajax\Website\Website::delete/$1');
+});
 
 /**
  * --------------------------------------------------------------------

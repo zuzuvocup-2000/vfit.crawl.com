@@ -12,3 +12,7 @@ const API_SIGNUP = 'http://localhost:3001/admin/users/signup';
 const API_USER_LIST = 'http://localhost:3001/admin/users'; 
 
 const API_WEBSITE_LIST = 'http://localhost:3001/admin/sites'; 
+const API_WEBSITE_CREATE = 'http://localhost:3001/admin/sites'; 
+const API_WEBSITE_UPDATE = 'http://localhost:3001/admin/sites'; 
+const API_WEBSITE_GET_BY_URL = 'http://localhost:3001/admin/sites/site'; 
+const API_WEBSITE_GET_BY_ID = 'http://localhost:3001/admin/sites'; 

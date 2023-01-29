@@ -26,22 +26,26 @@
                             <option value='<?php echo $url_dropdown.'50' ?>' <?php echo $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$url_dropdown.'50' == urldecode($actual_link) ? 'selected' : ''  ?>>50 bản ghi</option>
                             <option value='<?php echo $url_dropdown.'100' ?>' <?php echo $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$url_dropdown.'100' == urldecode($actual_link) ? 'selected' : ''  ?>>100 bản ghi</option>
                         </select>
-                        <div class="input-group " style="width: 500px;">
-                            <input type="text" name="keyword" class="form-control keyword-search" placeholder="Nhập từ khóa để tìm kiếm..." aria-label="Nhập từ khóa để tìm kiếm" aria-describedby="button-addon2" value="<?php echo isset($filter['url']['$regex']) ? $filter['url']['$regex'] : '' ?>">
-                            <button class="btn btn-outline-primary mb-0 btn-click-search-website" type="submit" id="button-addon2">Tìm kiếm</button>
+                        <div class="d-flex flex-middle">
+                            <div class="input-group " style="width: 500px;">
+                                <input type="text" name="keyword" class="form-control keyword-search" placeholder="Nhập từ khóa để tìm kiếm..." aria-label="Nhập từ khóa để tìm kiếm" aria-describedby="button-addon2" value="<?php echo isset($filter['url']['$regex']) ? $filter['url']['$regex'] : '' ?>">
+                                <button class="btn btn-outline-primary mb-0 btn-click-search-website" type="submit" id="button-addon2">Tìm kiếm</button>
+                            </div>
+                            <a href="/website/create" class="btn btn-primary m-0 ms-3">Thêm mới</a>
                         </div>
                     </div>  
                 </div>
             </div>
-            <div class="card-body px-0 pt-0 pb-2">
+            <div class="card-body px-0 pt-0 pb-0">
                 <div class="table-responsive p-0">
                     
                     <table class="table align-items-center mb-0">
                         <thead>
                             <tr>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 40px;">STT</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 40px;"></th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">URL</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center" style="width: 120px;">Loại</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center" style="width: 120px;">Loại Website</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center" style="width: 120px;">Loại Crawl</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="width: 80px;">TLBV</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="width: 80px;">TLDM</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="width: 100px;">Ngày thu thập</th>
@@ -53,14 +57,19 @@
                             <?php if(isset($websiteList['data']) && is_array($websiteList['data']) && count($websiteList['data'])){ 
                                 foreach ($websiteList['data'] as $key => $value) {
                             ?>
-                                <tr>
+                                <tr class="list-item" >
                                     <td class="text-center">
-                                        <?php echo $websiteList['pagination']['page'] * $websiteList['pagination']['limit'] + $key + 1 ?>
+                                        <div class="form-check text-center p-0 m-0 d-flex align-items-center justify-content-center click ">
+                                            <input class="form-check-input m-auto" type="checkbox" value="" onchange="$(this).parents('.list-item').toggleClass('change-bg')">
+                                        </div>
                                     </td>
                                     <td>
                                         <div class="d-flex flex-column justify-content-center">
                                             <h6 class="mb-0 text-sm"><?php echo $value['url'] ?></h6>
                                         </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <?php echo $value['type']  ?>
                                     </td>
                                     <td class="text-center">
                                         <?php echo $value['typeCrawl']  ?>
@@ -72,7 +81,7 @@
                                         <button class="btn bg-gradient-secondary m-0"><i class="ni ni-settings-gear-65"></i></button>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold"><?php echo $value['crawlUrlAt'] ?></span>
+                                        <span class="text-secondary text-xs font-weight-bold"><?php echo date('d-m-Y H:i:s', strtotime($value['crawlUrlAt'])) ?></span>
                                     </td>
                                     <td class="align-middle text-center text-sm">
                                         <?php if($value['status'] == 1){ ?>
@@ -83,8 +92,8 @@
                                     </td>
                                     <td class="align-middle">
                                         <div class="d-flex">
-                                            <a class="btn bg-gradient-success" style="margin-right: 10px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                            <a class="btn bg-gradient-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                            <a href="/website/update/<?php echo $value['_id'] ?>" class="btn bg-gradient-success mb-0" style="margin-right: 10px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                            <a class="btn bg-gradient-danger btn-delete-website mb-0" data-id="<?php echo $value['_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                         </div>
                                     </td>
                                 </tr>

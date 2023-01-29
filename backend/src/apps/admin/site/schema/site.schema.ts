@@ -1,11 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
-import { TYPE_CRAWL } from 'src/common/constants/enum';
+import { Document } from 'mongoose';
+import { TYPE_CRAWL, TYPE_SITE } from 'src/common/constants/enum';
 
 @Schema()
 export class Site {
-  @Prop({ required: false, type: mongoose.Schema.Types.ObjectId, ref: 'Site' })
-  _id: string;
 
   @Prop({ required: true })
   url: string;
@@ -16,7 +14,10 @@ export class Site {
   @Prop({ required: false })
   sitemap: boolean;
 
-  @Prop({ required: false, enum: TYPE_CRAWL })
+  @Prop({ required: true, enum: TYPE_SITE })
+  type: string;
+
+  @Prop({ required: true, enum: TYPE_CRAWL })
   typeCrawl: string;
 
   @Prop({ required: false })

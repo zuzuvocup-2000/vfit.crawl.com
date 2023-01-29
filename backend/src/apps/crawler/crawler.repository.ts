@@ -175,11 +175,11 @@ export class CrawlerRepository {
     }
   }
 
-  async getSiteCrawlSitemap(): Promise<Site[]> {
+  async getSiteCrawlUrl(type: string): Promise<Site[]> {
     try {
       return await this.siteModel.find({
         status: STATUS_SITE.ACTIVE,
-        // crawlSitemapAt: { $lte: date }
+        type: type,
       });
     } catch (error) {
       console.log(error);
@@ -253,13 +253,13 @@ export class CrawlerRepository {
         updateOne: {
           filter: {
             $and: [
-              { siteId: site._id },
+              { siteId: site['_id'] },
               { url: url.loc ? url.loc.replace('.gz', '') : url },
             ],
           },
           update: {
             $set: {
-              siteId: site._id,
+              siteId: site['_id'],
               url: url.loc ? url.loc.replace('.gz', '') : url,
             },
           },
@@ -267,6 +267,34 @@ export class CrawlerRepository {
         },
       }));
       await this.urlModel.bulkWrite(updateSitemap);
+      return true;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  /**
+   * Create or Update Urls.
+   * @param {sitemaps} list sitemap.
+   * @param {object} site info.
+   * @param {type} type sitemap.
+   * @return {boolean}
+   */
+  async urlsBulkWriteByBrowser(urls: [], site: Site): Promise<boolean> {
+    try {
+      const updateSite = await urls.map(url => ({
+        updateOne: {
+          filter: { url: url },
+          update: {
+            $set: {
+              siteId: site['_id'],
+              url: url,
+            },
+          },
+          upsert: true,
+        },
+      }));
+      await this.urlModel.bulkWrite(updateSite);
       return true;
     } catch (error) {
       console.log(error);
@@ -288,7 +316,7 @@ export class CrawlerRepository {
           filter: { url: url.loc ? url.loc.replace('.gz', '') : url },
           update: {
             $set: {
-              siteId: site._id,
+              siteId: site['_id'],
               url: url.loc ? url.loc.replace('.gz', '') : url,
             },
           },

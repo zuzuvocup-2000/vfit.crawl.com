@@ -10,6 +10,7 @@ import {
   Param,
   Put,
   Delete,
+  Req,
 } from '@nestjs/common';
 import { SiteService } from './site.service';
 import { CreateSiteRequest } from './dto/create-site.request';
@@ -33,11 +34,33 @@ import { GetFilterDto } from '../../../common/params/get-filter.dto';
 import { ERROR_MESSAGE } from 'src/common/constants/messages/error';
 import { SuccessSiteResponse } from './dto/success-site.response';
 import { UpdateSiteRequest } from './dto/update-site.request';
+import { Request } from 'express';
 
 @Controller('sites')
 @ApiTags('Site')
 export class SiteController {
   constructor(private readonly siteService: SiteService) {}
+
+  /**
+   * Api get detail site
+   * @params id
+   * @return Site
+   * */
+  @Get('/site')
+  @ApiResponse({ status: HttpStatus.OK, type: SuccessSiteResponse })
+  @ApiBadRequestResponse({
+    type: BadRequestResponse,
+  })
+  @ApiUnauthorizedResponse({ type: UnauthorizedResponse })
+  async getSiteByUrl(@Req() request: Request) {
+    try {
+      const url = request.query.url;
+      const site = await this.siteService.getByUrl(url.toString());
+      return new SuccessSiteResponse(site);
+    } catch (error) {
+      throw new Error(ERROR_MESSAGE.BAD_REQUEST);
+    }
+  }
 
   /**
    * Api get list website

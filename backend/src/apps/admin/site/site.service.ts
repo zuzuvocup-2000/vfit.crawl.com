@@ -204,8 +204,18 @@ export class SiteService {
    * @return Site
    * */
   async getById(id: string): Promise<SiteDocument> {
-    const productConfig = await this.siteModel.findById(id).exec();
-    return productConfig;
+    const site = await this.siteModel.findById(id).exec();
+    return site;
+  }
+
+  /**
+   * Api detail site
+   * @params url
+   * @return Site
+   * */
+  async getByUrl(url: string): Promise<SiteDocument> {
+    const site = await this.siteModel.findOne({ url }).exec();
+    return site;
   }
 
   /**

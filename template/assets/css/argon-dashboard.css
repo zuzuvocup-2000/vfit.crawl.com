@@ -26897,3 +26897,7 @@ pre[class*="language-"] {
     background-color: #1073ba !important;
     opacity: 0.8;
 }
+
+.change-bg{
+    background: #f2f2f2;
+}

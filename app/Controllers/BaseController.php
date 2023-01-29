@@ -19,6 +19,7 @@ use App\Models\AutoloadModel;
 use App\Libraries\Authentication;
 use App\Libraries\Pagination;
 use App\Libraries\Mobile_Detect;
+use CodeIgniter\HTTP\Response;
 
 class BaseController extends Controller
 {
@@ -56,7 +57,7 @@ class BaseController extends Controller
         // $this->session = \Config\Services::session();
         // $this->db = \Config\Database::connect();
         $this->request = \Config\Services::request();
-
+        $this->api = \Config\Services::curlrequest();
         //
         $this->client = new \CodeIgniter\HTTP\CURLRequest(
             new \Config\App(),
@@ -65,5 +66,42 @@ class BaseController extends Controller
         );
         $this->currentTime =  gmdate('Y-m-d H:i:s', time() + 7*3600);
         helper($this->helpers);
+    }
+
+    public function sendAPI($url, $method = 'get', $param = []){
+        $headers = ['Authorization' => "Bearer ".session()->get('accessToken')];
+        switch ($method) {
+            case 'post':
+                $result = $this->api->post($url, [
+                    'debug' => true,
+                    'headers'=>$headers,
+                    'json'=>$param,
+                ]);
+                break;
+            case 'put':
+                $result = $this->api->put($url, [
+                    'debug' => true,
+                    'headers'=>$headers,
+                    'json'=>$param,
+                ]);
+                break;
+            case 'delete':
+                $result = $this->api->delete($url, [
+                    'debug' => true,
+                    'headers'=>$headers,
+                    'json'=>$param,
+                ]);
+                break;
+            default:
+                $result = $this->api->get($url, [
+                    'debug' => true,
+                    'headers'=>$headers,
+                    'json'=>$param,
+                ]);
+                break;
+        }
+
+        $body = json_decode($result->getBody(),true);
+        return $body;
     }
 }

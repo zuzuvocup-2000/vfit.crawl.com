@@ -16,6 +16,8 @@ import { CatalogueConfig, CatalogueConfigSchema } from '../admin/config-catalogu
 import { ArticleConfig, ArticleConfigSchema } from '../admin/config-article/schema/article-config.schema';
 import { Catalogue, CatalogueSchema } from '../admin/catalogue/schema/catalogue.schema';
 import { Article, ArticleSchema } from '../admin/article/schema/article.schema';
+import { CrawlerJavascriptService } from './crawlerJavascript.service';
+import { CrawlerNormalService } from './crawlerNormal.service';
 
 @Module({
   imports: [
@@ -37,6 +39,8 @@ import { Article, ArticleSchema } from '../admin/article/schema/article.schema';
     CronService,
     CrawlerService,
     CrawlerSitemapService,
+    CrawlerJavascriptService,
+    CrawlerNormalService,
     CrawlerRepository,
     WriteFileExcelService,
   ],

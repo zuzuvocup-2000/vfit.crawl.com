@@ -1,4 +1,5 @@
 <?php
+
 if(!function_exists('std_object_to_array')){
 	function std_object_to_array($object){
 		return json_decode(json_encode($object), true);

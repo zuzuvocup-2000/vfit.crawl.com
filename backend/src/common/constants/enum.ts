@@ -29,6 +29,12 @@ export enum TYPE_CRAWL {
   BROWSER = 'BROWSER',
 }
 
+export enum TYPE_SITE {
+  SITEMAP = 'SITEMAP',
+  NORMAL = 'NORMAL',
+  JAVASCRIPT = 'JAVASCRIPT',
+}
+
 export enum CRITERIA_TYPE_ENUM {
   CONTENT = 'CONTENT',
   RATE = 'RATE',

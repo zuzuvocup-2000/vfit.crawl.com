@@ -26,4 +26,17 @@ class WebsiteService{
          echo $e->getMessage();die();
       }
    }
+
+   public function storeWebsite($request){
+      try{
+         helper('text');
+         return [
+            'url' => $request->getPost('url'),
+            'typeCrawl' => $request->getPost('typeCrawl'),
+            'status' => $request->getPost('status'),
+         ];
+      }catch(\Exception $e ){
+         echo $e->getMessage();die();
+      }
+   }
 }
