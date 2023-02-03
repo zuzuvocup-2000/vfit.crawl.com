@@ -7,11 +7,11 @@ export class Article {
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId })
   siteId: string;
 
-  @Prop({ required: false, type: mongoose.Schema.Types.ObjectId })
-  catalogueId: string;
-
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId })
   urlId: string;
+
+  @Prop({ required: false })
+  catalogue: string;
 
   @Prop({ required: true })
   url: string;

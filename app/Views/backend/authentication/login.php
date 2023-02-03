@@ -13,12 +13,16 @@
     //     'view_more' => '.wc-load-more-submit',
     //     'class_hide' => '.wpdiscuz-comment-pagination',
     // ];
-    $rate = [
-        'type' => 'SCROLL',
-        'comment'=> '#news-latest .article-summary',
-        'name'=> '#news-latest .article-title',
-    ];
-    echo json_encode($rate);
+    // $rate = [
+    //     'type' => 'SCROLL',
+    //     'comment'=> '#news-latest .article-summary',
+    //     'name'=> '#news-latest .article-title',
+    // ];
+    // $rateDOM = [
+    //     'comment'=> 'aside.flatsome_recent_posts > ul > li > div > div.flex-col.flex-grow > a',
+    //     'name'=> 'aside.flatsome_recent_posts > ul > li > div > div.flex-col.flex-grow > a',
+    // ];
+    // echo json_encode($rateDOM);
  ?>
 <!DOCTYPE html>
 <html lang="en">

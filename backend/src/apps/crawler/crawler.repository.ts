@@ -165,6 +165,7 @@ export class CrawlerRepository {
             urlId: url['_id'],
             url: url.url,
             title: result.title,
+            catalogue: result.catalogue,
             content:
               (result.description ? result.description : '') +
               (result.content ? result.content : ''),

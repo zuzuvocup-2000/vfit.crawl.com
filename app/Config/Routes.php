@@ -52,6 +52,12 @@ $routes->group('/website', ['filter' => 'auth'] , function($routes){
     $routes->add('crawl-javascript', 'Ajax\Website\Website::crawl_javascript');
 });
 
+// Config
+$routes->group('/config', ['filter' => 'auth'] , function($routes){
+    $routes->add('article/index', 'Backend\Config\Article::index');
+    $routes->add('catalogue/index', 'Backend\Config\Catalogue::index');
+});
+
 /**
  * --------------------------------------------------------------------
  * Additional Routing

@@ -24,8 +24,7 @@
                             <?php  echo form_dropdown('type', [
                                 '' => 'Chọn loại Website',
                                 'SITEMAP' => 'Website có Sitemap',
-                                'NORMAL' => 'Website truyền thống',
-                                'JAVASCRIPT' => 'Website load bằng Javascript'
+                                'NORMAL' => 'Website không có Sitemap',
                             ], set_value('type', (isset($website['data']['type']) ? $website['data']['type'] : '')), 'onfocus="focused(this)" onfocusout="defocused(this)" class="form-control"') ; ?>
                         </div>
                     </div>

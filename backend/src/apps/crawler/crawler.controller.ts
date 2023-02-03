@@ -1,8 +1,7 @@
-import { Controller, Post, UseGuards } from '@nestjs/common';
+import { Controller, Post } from '@nestjs/common';
 import { CrawlerService } from './crawl-data/crawler.service';
 import { CrawlerSitemapService } from './crawl-url/crawlerSitemap.service';
 import { WriteFileExcelService } from './writeFileExcel.service';
-import { AuthGuard } from '@nestjs/passport';
 import { CrawlerAllUrlsService } from './crawl-url/crawlerAllUrl.service';
 
 @Controller('crawler')
@@ -15,7 +14,7 @@ export class CrawlerController {
   ) {}
 
   @Post()
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   async index() {
     return await this.crawlerSitemapService.crawlerSitemap();
   }
@@ -24,7 +23,6 @@ export class CrawlerController {
    * Check sitemap status pending
    * @return array Site.update & Site.insert
    * */
-  @UseGuards(AuthGuard('jwt'))
   @Post('check-sitemap-pending')
   async checkSitemapPending() {
     return await this.crawlerSitemapService.crawlerSitemapPending();
@@ -35,7 +33,6 @@ export class CrawlerController {
     * @Body {array} sitemap info.
     * @return {boolean}
   */
-  @UseGuards(AuthGuard('jwt'))
   @Post('/crawl-site')
   async crawlerWebsite() {
     return await this.crawlerService.crawlDataFromUrls();
@@ -46,7 +43,6 @@ export class CrawlerController {
     * @Body {array} sitemap info.
     * @return {boolean}
   */
-  @UseGuards(AuthGuard('jwt'))
   @Post('/crawl-url-normal')
   async crawlUrlWebsiteNormal() {
     return await this.crawlerAllUrlsService.crawlUrl();

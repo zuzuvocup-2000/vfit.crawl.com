@@ -80,10 +80,10 @@
                                         <?php echo $value['typeCrawl']  ?>
                                     </td>
                                     <td class="text-center align-middle">
-                                        <button class="btn bg-gradient-primary m-0"><i class="ni ni-settings-gear-65"></i></button>
+                                        <a target="_blank" href="config/article/index?id=<?php echo $value['_id'] ?>" class="btn bg-gradient-primary m-0"><i class="ni ni-settings-gear-65"></i></a>
                                     </td>
                                     <td class="text-center align-middle">
-                                        <button class="btn bg-gradient-secondary m-0"><i class="ni ni-settings-gear-65"></i></button>
+                                        <a target="_blank" href="config/catalogue/index?id=<?php echo $value['_id'] ?>"  class="btn bg-gradient-secondary m-0"><i class="ni ni-settings-gear-65"></i></a>
                                     </td>
                                     <td class="align-middle text-center">
                                         <span class="text-secondary text-xs font-weight-bold"><?php echo isset($value['crawlUrlAt']) ? date('d-m-Y H:i:s', strtotime($value['crawlUrlAt'])) : '-' ?></span>
