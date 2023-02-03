@@ -55,9 +55,20 @@ export class CrawlerRepository {
 
   async getSiteCrawl(): Promise<Site[]> {
     try {
-      return await this.siteModel
-        .find({ status: STATUS_SITE.ACTIVE })
-        .sort({ platformId: ASC_FILTER });
+      return await this.siteModel.find({ status: STATUS_SITE.ACTIVE });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  /*
+   * get site
+   * @return {site[]}
+   */
+
+  async getUrlCrawlBySite(site: Site): Promise<Url[]> {
+    try {
+      return await this.urlModel.find({ siteId: site['_id'], status: STATUS_URL.ACTIVE });
     } catch (error) {
       console.log(error);
     }
@@ -81,15 +92,15 @@ export class CrawlerRepository {
    * @return {url[]}
    */
 
-  async getConfigCatalogueBySiteId(url: Url): Promise<any[]> {
+  async getConfigCatalogueBySiteId(site: Site): Promise<any[]> {
     try {
       return await this.catalogueConfigModel.aggregate([
-        { $match: { siteId: url.siteId } },
+        { $match: { siteId: site['_id'] } },
         {
           $group: {
             _id: '$group',
-            records: { $push: '$$ROOT' }
-          }
+            records: { $push: '$$ROOT' },
+          },
         },
       ]);
     } catch (error) {
@@ -102,18 +113,18 @@ export class CrawlerRepository {
    * @return {articleconfig[]}
    */
 
-  async getConfigArticleBySiteId(url: Url): Promise<any[]> {
+  async getConfigArticleBySiteId(site: Site): Promise<any[]> {
     try {
       // return await this.articleConfigModel.find({
       //   siteId: url.siteId,
       // });
       return await this.articleConfigModel.aggregate([
-        { $match: { siteId: url.siteId } },
+        { $match: { siteId: site['_id'] } },
         {
           $group: {
             _id: '$group',
-            records: { $push: '$$ROOT' }
-          }
+            records: { $push: '$$ROOT' },
+          },
         },
       ]);
     } catch (error) {
@@ -121,10 +132,7 @@ export class CrawlerRepository {
     }
   }
 
-  async upsertCatalogue(
-    url: Url,
-    result: any
-  ): Promise<boolean> {
+  async upsertCatalogue(url: Url, result: any): Promise<boolean> {
     try {
       await this.catalogueModel.updateOne(
         { urlId: url['_id'] },
@@ -147,10 +155,7 @@ export class CrawlerRepository {
     }
   }
 
-  async upsertArticle(
-    url: Url,
-    result: any,
-  ): Promise<boolean> {
+  async upsertArticle(url: Url, result: any): Promise<boolean> {
     try {
       await this.articleModel.updateOne(
         { urlId: url['_id'] },
@@ -160,8 +165,11 @@ export class CrawlerRepository {
             urlId: url['_id'],
             url: url.url,
             title: result.title,
-            content: (result.description ? result.description : '') + (result.content ? result.content : ''),
+            content:
+              (result.description ? result.description : '') +
+              (result.content ? result.content : ''),
             urlImages: result.image ? result.image : [],
+            rate: result.rate ? result.rate : [],
             status: STATUS_ARTICLE.ACTIVE,
           },
         },
@@ -213,6 +221,29 @@ export class CrawlerRepository {
   }
 
   /**
+   * Update status crawl url.
+   * @param {string} url Url.
+   * @return {boolean}
+   */
+  async updateStatusCrawlUrl(
+    url: Url,
+  ): Promise<boolean> {
+    try {
+      await this.urlModel.updateOne(
+        { _id: url['_id'] },
+        {
+          $set: {
+            isCrawl: true,
+          },
+        },
+      );
+      return true;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  /**
    * Update Site With Sitemap.
    * @param {string} url site.
    * @param {boolean} sitemap site.
@@ -247,9 +278,9 @@ export class CrawlerRepository {
    * @param {type} type sitemap.
    * @return {boolean}
    */
-  async urlsBulkWrite(sitemaps, site: Site): Promise<boolean> {
+  async urlsBulkWriteBySitemap(sitemaps, site: Site): Promise<boolean> {
     try {
-      const updateSitemap = sitemaps.map(url => ({
+      const updateSitemap = sitemaps.map((url) => ({
         updateOne: {
           filter: {
             $and: [
@@ -282,7 +313,7 @@ export class CrawlerRepository {
    */
   async urlsBulkWriteByBrowser(urls: [], site: Site): Promise<boolean> {
     try {
-      const updateSite = await urls.map(url => ({
+      const updateSite = await urls.map((url) => ({
         updateOne: {
           filter: { url: url },
           update: {
@@ -311,7 +342,7 @@ export class CrawlerRepository {
    */
   async sitemapBulkWrite(sitemaps, site: Site): Promise<boolean> {
     try {
-      const updateSitemap = sitemaps.map(url => ({
+      const updateSitemap = sitemaps.map((url) => ({
         updateOne: {
           filter: { url: url.loc ? url.loc.replace('.gz', '') : url },
           update: {

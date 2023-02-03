@@ -59,7 +59,13 @@
 
 
     </main>     
-
+    <div class="screen screen-loading d-none">
+        <div class="loader">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
     <?php echo view('backend/dashboard/common/setting') ?>
     <!-- Mainly scripts -->
     <?php  

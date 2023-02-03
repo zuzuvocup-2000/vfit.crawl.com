@@ -1,3 +1,25 @@
+<?php 
+    // $rate = [
+    //     'type' => 'PLUGIN',
+    //     'selector' => '.fb-comments iframe',
+    //     'comment'=> '._30o4',
+    //     'name'=> '.UFICommentActorName',
+    //     'view_more' => 'div._5o4h > button',
+    // ];
+    // $rate = [
+    //     'type' => 'CLICK',
+    //     'comment'=> '.wc-comment-text',
+    //     'name'=> '.wc-comment-author ',
+    //     'view_more' => '.wc-load-more-submit',
+    //     'class_hide' => '.wpdiscuz-comment-pagination',
+    // ];
+    $rate = [
+        'type' => 'SCROLL',
+        'comment'=> '#news-latest .article-summary',
+        'name'=> '#news-latest .article-title',
+    ];
+    echo json_encode($rate);
+ ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>

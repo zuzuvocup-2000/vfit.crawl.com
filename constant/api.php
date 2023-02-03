@@ -16,3 +16,8 @@ const API_WEBSITE_CREATE = 'http://localhost:3001/admin/sites';
 const API_WEBSITE_UPDATE = 'http://localhost:3001/admin/sites'; 
 const API_WEBSITE_GET_BY_URL = 'http://localhost:3001/admin/sites/site'; 
 const API_WEBSITE_GET_BY_ID = 'http://localhost:3001/admin/sites'; 
+
+const API_CRAWL_SITEMAP = 'http://localhost:3002/crawler'; 
+const API_CRAWL_JAVASCRIPT = 'http://localhost:3002/crawler/crawl-url-javascript'; 
+const API_CRAWL_NORMAL = 'http://localhost:3002/crawler/crawl-url-normal'; 
+

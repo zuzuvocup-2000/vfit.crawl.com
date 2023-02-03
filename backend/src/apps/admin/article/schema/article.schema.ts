@@ -23,7 +23,7 @@ export class Article {
   content: string;
 
   @Prop({ required: false })
-  review: string;
+  rate: [];
 
   @Prop({ required: false })
   urlImages: [];

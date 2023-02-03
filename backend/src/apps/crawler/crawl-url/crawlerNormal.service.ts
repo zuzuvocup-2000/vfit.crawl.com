@@ -5,7 +5,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import * as https from 'https';
 import { CHECK_URL_DISABLED } from 'src/common/constants/app';
 import { TYPE_SITE } from 'src/common/constants/enum';
-import { CrawlerRepository } from './crawler.repository';
+import { CrawlerRepository } from '../crawler.repository';
 
 @Injectable()
 export class CrawlerNormalService {
@@ -42,6 +42,7 @@ export class CrawlerNormalService {
     const responseSite = await this.getResponseAxios(param.url);
     if (responseSite && responseSite['status'] === HttpStatus.OK) {
       const getHrefs = require('get-hrefs');
+      console.log(param.url);
       const currentUrl = new URL(param.url);
       const urls = getHrefs(responseSite['data']);
       const uniqueHrefs = urls.filter((item, i, ar) => ar.indexOf(item) === i);

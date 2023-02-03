@@ -17,8 +17,8 @@
                         <li class="text-danger text-xs">TLDM: Thiết lập danh mục</li>
                     </ul>
                 </div>
-                <div class="wrap-search">
-                    <div class="d-flex justify-content-between">
+                <div class="wrap-search ">
+                    <div class="d-flex justify-content-between mb-3">
                         <select class="form-control select-website" style="width: 200px;">
                             <option value='<?php echo $url_dropdown.'20' ?>' <?php echo $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$url_dropdown.'20' == urldecode($actual_link) ? 'selected' : ''  ?>>20 bản ghi</option>
                             <option value='<?php echo $url_dropdown.'30' ?>' <?php echo $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$url_dropdown.'30' == urldecode($actual_link) ? 'selected' : ''  ?>>30 bản ghi</option>
@@ -34,6 +34,11 @@
                             <a href="/website/create" class="btn btn-primary m-0 ms-3">Thêm mới</a>
                         </div>
                     </div>  
+                    <!-- <div class="d-flex">
+                        <button type="button" class="btn bg-gradient-primary btn-crawl-url-sitemap" style="margin-right: 15px;">Thu thập URL Website Sitemap</button>
+                        <button type="button" class="btn bg-gradient-secondary btn-crawl-url-normal" style="margin-right: 15px;">Thu thập URL Website Normal</button>
+                        <button type="button" class="btn bg-gradient-info btn-crawl-url-javascript">Thu thập URL Website Javascript</button>
+                    </div>   -->
                 </div>
             </div>
             <div class="card-body px-0 pt-0 pb-0">
@@ -81,7 +86,7 @@
                                         <button class="btn bg-gradient-secondary m-0"><i class="ni ni-settings-gear-65"></i></button>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold"><?php echo date('d-m-Y H:i:s', strtotime($value['crawlUrlAt'])) ?></span>
+                                        <span class="text-secondary text-xs font-weight-bold"><?php echo isset($value['crawlUrlAt']) ? date('d-m-Y H:i:s', strtotime($value['crawlUrlAt'])) : '-' ?></span>
                                     </td>
                                     <td class="align-middle text-center text-sm">
                                         <?php if($value['status'] == 1){ ?>
@@ -92,6 +97,7 @@
                                     </td>
                                     <td class="align-middle">
                                         <div class="d-flex">
+                                            <a href="" class="btn bg-gradient-info mb-0" style="margin-right: 10px;"><i class="fa fa-globe" aria-hidden="true"></i></a>
                                             <a href="/website/update/<?php echo $value['_id'] ?>" class="btn bg-gradient-success mb-0" style="margin-right: 10px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                             <a class="btn bg-gradient-danger btn-delete-website mb-0" data-id="<?php echo $value['_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                         </div>
@@ -105,10 +111,10 @@
         </div>
     </div>
 </div>
+
 <script>
     $('.keyword-search').keyup(function(e){
-        if(e.keyCode == 13)
-        {
+        if(e.keyCode == 13){
             let val = $('.keyword-search').val();
             if(val != ''){
                 let url = '<?php echo $_SERVER['REDIRECT_URL'].'?filter={"url":{"$regex":"{keyword}"}}&page='.(isset($_GET['page']) ? $_GET['page'] : 0).'&limit='.(isset($_GET['limit']) ? $_GET['limit'] : 20) ?>';
@@ -126,10 +132,5 @@
         }else{
             window.location.href = '<?php echo $_SERVER['REDIRECT_URL'].'?filter={}&page='.(isset($_GET['page']) ? $_GET['page'] : 0).'&limit='.(isset($_GET['limit']) ? $_GET['limit'] : 20) ?>';
         }
-    })
-
-    $(document).on('change', '.select-website', function(){
-        let val = $(this).val();
-        window.location.href = val;
     })
 </script>

@@ -4,7 +4,7 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { CHECK_URL_DISABLED } from 'src/common/constants/app';
 import { TYPE_SITE } from 'src/common/constants/enum';
-import { CrawlerRepository } from './crawler.repository';
+import { CrawlerRepository } from '../crawler.repository';
 
 @Injectable()
 export class CrawlerJavascriptService {
@@ -19,7 +19,7 @@ export class CrawlerJavascriptService {
    */
   async crawlUrl(): Promise<unknown> {
     try {
-      const sites = await this.crawlerRepository.getSiteCrawlUrl(TYPE_SITE.JAVASCRIPT);
+      const sites = await this.crawlerRepository.getSiteCrawlUrl(TYPE_SITE.NORMAL);
       for (const site of sites) {
         const urls = await this.getAllUrlsByBrowser({
           index: 0,
@@ -66,6 +66,7 @@ export class CrawlerJavascriptService {
     await page.goto(param.url, {
       waitUntil: 'domcontentloaded',
     });
+    console.log(param.url);
     // Get all urls in current page
     const hrefs = await page.$$eval('a', as => as.map(a => a.href));
     const uniqueHrefs = hrefs.filter((item, i, ar) => ar.indexOf(item) === i);
@@ -86,7 +87,6 @@ export class CrawlerJavascriptService {
         lists.push(currentUrl.origin);
     }
     param.list = param.list.concat(lists).filter((item, i, ar) => ar.indexOf(item) === i);
-    console.log(param.list);
     await browser.close();
     if (param.index + 1 != param.list.length) {
       await this.getAllUrlsByBrowser({

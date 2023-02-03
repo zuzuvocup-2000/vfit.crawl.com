@@ -32,6 +32,7 @@ class WebsiteService{
          helper('text');
          return [
             'url' => $request->getPost('url'),
+            'type' => $request->getPost('type'),
             'typeCrawl' => $request->getPost('typeCrawl'),
             'status' => $request->getPost('status'),
          ];

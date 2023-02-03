@@ -5,19 +5,17 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Sitemap, SitemapSchema } from '../admin/sitemap/schema/sitemap.schema';
 import { Site, SiteSchema } from '../admin/site/schema/site.schema';
 import { HttpModule } from '@nestjs/axios';
-import { CronService } from './cron.service';
-import { CrawlerService } from './crawler.service';
+import { CrawlerService } from './crawl-data/crawler.service';
 import { CrawlerRepository } from './crawler.repository';
 import { CrawlerController } from './crawler.controller';
 import { Url, UrlSchema } from '../admin/sitemap/schema/url.schema';
-import { CrawlerSitemapService } from './crawlerSitemap.service';
+import { CrawlerSitemapService } from './crawl-url/crawlerSitemap.service';
 import { WriteFileExcelService } from './writeFileExcel.service';
 import { CatalogueConfig, CatalogueConfigSchema } from '../admin/config-catalogue/schema/catalogue-config.schema';
 import { ArticleConfig, ArticleConfigSchema } from '../admin/config-article/schema/article-config.schema';
 import { Catalogue, CatalogueSchema } from '../admin/catalogue/schema/catalogue.schema';
 import { Article, ArticleSchema } from '../admin/article/schema/article.schema';
-import { CrawlerJavascriptService } from './crawlerJavascript.service';
-import { CrawlerNormalService } from './crawlerNormal.service';
+import { CrawlerAllUrlsService } from './crawl-url/crawlerAllUrl.service';
 
 @Module({
   imports: [
@@ -36,11 +34,9 @@ import { CrawlerNormalService } from './crawlerNormal.service';
   ],
   controllers: [CrawlerController],
   providers: [
-    CronService,
     CrawlerService,
     CrawlerSitemapService,
-    CrawlerJavascriptService,
-    CrawlerNormalService,
+    CrawlerAllUrlsService,
     CrawlerRepository,
     WriteFileExcelService,
   ],

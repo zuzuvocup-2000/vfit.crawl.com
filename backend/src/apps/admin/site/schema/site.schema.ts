@@ -23,7 +23,7 @@ export class Site {
   @Prop({ required: false })
   isCrawl: boolean;
 
-  @Prop({ required: false, default: Date.now })
+  @Prop({ required: false })
   crawlUrlAt: Date;
 
   @Prop({ required: false, default: Date.now })

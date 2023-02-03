@@ -1,3 +1,10 @@
+
+
+$(document).on('change', '.select-website', function(){
+    let val = $(this).val();
+    window.location.href = val;
+})
+
 $(document).on('click','.btn-delete-website',function(){
 	let _this = $(this);
 	let id = _this.attr('data-id');
@@ -28,5 +35,50 @@ $(document).on('click','.btn-delete-website',function(){
 			swal("Hủy bỏ", "Thao tác bị hủy bỏ", "error");
 		}
 	});
+	return false;
+});
+
+$(document).on('click','.btn-crawl-url-sitemap',function(){
+	$('.screen-loading').removeClass('d-none')
+	let ajaxUrl = "website/crawl-sitemap";
+	$.ajax({
+		method: "POST",
+		url: ajaxUrl,
+		cache: false,
+		success: function(data){
+			$('.screen-loading').addClass('d-none')
+		}
+	});
+
+	return false;
+});
+
+$(document).on('click','.btn-crawl-url-normal',function(){
+	$('.screen-loading').removeClass('d-none')
+	let ajaxUrl = "website/crawl-normal";
+	$.ajax({
+		method: "POST",
+		url: ajaxUrl,
+		cache: false,
+		success: function(data){
+			$('.screen-loading').addClass('d-none')
+		}
+	});
+
+	return false;
+});
+
+$(document).on('click','.btn-crawl-url-javascript',function(){
+	$('.screen-loading').removeClass('d-none')
+	let ajaxUrl = "website/crawl-javascript";
+	$.ajax({
+		method: "POST",
+		url: ajaxUrl,
+		cache: false,
+		success: function(data){
+			$('.screen-loading').addClass('d-none')
+		}
+	});
+
 	return false;
 });

@@ -18,4 +18,19 @@ class Website extends BaseController{
 			echo json_encode($response);die();
 		}
 	}
+
+	// public function crawl_sitemap(){
+	// 	$this->data['website'] = $this->sendAPI(API_CRAWL_SITEMAP,'post');
+	// 	echo json_encode($this->data['website']);die();
+	// }
+
+	// public function crawl_normal(){
+	// 	$this->data['website'] = $this->sendAPI(API_CRAWL_NORMAL,'post');
+	// 	echo json_encode($this->data['website']);die();
+	// }
+
+	// public function crawl_javascript(){
+	// 	$this->data['website'] = $this->sendAPI(API_CRAWL_JAVASCRIPT,'post');
+	// 	echo json_encode($this->data['website']);die();
+	// }
 }

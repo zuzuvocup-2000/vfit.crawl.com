@@ -47,6 +47,9 @@ $routes->group('/website', ['filter' => 'auth'] , function($routes){
     $routes->add('create', 'Backend\Website\Website::create');
     $routes->add('update/([a-zA-Z0-9-]+)', 'Backend\Website\Website::update/$1');
     $routes->add('delete/([a-zA-Z0-9-]+)', 'Ajax\Website\Website::delete/$1');
+    $routes->add('crawl-sitemap', 'Ajax\Website\Website::crawl_sitemap');
+    $routes->add('crawl-normal', 'Ajax\Website\Website::crawl_normal');
+    $routes->add('crawl-javascript', 'Ajax\Website\Website::crawl_javascript');
 });
 
 /**

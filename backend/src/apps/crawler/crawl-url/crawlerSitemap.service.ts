@@ -6,8 +6,8 @@ import {
   STATUS_SITE_MAP,
 } from 'src/common/constants/app';
 import { toJson } from 'xml2json';
-import { Site } from '../admin/site/schema/site.schema';
-import { CrawlerRepository } from './crawler.repository';
+import { Site } from '../../admin/site/schema/site.schema';
+import { CrawlerRepository } from '../crawler.repository';
 import * as https from 'https';
 import { TYPE_SITE } from 'src/common/constants/enum';
 
@@ -170,7 +170,7 @@ export class CrawlerSitemapService {
    */
   async sitemapBulkWriteUrl(sitemaps, site: Site): Promise<void> {
     try {
-      await this.crawlerRepository.urlsBulkWrite( sitemaps, site );
+      await this.crawlerRepository.urlsBulkWriteBySitemap( sitemaps, site );
       console.log('upsert sitemap done');
     } catch (error) {
       console.log(error);

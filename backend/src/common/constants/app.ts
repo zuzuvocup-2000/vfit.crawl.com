@@ -33,6 +33,12 @@ export const STATUS_ARTICLE = {
   STATISTIC: 2,
 };
 
+export const STATUS_CATALOGUE = {
+  INACTIVE: 0,
+  ACTIVE: 1,
+  STATISTIC: 2,
+};
+
 export const CRAWL = {
   SITE_MAP: 'Sitemap: ',
   ROBOTS: 'robots.txt',
@@ -76,5 +82,5 @@ export const JWT_CONSTANTS = {
   secret: 'vanhfithau',
 };
 
-export const CHECK_URL_DISABLED = ['javascript:void', '#', 'facebook.com', 'youtube.com'];
+export const CHECK_URL_DISABLED = ['javascript:void', '#', 'facebook.com', 'youtube.com', '.pdf', 'google.com'];
 

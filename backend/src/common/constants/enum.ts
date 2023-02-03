@@ -32,11 +32,21 @@ export enum TYPE_CRAWL {
 export enum TYPE_SITE {
   SITEMAP = 'SITEMAP',
   NORMAL = 'NORMAL',
-  JAVASCRIPT = 'JAVASCRIPT',
 }
 
 export enum CRITERIA_TYPE_ENUM {
   CONTENT = 'CONTENT',
   RATE = 'RATE',
   IMAGE = 'IMAGE'
+}
+
+export enum TYPE_RATE {
+  PLUGIN = 'PLUGIN',
+  CLICK = 'CLICK',
+  SCROLL = 'SCROLL'
+}
+
+export enum TYPE_RATE_STOP {
+  HIDE = 'hide',
+  NONE = 'none'
 }
