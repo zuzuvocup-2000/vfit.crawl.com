@@ -30,7 +30,7 @@ class Website extends BaseController{
         			$session->setFlashdata('message-success', 'Thêm mới Url Website thành công!');
         			return redirect()->to(BASE_URL.'website/create');
         		}else{
-        			$session->setFlashdata('message-success', 'Có lỗi xảy ra xin vui lòng thử lại!');
+        			$session->setFlashdata('message-danger', 'Có lỗi xảy ra xin vui lòng thử lại!');
         			return redirect()->to(BASE_URL.'website/index');
         		}
 			}else{
@@ -56,7 +56,7 @@ class Website extends BaseController{
         			$session->setFlashdata('message-success', 'Cập nhật Url Website thành công!');
         			return redirect()->to(BASE_URL.'website/index');
         		}else{
-        			$session->setFlashdata('message-success', 'Có lỗi xảy ra xin vui lòng thử lại!');
+        			$session->setFlashdata('message-danger', 'Có lỗi xảy ra xin vui lòng thử lại!');
         			return redirect()->to(BASE_URL.'website/index');
         		}
 			}else{

@@ -12,7 +12,22 @@ class UserRules {
 
 	public function __construct(){
 		$this->client = \Config\Services::curlrequest();
+	}
 
+	public function unique_email(string $email = '', string $method = ''){
+		$headers = ['Authorization' => "Bearer ".session()->get('accessToken')];
+		$result = $this->client->get(API_GET_CURRENT_USER_BY_EMAIL.$email,['headers' => $headers,'debug' => true]);
+		$body = json_decode($result->getBody(),true);
+		if(isset($body) && is_array($body) && count($body)){
+			if($method == 'update'){
+				if($email == $_POST['email_original']){
+					return true;
+				}
+				return false;
+			}
+			return false;
+		}
+		return true;
 	}
 
 	public function check_email(string $email = ''){
@@ -22,6 +37,18 @@ class UserRules {
 		$result = $this->client->post(API_GET_USER_BY_EMAIL,['debug' => true,'json' => $param]);
 		$body = json_decode($result->getBody(),true);
 		if(isset($body) && $body['code'] == 200){
+			return true;
+		}
+		return false;
+	}
+
+	public function check_email_exist(string $email = ''){
+		$param = [
+			'email' => $email
+		];
+		$result = $this->client->post(API_GET_USER_BY_EMAIL,['debug' => true,'json' => $param]);
+		$body = json_decode($result->getBody(),true);
+		if(isset($body) && $body['code'] == 400){
 			return true;
 		}
 		return false;

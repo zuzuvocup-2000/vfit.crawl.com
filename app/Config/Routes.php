@@ -38,7 +38,9 @@ $routes->get('/dashboard', 'Backend\Dashboard\Dashboard::index',['filter' => 'au
 
 
 // User
-$routes->get('/profile', 'Backend/User/User::profile',['filter' => 'auth' ]);
+$routes->get('profile', 'Backend/User/User::profile',['filter' => 'auth' ]);
+$routes->post('profile/change-password', 'Backend\User\User::change_pass',['filter' => 'auth' ]);
+$routes->post('profile/update', 'Backend\User\User::update_user',['filter' => 'auth' ]);
 
 // Website
 $routes->group('/website', ['filter' => 'auth'] , function($routes){
@@ -67,6 +69,15 @@ $routes->group('/config', ['filter' => 'auth'] , function($routes){
     $routes->add('article/create', 'Backend\Config\Article::create');
     $routes->add('catalogue/index', 'Backend\Config\Catalogue::index');
     $routes->add('catalogue/create', 'Backend\Config\Catalogue::create');
+});
+
+// User
+$routes->group('/user', ['filter' => 'auth'] , function($routes){
+    $routes->add('/', 'Backend\User\User::index');
+    $routes->add('index', 'Backend\User\User::index');
+    $routes->add('create', 'Backend\User\User::create');
+    $routes->add('update/([a-zA-Z0-9-]+)', 'Backend\User\User::update/$1');
+    $routes->add('delete/([a-zA-Z0-9-]+)', 'Ajax\User\User::delete/$1');
 });
 
 /**

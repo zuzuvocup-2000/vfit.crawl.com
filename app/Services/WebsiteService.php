@@ -11,7 +11,7 @@ class WebsiteService{
    public function getListWebsite(){
       try{
          $headers = ['Authorization' => "Bearer ".session()->get('accessToken')];
-         $url = API_WEBSITE_LIST.'?filter='.(isset($_GET['filter']) ? $_GET['filter'] : '{}').'&page='.(isset($_GET['page']) ? $_GET['page'] : '0').'&limit='.(isset($_GET['limit']) ? $_GET['limit'] : '20');
+         $url = API_WEBSITE_LIST.'?keyword='.(isset($_GET['keyword']) ? $_GET['keyword'] : '').'&page='.(isset($_GET['page']) ? $_GET['page'] : '0').'&limit='.(isset($_GET['limit']) ? $_GET['limit'] : '20');
          $result = $this->client->get($url, [
             'debug' => true,
             'headers'=>$headers,
