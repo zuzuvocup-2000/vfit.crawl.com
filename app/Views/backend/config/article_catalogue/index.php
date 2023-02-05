@@ -9,7 +9,7 @@
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0 mb-3">
-                <h6>Danh sách bài viết</h6>
+                <h6>Danh sách danh mục</h6>
                 <div class="note-table">
                     <div class="note-table-title text-xs">Chú thích:</div>
                     <ul>
@@ -31,7 +31,7 @@
                                 <input type="text" name="keyword" class="form-control keyword-search" placeholder="Nhập từ khóa để tìm kiếm..." aria-label="Nhập từ khóa để tìm kiếm" aria-describedby="button-addon2" value="<?php echo isset($filter['url']['$regex']) ? $filter['url']['$regex'] : '' ?>">
                                 <button class="btn btn-outline-primary mb-0 btn-click-search-website" type="submit" id="button-addon2">Tìm kiếm</button>
                             </div>
-                            <a href="config/article/create" class="btn btn-primary m-0 ms-3">Thêm mới</a>
+                            <a href="config/catalogue/create" class="btn btn-primary m-0 ms-3">Thêm mới</a>
                         </div>
                     </div>  
                     
@@ -45,8 +45,8 @@
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 40px;"></th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Bộ chọn HTML</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center" style="width: 120px;">Loại Bài Viết</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center" style="width: 120px;">Nhóm Bài Viết</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center" style="width: 120px;">Loại Danh mục</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center" style="width: 120px;">Nhóm Danh mục</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center" style="width: 120px;">Website gốc</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="width: 80px;">TLBV</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="width: 80px;">TLDM</th>
