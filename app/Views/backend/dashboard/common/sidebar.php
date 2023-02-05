@@ -1,7 +1,7 @@
 <?php
-    $uri = service('uri');
-    $uri = current_url(true);
-    $uriSegment = $uri->getSegment(1);
+$uri = service('uri');
+$uri = current_url(true);
+$uriSegment = $uri->getSegment(1);
 ?>
 <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
     <div class="sidenav-header">
@@ -47,6 +47,14 @@
                     <span class="nav-link-text ms-1">Quản lý tiêu chí</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link <?php echo $uriSegment == 'user' ? 'active' : '' ?>" href="user/index">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa fa-users text-warning text-sm opacity-10" aria-hidden="true"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Quản lý tài khoản</span>
+                </a>
+            </li>
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Tài khoản</h6>
             </li>
@@ -59,5 +67,8 @@
                 </a>
             </li>
         </ul>
+    </div>
+    <div class="sidenav-footer mx-3 ">
+        <a href="https://www.creative-tim.com/learning-lab/bootstrap/license/argon-dashboard" target="_blank" class="btn btn-dark btn-sm w-100 mb-3">Documentation</a>
     </div>
 </aside>

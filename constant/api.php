@@ -9,7 +9,11 @@ const API_RESET_PASSWORD = 'http://localhost:3001/admin/auth/reset-password';
 const API_GET_CURRENT_USER_BY_EMAIL = 'http://localhost:3001/admin/users/'; 
 // http://localhost:3001/admin/users/vanh.dev2000@gmail.com
 const API_SIGNUP = 'http://localhost:3001/admin/users/signup'; 
-const API_USER_LIST = 'http://localhost:3001/admin/users'; 
+const API_USER_GET_BY_ID = 'http://localhost:3001/admin/users/index'; 
+const API_USER_LIST = 'http://localhost:3001/admin/users/list'; 
+const API_USER_CREATE = 'http://localhost:3001/admin/users/create'; 
+const API_CHANGE_PASSWORD = 'http://localhost:3001/admin/users/change-password'; 
+const API_UPDATE_USER = 'http://localhost:3001/admin/users/update-user';
 
 const API_WEBSITE_LIST = 'http://localhost:3001/admin/sites'; 
 const API_WEBSITE_CREATE = 'http://localhost:3001/admin/sites'; 

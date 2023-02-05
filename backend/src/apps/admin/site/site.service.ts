@@ -15,8 +15,8 @@ import * as https from 'https';
 import { WorkSheet } from 'xlsx';
 import { HttpService } from '@nestjs/axios';
 import { STATUS_SITE } from 'src/common/constants/app';
-import { GetFilterDto } from '../../../common/params/get-filter.dto';
 import { UpdateSiteRequest } from './dto/update-site.request';
+import { GetPaginateDto } from 'src/common/params/get-paginate.dto';
 
 @Injectable()
 export class SiteService {
@@ -37,13 +37,17 @@ export class SiteService {
    * @return array Site
    * */
   async paginate(
-    getFilterDto: GetFilterDto,
+    getPaginateDto: GetPaginateDto,
   ): Promise<CollectionResponse<SiteDocument>> {
     const collector = new DocumentCollector<SiteDocument>(this.siteModel);
     return collector.find({
-      filter: JSON.parse(getFilterDto.filter) || {},
-      page: getFilterDto.page,
-      limit: getFilterDto.limit,
+      filter: {
+        $or: [
+          { url: { $regex: new RegExp(getPaginateDto.keyword, "i") } },
+        ]
+      },
+      page: getPaginateDto.page,
+      limit: getPaginateDto.limit,
     });
   }
 

@@ -4,6 +4,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
 use App\Models\UserModel;
+use Config\Encryption;
 
 class Auth implements FilterInterface
 {

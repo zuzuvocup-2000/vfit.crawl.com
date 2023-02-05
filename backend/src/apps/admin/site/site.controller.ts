@@ -35,6 +35,7 @@ import { ERROR_MESSAGE } from 'src/common/constants/messages/error';
 import { SuccessSiteResponse } from './dto/success-site.response';
 import { UpdateSiteRequest } from './dto/update-site.request';
 import { Request } from 'express';
+import { GetPaginateDto } from 'src/common/params/get-paginate.dto';
 
 @Controller('sites')
 @ApiTags('Site')
@@ -75,8 +76,8 @@ export class SiteController {
     type: BadRequestResponse,
   })
   @ApiUnauthorizedResponse({ type: UnauthorizedResponse })
-  async filterHandle(@Query() getFilterDto: GetFilterDto) {
-    const website = await this.siteService.paginate(getFilterDto);
+  async filterHandle(@Query() getPaginateDto: GetPaginateDto) {
+    const website = await this.siteService.paginate(getPaginateDto);
     return {
       status: CODES.SUCCESS,
       message: SUCCESS_MESSAGE.DEFAULT,

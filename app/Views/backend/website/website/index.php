@@ -1,10 +1,3 @@
-<?php 
-    $actual_link = "$_SERVER[REQUEST_SCHEME]://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-    if(isset($_GET['filter'])){
-        $filter = json_decode($_GET['filter'],true);
-    }
-?>
-<?php $url_dropdown = $_SERVER['REDIRECT_URL'].'?filter='.(isset($_GET['filter']) ? $_GET['filter'] : '{}').'&page='.(isset($_GET['page']) ? $_GET['page'] : 0).'&limit=' ?>
 <div class="row">
     <div class="col-12">
         <div class="card mb-4">
@@ -18,27 +11,22 @@
                     </ul>
                 </div>
                 <div class="wrap-search ">
-                    <div class="d-flex justify-content-between mb-3">
-                        <select class="form-control select-website" style="width: 200px;">
-                            <option value='<?php echo $url_dropdown.'20' ?>' <?php echo $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$url_dropdown.'20' == urldecode($actual_link) ? 'selected' : ''  ?>>20 bản ghi</option>
-                            <option value='<?php echo $url_dropdown.'30' ?>' <?php echo $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$url_dropdown.'30' == urldecode($actual_link) ? 'selected' : ''  ?>>30 bản ghi</option>
-                            <option value='<?php echo $url_dropdown.'40' ?>' <?php echo $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$url_dropdown.'40' == urldecode($actual_link) ? 'selected' : ''  ?>>40 bản ghi</option>
-                            <option value='<?php echo $url_dropdown.'50' ?>' <?php echo $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$url_dropdown.'50' == urldecode($actual_link) ? 'selected' : ''  ?>>50 bản ghi</option>
-                            <option value='<?php echo $url_dropdown.'100' ?>' <?php echo $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$url_dropdown.'100' == urldecode($actual_link) ? 'selected' : ''  ?>>100 bản ghi</option>
+                    <form class="d-flex justify-content-between mb-3" action="" method="get">
+                        <select class="form-control select-website" style="width: 200px;" name="limit">
+                            <option value='20' <?php echo isset($_GET['limit']) && $_GET['limit'] == '20' ? 'selected' : ''  ?>>20 bản ghi</option>
+                            <option value='30' <?php echo isset($_GET['limit']) && $_GET['limit'] == '30' ? 'selected' : ''  ?>>30 bản ghi</option>
+                            <option value='40' <?php echo isset($_GET['limit']) && $_GET['limit'] == '40' ? 'selected' : ''  ?>>40 bản ghi</option>
+                            <option value='50' <?php echo isset($_GET['limit']) && $_GET['limit'] == '50' ? 'selected' : ''  ?>>50 bản ghi</option>
+                            <option value='100' <?php echo isset($_GET['limit']) && $_GET['limit'] == '100' ? 'selected' : ''  ?>>100 bản ghi</option>
                         </select>
                         <div class="d-flex flex-middle">
                             <div class="input-group " style="width: 500px;">
-                                <input type="text" name="keyword" class="form-control keyword-search" placeholder="Nhập từ khóa để tìm kiếm..." aria-label="Nhập từ khóa để tìm kiếm" aria-describedby="button-addon2" value="<?php echo isset($filter['url']['$regex']) ? $filter['url']['$regex'] : '' ?>">
+                                <input type="text" name="keyword" class="form-control keyword-search" placeholder="Nhập từ khóa để tìm kiếm..." aria-label="Nhập từ khóa để tìm kiếm" aria-describedby="button-addon2" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : '' ?>">
                                 <button class="btn btn-outline-primary mb-0 btn-click-search-website" type="submit" id="button-addon2">Tìm kiếm</button>
                             </div>
                             <a href="/website/create" class="btn btn-primary m-0 ms-3">Thêm mới</a>
                         </div>
-                    </div>  
-                    <!-- <div class="d-flex">
-                        <button type="button" class="btn bg-gradient-primary btn-crawl-url-sitemap" style="margin-right: 15px;">Thu thập URL Website Sitemap</button>
-                        <button type="button" class="btn bg-gradient-secondary btn-crawl-url-normal" style="margin-right: 15px;">Thu thập URL Website Normal</button>
-                        <button type="button" class="btn bg-gradient-info btn-crawl-url-javascript">Thu thập URL Website Javascript</button>
-                    </div>   -->
+                    </form>  
                 </div>
             </div>
             <div class="card-body px-0 pt-0 pb-0">
@@ -111,26 +99,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    $('.keyword-search').keyup(function(e){
-        if(e.keyCode == 13){
-            let val = $('.keyword-search').val();
-            if(val != ''){
-                let url = '<?php echo $_SERVER['REDIRECT_URL'].'?filter={"url":{"$regex":"{keyword}"}}&page='.(isset($_GET['page']) ? $_GET['page'] : 0).'&limit='.(isset($_GET['limit']) ? $_GET['limit'] : 20) ?>';
-                window.location.href = url.replace("{keyword}", val);
-            }else{
-                window.location.href = '<?php echo $_SERVER['REDIRECT_URL'].'?filter={}&page='.(isset($_GET['page']) ? $_GET['page'] : 0).'&limit='.(isset($_GET['limit']) ? $_GET['limit'] : 20) ?>';
-            }
-        }
-    });
-    $(document).on('click', '.btn-click-search-website', function(){
-        let val = $('.keyword-search').val();
-        if(val != ''){
-            let url = '<?php echo $_SERVER['REDIRECT_URL'].'?filter={"url":{"$regex":"{keyword}"}}&page='.(isset($_GET['page']) ? $_GET['page'] : 0).'&limit='.(isset($_GET['limit']) ? $_GET['limit'] : 20) ?>';
-            window.location.href = url.replace("{keyword}", val);
-        }else{
-            window.location.href = '<?php echo $_SERVER['REDIRECT_URL'].'?filter={}&page='.(isset($_GET['page']) ? $_GET['page'] : 0).'&limit='.(isset($_GET['limit']) ? $_GET['limit'] : 20) ?>';
-        }
-    })
-</script>
