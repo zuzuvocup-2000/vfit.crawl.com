@@ -3,15 +3,14 @@ namespace App\Filters;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
-use App\Models\UserModel;
-use Config\Encryption;
+// use App\Models\UserModel;
 
 class Auth implements FilterInterface
 {
 	protected $AutoloadModel;
     protected $auth;
 	public function __construct(){
-        $this->usermodel = new UserModel();
+        // $this->usermodel = new UserModel();
         helper(['mystring']);
 	}
     public function before(RequestInterface $request, $arguments = null)

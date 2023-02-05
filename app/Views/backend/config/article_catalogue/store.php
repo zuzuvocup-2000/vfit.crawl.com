@@ -31,15 +31,11 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Kiểu bài viết<span class="text-danger">(*)</span> </label>
+                            <label for="example-text-input" class="form-control-label">Kiểu danh mục<span class="text-danger">(*)</span> </label>
                             <?php  echo form_dropdown('dataType', [
-                                '' => 'Chọn loại bài viết',
+                                '' => 'Chọn loại danh mục',
                                 'TITLE' => 'TITLE',
-                                'DESCRIPTION' => 'DESCRIPTION',
-                                'CONTENT' => 'CONTENT',
-                                'RATE' => 'RATE',
-                                'IMAGE' => 'IMAGE',
-                                'CATALOGUE_TITLE' => 'CATALOGUE_TITLE',
+                                
                             ], set_value('type', (isset($article['data']['type']) ? $article['data']['type'] : '')), 'onfocus="focused(this)" onfocusout="defocused(this)" class="form-control"') ; ?>
                         </div>
                     </div>

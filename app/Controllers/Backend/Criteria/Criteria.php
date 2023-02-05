@@ -1,19 +1,21 @@
 <?php 
-namespace App\Controllers\Backend\Config;
+namespace App\Controllers\Backend\Criteria;
 use App\Controllers\BaseController;
 
-class Catalogue extends BaseController{
+class Criteria extends BaseController{
 
 	protected $data;
 
 	public function __construct(){
 		$this->data = [];
+		$this->websiteService = service('WebsiteService');
 	}
 
 	public function index(){
-		$this->data['title'] = 'Trang chủ';
-		$this->data['module'] = 'home';
-		$this->data['template'] = 'backend/config/article_catalogue/index';
+		$this->data['websiteList'] = $this->websiteService->getListWebsite();
+		$this->data['title'] = 'Danh sách Tiêu chí';
+		$this->data['module'] = 'criteria';
+		$this->data['template'] = 'backend/criteria/criteria/index';
 		return view('backend/dashboard/layout/home', $this->data);
 	}
 
@@ -36,9 +38,9 @@ class Catalogue extends BaseController{
 	        }
 		}
 
-		$this->data['title'] = 'Thêm mới Danh Mục';
-		$this->data['module'] = 'article_catalogue';
-		$this->data['template'] = 'backend/config/article_catalogue/store';
+		$this->data['title'] = 'Thêm mới Website';
+		$this->data['module'] = 'criteria';
+		$this->data['template'] = 'backend/criteria/criteria/store';
 		return view('backend/dashboard/layout/home', $this->data);
 	}
 

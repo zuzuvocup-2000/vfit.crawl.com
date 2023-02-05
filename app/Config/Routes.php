@@ -54,10 +54,21 @@ $routes->group('/website', ['filter' => 'auth'] , function($routes){
     $routes->add('crawl-javascript', 'Ajax\Website\Website::crawl_javascript');
 });
 
+//criteria
+$routes->group('/criteria', ['filter' => 'auth'] , function($routes){
+    $routes->add('/', 'Backend\Criteria\Criteria::index');
+    $routes->add('index', 'Backend\Criteria\Criteria::index');
+    $routes->add('create', 'Backend\Criteria\Criteria::create');
+   
+});
+
+
 // Config
 $routes->group('/config', ['filter' => 'auth'] , function($routes){
     $routes->add('article/index', 'Backend\Config\Article::index');
+    $routes->add('article/create', 'Backend\Config\Article::create');
     $routes->add('catalogue/index', 'Backend\Config\Catalogue::index');
+    $routes->add('catalogue/create', 'Backend\Config\Catalogue::create');
 });
 
 // User
