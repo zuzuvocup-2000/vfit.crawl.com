@@ -13,6 +13,7 @@ import {
 import { GetFilterDto } from 'src/common/params/get-filter.dto';
 import { CreateArticleConfigRequest } from './dto/create-article-config.request';
 import { UpdateArticleConfigRequest } from './dto/update-article-config.request';
+import { GetPaginateDto } from 'src/common/params/get-paginate.dto';
 
 @Injectable()
 export class ArticleConfigService {
@@ -21,6 +22,29 @@ export class ArticleConfigService {
     @InjectModel(ArticleConfig.name)
     private articleConfigModel: Model<ArticleConfigDocument>,
   ) {}
+
+  /**
+   * Api get list users
+   * @param filter
+   * @param page
+   * @param limit
+   * @return array User
+   * */
+  async paginateBySiteId(
+    id, getPaginateDto: GetPaginateDto
+  ): Promise<CollectionResponse<ArticleConfigDocument>> {
+    const collector = new DocumentCollector<ArticleConfigDocument>(this.articleConfigModel);
+    return collector.find({
+      filter: {
+        $or: [
+          { selector: { $regex: new RegExp(getPaginateDto.keyword, 'i') } },
+        ],
+        siteId: id
+      },
+      page: getPaginateDto.page,
+      limit: getPaginateDto.limit,
+    });
+  }
 
   /**
    * Api get list articleConfig

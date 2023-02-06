@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0 mb-3">
-                <h6>Danh sách Website</h6>
+                <h6><?php echo $title ?></h6>
                 <div class="note-table">
                     <div class="note-table-title text-xs">Chú thích:</div>
                     <ul>
@@ -68,10 +68,10 @@
                                         <?php echo $value['typeCrawl']  ?>
                                     </td>
                                     <td class="text-center align-middle">
-                                        <a target="_blank" href="config/article/index?id=<?php echo $value['_id'] ?>" class="btn bg-gradient-primary m-0"><i class="ni ni-settings-gear-65"></i></a>
+                                        <a href="config/article/index/<?php echo $value['_id'] ?>" class="btn bg-gradient-primary m-0"><i class="ni ni-settings-gear-65"></i></a>
                                     </td>
                                     <td class="text-center align-middle">
-                                        <a target="_blank" href="config/catalogue/index?id=<?php echo $value['_id'] ?>"  class="btn bg-gradient-secondary m-0"><i class="ni ni-settings-gear-65"></i></a>
+                                        <a href="config/catalogue/index/<?php echo $value['_id'] ?>"  class="btn bg-gradient-secondary m-0"><i class="ni ni-settings-gear-65"></i></a>
                                     </td>
                                     <td class="align-middle text-center">
                                         <span class="text-secondary text-xs font-weight-bold"><?php echo isset($value['crawlUrlAt']) ? date('d-m-Y H:i:s', strtotime($value['crawlUrlAt'])) : '-' ?></span>

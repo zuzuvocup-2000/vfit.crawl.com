@@ -2,10 +2,10 @@
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0 mb-3">
-                <h6>Danh sách Tài khoản</h6>
+                <h6><?php echo $title ?></h6>
                 <div class="wrap-search ">
                     <form class="d-flex justify-content-between mb-3" action="" method="get">
-                        <select class="form-control select-website" style="width: 200px;" name="limit">
+                        <select class="form-control select-user" style="width: 200px;" name="limit">
                             <option value='20' <?php echo isset($_GET['limit']) && $_GET['limit'] == '20' ? 'selected' : ''  ?>>20 bản ghi</option>
                             <option value='30' <?php echo isset($_GET['limit']) && $_GET['limit'] == '30' ? 'selected' : ''  ?>>30 bản ghi</option>
                             <option value='40' <?php echo isset($_GET['limit']) && $_GET['limit'] == '40' ? 'selected' : ''  ?>>40 bản ghi</option>
@@ -15,7 +15,7 @@
                         <div class="d-flex flex-middle">
                             <div class="input-group " style="width: 500px;">
                                 <input type="text" name="keyword" class="form-control keyword-search" placeholder="Nhập từ khóa để tìm kiếm..." aria-label="Nhập từ khóa để tìm kiếm" aria-describedby="button-addon2" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : '' ?>">
-                                <button class="btn btn-outline-primary mb-0 btn-click-search-website" type="submit" id="button-addon2">Tìm kiếm</button>
+                                <button class="btn btn-outline-primary mb-0 btn-click-search-user" type="submit" id="button-addon2">Tìm kiếm</button>
                             </div>
                             <a href="/user/create" class="btn btn-primary m-0 ms-3">Thêm mới</a>
                         </div>
@@ -57,7 +57,7 @@
                                     <td class="align-middle">
                                         <div class="d-flex">
                                             <a href="/user/update/<?php echo $value['_id'] ?>" class="btn bg-gradient-success mb-0" style="margin-right: 10px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                            <a class="btn bg-gradient-danger btn-delete-website mb-0" data-id="<?php echo $value['_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                            <a class="btn bg-gradient-danger btn-delete-user mb-0" data-id="<?php echo $value['_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                         </div>
                                     </td>
                                 </tr>

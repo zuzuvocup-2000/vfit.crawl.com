@@ -44,8 +44,8 @@ export class UserService {
     return collector.find({
       filter: {
         $or: [
-          { name: { $regex: new RegExp(getPaginateDto.keyword, "i") } },
-          { email: { $regex: new RegExp(getPaginateDto.keyword, "i") } }
+          { name: { $regex: new RegExp(getPaginateDto.keyword, 'i') } },
+          { email: { $regex: new RegExp(getPaginateDto.keyword, 'i') } }
         ]
       },
       page: getPaginateDto.page,
@@ -128,5 +128,13 @@ export class UserService {
 
   async findAll(): Promise<User[]> {
     return await this.userModel.find().exec();
+  }
+
+  /**
+   * Api delete user
+   * @params id
+   * */
+  async deleteById(id: string) {
+    return await this.userModel.findByIdAndRemove(id);
   }
 }

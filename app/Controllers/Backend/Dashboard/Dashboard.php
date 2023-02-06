@@ -16,4 +16,11 @@ class Dashboard extends BaseController{
 		$this->data['template'] = 'backend/dashboard/home/index';
 		return view('backend/dashboard/layout/home', $this->data);
 	}
+
+	public function support(){
+		$this->data['title'] = 'Hướng dẫn cài đặt';
+		$this->data['module'] = 'support';
+		$this->data['template'] = 'backend/dashboard/home/support';
+		return view('backend/dashboard/layout/home', $this->data);
+	}
 }

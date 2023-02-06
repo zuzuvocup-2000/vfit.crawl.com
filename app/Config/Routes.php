@@ -35,6 +35,7 @@ $routes->get(BACKEND_DIRECTORY, 'Backend\Authentication\Auth::login', ['filter' 
 $routes->match(['get','post'],'forgot', 'Backend\Authentication\Auth::forgot', ['filter' => 'login' ]);
 $routes->match(['get','post'],'verify', 'Backend\Authentication\Auth::verify', ['filter' => 'login' ]);
 $routes->get('/dashboard', 'Backend\Dashboard\Dashboard::index',['filter' => 'auth' ]);
+$routes->get('/support', 'Backend\Dashboard\Dashboard::support',['filter' => 'auth' ]);
 
 
 // User
@@ -65,8 +66,9 @@ $routes->group('/criteria', ['filter' => 'auth'] , function($routes){
 
 // Config
 $routes->group('/config', ['filter' => 'auth'] , function($routes){
-    $routes->add('article/index', 'Backend\Config\Article::index');
-    $routes->add('article/create', 'Backend\Config\Article::create');
+    $routes->add('article/index/([a-zA-Z0-9-]+)', 'Backend\Config\Article::index/$1');
+    $routes->add('article/create/([a-zA-Z0-9-]+)', 'Backend\Config\Article::create/$1');
+    $routes->add('article/update/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)', 'Backend\Config\Article::update/$1/$2');
     $routes->add('catalogue/index', 'Backend\Config\Catalogue::index');
     $routes->add('catalogue/create', 'Backend\Config\Catalogue::create');
 });

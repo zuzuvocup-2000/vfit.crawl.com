@@ -15,11 +15,19 @@ const API_USER_CREATE = 'http://localhost:3001/admin/users/create';
 const API_CHANGE_PASSWORD = 'http://localhost:3001/admin/users/change-password'; 
 const API_UPDATE_USER = 'http://localhost:3001/admin/users/update-user';
 
+
 const API_WEBSITE_LIST = 'http://localhost:3001/admin/sites'; 
 const API_WEBSITE_CREATE = 'http://localhost:3001/admin/sites'; 
 const API_WEBSITE_UPDATE = 'http://localhost:3001/admin/sites'; 
 const API_WEBSITE_GET_BY_URL = 'http://localhost:3001/admin/sites/site'; 
-const API_WEBSITE_GET_BY_ID = 'http://localhost:3001/admin/sites'; 
+const API_WEBSITE_GET_BY_ID = 'http://localhost:3001/admin/sites';
+
+const API_CONFIG_ARTICLE_LIST = 'http://localhost:3001/admin/article-config'; 
+const API_CONFIG_ARTICLE_CREATE = 'http://localhost:3001/admin/article-config'; 
+const API_CONFIG_ARTICLE_UPDATE = 'http://localhost:3001/admin/article-config'; 
+// const API_CONFIG_ARTICLE_GET_BY_URL = 'http://localhost:3001/admin/article-config/site'; 
+const API_CONFIG_ARTICLE_GET_BY_SITEID = 'http://localhost:3001/admin/article-config/list';  
+const API_CONFIG_ARTICLE_GET_BY_ID = 'http://localhost:3001/admin/article-config';  
 
 const API_CRAWL_SITEMAP = 'http://localhost:3002/crawler'; 
 const API_CRAWL_JAVASCRIPT = 'http://localhost:3002/crawler/crawl-url-javascript'; 

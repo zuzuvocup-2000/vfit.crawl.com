@@ -7,6 +7,7 @@ import {
   UseGuards,
   Query,
   HttpStatus,
+  Delete,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import {
@@ -117,5 +118,21 @@ export class UserController {
   @ApiResponse({ status: 200, type: CreateUserResponse })
   async updateUser(@Body() updateUserRequest: UpdateUserRequest) {
     return await this.userService.updateUser(updateUserRequest);
+  }
+
+  /**
+   * Api delete product config
+   * @params id
+   * */
+  @Delete(':id')
+  @ApiResponse({ status: HttpStatus.OK, type: SuccessUserResponse })
+  @ApiBadRequestResponse({
+    type: BadRequestResponse,
+  })
+  @UseGuards(AuthGuard('jwt'))
+  async delete(@Param('id') id: string) {
+    const deleteUser = await this.userService.deleteById(id);
+    if (!deleteUser) throw new Error(ERROR_MESSAGE.NOT_FOUND);
+    return new SuccessUserResponse(null);
   }
 }

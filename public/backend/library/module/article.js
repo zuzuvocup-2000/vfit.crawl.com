@@ -1,133 +1,182 @@
-var count = 0;
-
-$(document).ready(function(){
-	$(document).on('click','.delete-all', function(){
-		let id = [];
-		let _this = $(this);
-		$('.checkbox-item:checked').each(function(){
-			let _this = $(this);
-		 	id.push(_this.val());
-		});
-
-		if(id.length > 0){
-			swal({
-				title: "Hãy chắc chắn rằng bạn muốn thực hiện thao tác này?",
-				text: 'Xóa các Bài viết được chọn',
-				type: "warning",
-				showCancelButton: true,
-				confirmButtonColor: "#DD6B55",
-				confirmButtonText: "Thực hiện!",
-				cancelButtonText: "Hủy bỏ!",
-				closeOnConfirm: false,
-				closeOnCancel: false },
-			function (isConfirm) {
-				if (isConfirm) {
-					var formURL = 'ajax/dashboard/delete_all';
-					$.post(formURL, {
-						id: id, module: _this.attr('data-module')},
-						function(data){
-							if(data == 0){
-									sweet_error_alert('Có vấn đề xảy ra','Vui lòng thử lại')
-								}else{
-									for(let i = 0; i < id.length; i++){
-										$('#post-'+id[i]).hide().remove()				
-									}
-									swal("Xóa thành công!", "Các bản ghi đã được xóa khỏi danh sách.", "success");
-								}
-						});
-				} else {
-					swal("Hủy bỏ", "Thao tác bị hủy bỏ", "error");
-				}
-			});
-		}
-		else{
-			sweet_error_alert('Thông báo từ hệ thống!', 'Bạn phải chọn 1 bản ghi để thực hiện chức năng này');
-			return false;
-		}
-		return false;
-	});
-
-	$(document).on('click','.delete', function(){
-		let _this = $(this);
-
-		if(id.length > 0){
-			swal({
-				title: "Hãy chắc chắn rằng bạn muốn thực hiện thao tác này?",
-				text: 'Xóa Bài viết này. Dữ liệu sẽ không thể khôi phục!',
-				type: "warning",
-				showCancelButton: true,
-				confirmButtonColor: "#DD6B55",
-				confirmButtonText: "Thực hiện!",
-				cancelButtonText: "Hủy bỏ!",
-				closeOnConfirm: false,
-				closeOnCancel: false },
-			function (isConfirm) {
-				if (isConfirm) {
-					var formURL = 'ajax/article/deleteArt';
-					$.post(formURL, {
-						id: id, module: _this.attr('data-module')},
-						function(data){
-							if(data == 0){
-									sweet_error_alert('Có vấn đề xảy ra','Vui lòng thử lại')
-								}else{
-									swal("Xóa thành công!", "Bản ghi đã được xóa khỏi danh sách.", "success");
-									window.location.href = BASE_URL+'backend/article/article/index';
-								}
-						});
-				} else {
-					swal("Hủy bỏ", "Thao tác bị hủy bỏ", "error");
-				}
-			});
-		}
-		else{
-			sweet_error_alert('Thông báo từ hệ thống!', 'Bạn phải chọn 1 bản ghi để thực hiện chức năng này');
-			return false;
-		}
-		return false;
-	});
-
-	
-});
-$(document).on('click','.add-attr',function(){
+$(document).on('change', '.click-change-rate-dom', function(){
 	let _this = $(this);
-	count++;
-	render_attr();
+	let val = _this.val()
+	$('.wrap-selector-normal').remove()
+	$('.js-open-normal-rate .row').remove()
+	if(val == 'RATE'){
+		$('.js-open-normal-rate').append(add_wrap_rate_normal())
+	}else{
+		$('.wrap-selector-article').append(add_selector_normal())
+	}
 })
 
-function render_attr(){
-	let html ='';
-	var id = 'title_' + count;
+$(document).on('change', '.click-change-rate-type', function(){
+	let _this = $(this);
+	let val = _this.val()
+	$('.wrap-selector-normal, .wrap-selector-type-rate').remove()
+	$('.js-open-plugin-rate .row, .js-open-click-rate .row, .js-open-scroll-rate .row').remove()
+	if(val == 'RATE'){
+		$('.wrap-selector-article').append(add_selector_type_rate())
+	}else{
+		$('.wrap-selector-article').append(add_selector_normal())
+	}
+})
 
-	html = html + '<div class="ibox desc-more" style="opacity: 1;">';
-        html = html + '<div class="ibox-title ui-sortable-handle">';
-        	html = html + '<div class="uk-flex uk-flex-middle">';
-                html = html + '<div class="col-lg-8">';
-					html = html + '<input type="text" name="sub_content[title][]" class="form-control" value="" placeholder="Tiêu đề">';
-				html = html + '</div>';
-				html = html + '<div class="col-lg-4">';
-					html = html + '<div class="uk-flex uk-flex-middle uk-flex-space-between">';
-						html = html + '<a href="" title="" data-target="'+id+'" class="uploadMultiImage">Upload hình ảnh</a>';
-		                html = html + '<div class="ibox-tools">';
-		                    html = html + '<a class="collapse-link ui-sortable">';
-		                        html = html + '<i class="fa fa-chevron-up"></i>';
-		                    html = html + '</a>';
-		                    html = html + '<a class="close-link">';
-		                        html = html + '<i class="fa fa-times"></i>';
-		                    html = html + '</a>';
-		                html = html + '</div>';
-					html = html + '</div>';
-				html = html + '</div>';
-        	html = html + '</div>';
-        html = html + '</div>';
-        html = html + '<div class="ibox-content" style="">';
-        	html = html + '<div class="row">';
-                html = html + '<div class="col-lg-12" >';
-                	html = html + '<textarea name="sub_content[description][]" class="form-control ck-editor" id="'+id+'" placeholder="Mô tả"></textarea>';
-				html = html + '</div>';
-			html = html + '</div>	';
+$(document).on('change', '.selector-type-rate', function(){
+	let _this = $(this);
+	let val = _this.val()
+	$('.js-open-plugin-rate .row, .js-open-click-rate .row, .js-open-scroll-rate .row').remove()
+	switch (val) {
+		case 'PLUGIN':
+			$('.js-open-plugin-rate').append(add_wrap_rate_plugin())
+			break;
+		case 'SCROLL':
+			$('.js-open-scroll-rate').append(add_wrap_rate_scroll())
+			break;
+		case 'CLICK':
+			$('.js-open-click-rate').append(add_wrap_rate_click())
+			break;
+	}
+})
+
+function add_selector_normal(){
+	let html = '<div class="col-md-6 wrap-selector-normal">';
+        html =  html + '<div class="form-group">';
+            html =  html + '<label for="example-text-input" class="form-control-label">Bộ chọn HTML  <span class="text-danger">(*)</span></label>';
+            html =  html + '<input type="text" name="selector" value="" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">';
+        html =  html + '</div>';
+    html =  html + '</div>';
+
+    return html;
+}
+
+function add_selector_type_rate(){
+	let html = '';
+	html = html + '<div class="col-md-6 wrap-selector-type-rate">';
+        html = html + '<div class="form-group">';
+            html = html + '<label for="example-text-input" class="form-control-label">Loại đánh giá</label>';
+            html = html + '<select name="selector[type]" onfocus="focused(this)" onfocusout="defocused(this)" class="form-control selector-type-rate">';
+				html = html + '<option value="" selected="selected">Chọn loại đánh giá</option>';
+				html = html + '<option value="PLUGIN">PLUGIN</option>';
+				html = html + '<option value="CLICK">CLICK</option>';
+				html = html + '<option value="SCROLL">SCROLL</option>';
+			html = html + '</select>';
         html = html + '</div>';
     html = html + '</div>';
+    return html;
+}
 
-	$('.attr-more').prepend(html);
-	ckeditor5(id);
+function add_wrap_rate_plugin(){
+	let html = '';
+	html = html +'<div class="row">';
+	    html = html +'<p class="text-sm">';
+	        html = html +'<span class="text-uppercase ">Bộ chọn HTML cho loại thu thập đánh giá plugin</span>';
+	        html = html +'<span class="text-warning text-xs">Plugin bình luận Facebook</span>';
+	    html = html +'</p>';
+	    html = html +'<div class="col-md-6">';
+	        html = html +'<div class="form-group">';
+	            html = html +'<label for="example-text-input" class="form-control-label">Bộ chọn HTML để thu thập URL plugin Facebook  </label>';
+	            html = html +'<input type="text" name="selector[selector]" value=".fb-comments iframe" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">';
+	        html = html +'</div>';
+	    html = html +'</div>';
+	    html = html +'<div class="col-md-6">';
+	        html = html +'<div class="form-group">';
+	            html = html +'<label for="example-text-input" class="form-control-label">Bộ chọn HTML bình luận  </label>';
+	            html = html +'<input type="text" name="selector[comment]" value="._30o4" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">';
+	        html = html +'</div>';
+	    html = html +'</div>';
+	    html = html +'<div class="col-md-6">';
+	        html = html +'<div class="form-group">';
+	            html = html +'<label for="example-text-input" class="form-control-label">Bộ chọn HTML tên người bình luận  </label>';
+	            html = html +'<input type="text" name="selector[name]" value=".UFICommentActorName" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">';
+	        html = html +'</div>';
+	   	html = html +' </div>';
+	    html = html +'<div class="col-md-6">';
+	        html = html +'<div class="form-group">';
+	            html = html +'<label for="example-text-input" class="form-control-label">Bộ chọn HTML nút xem thêm  </label>';
+	            html = html +'<input type="text" name="selector[selector]" value="div._5o4h > button" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">';
+	        html = html +'</div>';
+	    html = html +'</div>';
+	html = html +'</div>';
+    return html;
+}
+
+function add_wrap_rate_click(){
+	let html = '';
+	html = html + '<div class="row">';
+	    html = html + '<p class="text-sm">';
+	        html = html + '<span class="text-uppercase ">Bộ chọn HTML cho loại thu thập đánh giá click</span>';
+	        html = html + '<span class="text-warning text-xs">Click để xem thêm bình luận</span>';
+	    html = html + '</p>';
+	    html = html + '<div class="col-md-6">';
+	        html = html + '<div class="form-group">';
+	            html = html + '<label for="example-text-input" class="form-control-label">Bộ chọn HTML bình luận  </label>';
+	            html = html + '<input type="text" name="selector[comment]" value="" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">';
+	        html = html + '</div>';
+	    html = html + '</div>';
+	    html = html + '<div class="col-md-6">';
+	        html = html + '<div class="form-group">';
+	            html = html + '<label for="example-text-input" class="form-control-label">Bộ chọn HTML tên người bình luận  </label>';
+	            html = html + '<input type="text" name="selector[name]" value="" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">';
+	        html = html + '</div>';
+	    html = html + '</div>';
+	    html = html + '<div class="col-md-6">';
+	        html = html + '<div class="form-group">';
+	            html = html + '<label for="example-text-input" class="form-control-label">Bộ chọn HTML nút xem thêm  </label>';
+	            html = html + '<input type="text" name="selector[selector]" value="" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">';
+	        html = html + '</div>';
+	    html = html + '</div>';
+	    html = html + '<div class="col-md-6">';
+	        html = html + '<div class="form-group">';
+	            html = html + '<label for="example-text-input" class="form-control-label">Bộ chọn HTML sự kiện ẩn hoặc loại bỏ  </label>';
+	            html = html + '<input type="text" name="selector[class_hide]" value="" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">';
+	        html = html + '</div>';
+	    html = html + '</div>';
+	html = html + '</div>';
+	return html;
+}
+
+function add_wrap_rate_scroll(){
+	let html = '';
+	html = html + '<div class="row">';
+	    html = html + '<p class="text-sm">';
+	        html = html + '<span class="text-uppercase ">Bộ chọn HTML cho loại thu thập đánh giá scroll</span>';
+	        html = html + '<span class="text-warning text-xs">Scroll để xem thêm bình luận</span>';
+	    html = html + '</p>';
+	    html = html + '<div class="col-md-6">';
+	        html = html + '<div class="form-group">';
+	            html = html + '<label for="example-text-input" class="form-control-label">Bộ chọn HTML bình luận  </label>';
+	            html = html + '<input type="text" name="selector[comment]" value="" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">';
+	        html = html + '</div>';
+	    html = html + '</div>';
+	    html = html + '<div class="col-md-6">';
+	        html = html + '<div class="form-group">';
+	            html = html + '<label for="example-text-input" class="form-control-label">Bộ chọn HTML tên người bình luận  </label>';
+	            html = html + '<input type="text" name="selector[name]" value="" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">';
+	        html = html + '</div>';
+	    html = html + '</div>';
+	html = html + '</div>';
+	return html;
+}
+
+function add_wrap_rate_normal(){
+	let html = '';
+	html = html + '<div class="row">';
+	    html = html + '<p class="text-sm">';
+	        html = html + '<span class="text-uppercase ">Bộ chọn HTML cho loại thu thập đánh giá DOM</span>';
+	    html = html + '</p>';
+	    html = html + '<div class="col-md-6">';
+	        html = html + '<div class="form-group">';
+	            html = html + '<label for="example-text-input" class="form-control-label">Bộ chọn HTML bình luận  </label>';
+	            html = html + '<input type="text" name="selector[comment]" value="" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">';
+	        html = html + '</div>';
+	    html = html + '</div>';
+	    html = html + '<div class="col-md-6">';
+	        html = html + '<div class="form-group">';
+	            html = html + '<label for="example-text-input" class="form-control-label">Bộ chọn HTML tên người bình luận  </label>';
+	            html = html + '<input type="text" name="selector[name]" value="" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">';
+	        html = html + '</div>';
+	    html = html + '</div>';
+	html = html + '</div>';
+	return html;
 }

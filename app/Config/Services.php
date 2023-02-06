@@ -39,4 +39,18 @@ class Services extends CoreServices{
         }
         return new \App\Services\WebsiteService($param);
     }
+
+    public static function ConfigArticleService($param = [], $getShared = true){
+        if ($getShared){
+            return static::getSharedInstance('ConfigArticleService', $param);
+        }
+        return new \App\Services\ConfigArticleService($param);
+    }
+
+    public static function ConfigCatalogueService($param = [], $getShared = true){
+        if ($getShared){
+            return static::getSharedInstance('ConfigCatalogueService', $param);
+        }
+        return new \App\Services\ConfigCatalogueService($param);
+    }
 }

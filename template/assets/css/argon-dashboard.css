@@ -27005,3 +27005,5 @@ pre[class*="language-"] {
     top: 0;
   }
 }
+
+.img-scaledown{display:block;width:100%;height:100%}.img-scaledown img{display:block;width:100%;height:100%;object-fit:scale-down}

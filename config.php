@@ -24,3 +24,5 @@ define('VFIT_USER', '');
 define('VFIT_PASS', '');
 define('VFIT_NAME', 'crawl-data');
 define('VFIT_AUTH_REQUIRED', false);
+
+

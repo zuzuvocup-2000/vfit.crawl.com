@@ -23,13 +23,16 @@ import { ERROR_MESSAGE } from 'src/common/constants/messages/error';
 import { GetFilterDto } from './dto/get-filter.dto';
 import { SuccessArticleConfigResponse } from './dto/success-article-config.response';
 import { UpdateArticleConfigRequest } from './dto/update-article-config.request';
+import { GetPaginateDto } from 'src/common/params/get-paginate.dto';
+import { CODES } from 'src/common/constants/code';
+import { SUCCESS_MESSAGE } from 'src/common/constants/messages/success';
 
 @Controller('article-config')
 export class ArticleConfigController {
   constructor(private readonly articleConfigService: ArticleConfigService) {}
 
   /**
-   * Api get list article config
+   * Api get /:id article config
    * @param filter
    * @param page
    * @param limit
@@ -47,6 +50,34 @@ export class ArticleConfigController {
         getFilterDto,
       );
       return new SuccessArticleConfigResponse(articleConfigs);
+    } catch (error) {
+      throw new Error(ERROR_MESSAGE.BAD_REQUEST);
+    }
+  }
+
+  /**
+   * Api get list article config by id site
+   * @param filter
+   * @param page
+   * @param limit
+   * @return array Site
+   * */
+  @Get('list/:id')
+  @ApiResponse({ status: HttpStatus.OK, type: SuccessArticleConfigResponse })
+  @ApiBadRequestResponse({
+    type: BadRequestResponse,
+  })
+  @ApiUnauthorizedResponse({ type: UnauthorizedResponse })
+  async filterListBySiteId(@Query() GetPaginateDto: GetPaginateDto, @Param('id') id: string) {
+    try {
+      const articleConfigs = await this.articleConfigService.paginateBySiteId(
+        id, GetPaginateDto
+      );
+      return {
+        status: CODES.SUCCESS,
+        message: SUCCESS_MESSAGE.DEFAULT,
+        ...articleConfigs,
+      };
     } catch (error) {
       throw new Error(ERROR_MESSAGE.BAD_REQUEST);
     }
