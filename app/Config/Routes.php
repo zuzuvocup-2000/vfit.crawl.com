@@ -48,6 +48,8 @@ $routes->group('/website', ['filter' => 'auth'] , function($routes){
     $routes->add('/', 'Backend\Website\Website::index');
     $routes->add('index', 'Backend\Website\Website::index');
     $routes->add('create', 'Backend\Website\Website::create');
+    $routes->add('url/([a-zA-Z0-9-]+)', 'Backend\Website\Website::url/$1');
+    $routes->add('url/update-status/([a-zA-Z0-9-]+)', 'Backend\Website\Website::update_status/$1');
     $routes->add('update/([a-zA-Z0-9-]+)', 'Backend\Website\Website::update/$1');
     $routes->add('delete/([a-zA-Z0-9-]+)', 'Ajax\Website\Website::delete/$1');
     $routes->add('crawl-sitemap', 'Ajax\Website\Website::crawl_sitemap');
@@ -60,17 +62,25 @@ $routes->group('/criteria', ['filter' => 'auth'] , function($routes){
     $routes->add('/', 'Backend\Criteria\Criteria::index');
     $routes->add('index', 'Backend\Criteria\Criteria::index');
     $routes->add('create', 'Backend\Criteria\Criteria::create');
-   
+    $routes->add('update/([a-zA-Z0-9-]+)', 'Backend\Criteria\Criteria::update/$1');
 });
 
+//criteria
+$routes->group('/statistic', ['filter' => 'auth'] , function($routes){
+    $routes->add('list', 'Backend\Statistic\Statistic::index');
+});
 
 // Config
 $routes->group('/config', ['filter' => 'auth'] , function($routes){
     $routes->add('article/index/([a-zA-Z0-9-]+)', 'Backend\Config\Article::index/$1');
     $routes->add('article/create/([a-zA-Z0-9-]+)', 'Backend\Config\Article::create/$1');
     $routes->add('article/update/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)', 'Backend\Config\Article::update/$1/$2');
-    $routes->add('catalogue/index', 'Backend\Config\Catalogue::index');
-    $routes->add('catalogue/create', 'Backend\Config\Catalogue::create');
+    $routes->add('article/delete/([a-zA-Z0-9-]+)', 'Backend\Config\Article::delete/$1');
+    
+    $routes->add('catalogue/index/([a-zA-Z0-9-]+)', 'Backend\Config\Catalogue::index/$1');
+    $routes->add('catalogue/create/([a-zA-Z0-9-]+)', 'Backend\Config\Catalogue::create/$1');
+    $routes->add('catalogue/update/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)', 'Backend\Config\Catalogue::update/$1/$2');
+    $routes->add('catalogue/delete/([a-zA-Z0-9-]+)', 'Backend\Config\Catalogue::delete/$1');
 });
 
 // User

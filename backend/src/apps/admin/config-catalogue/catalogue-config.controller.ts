@@ -23,13 +23,16 @@ import { ERROR_MESSAGE } from 'src/common/constants/messages/error';
 import { GetFilterDto } from './dto/get-filter.dto';
 import { SuccessCatalogueConfigResponse } from './dto/success-catalogue-config.response';
 import { UpdateCatalogueConfigRequest } from './dto/update-catalogue-config.request';
+import { GetPaginateDto } from 'src/common/params/get-paginate.dto';
+import { CODES } from 'src/common/constants/code';
+import { SUCCESS_MESSAGE } from 'src/common/constants/messages/success';
 
 @Controller('catalogue-config')
 export class CatalogueConfigController {
   constructor(private readonly catalogueConfigService: CatalogueConfigService) {}
 
   /**
-   * Api get list catalogue config
+   * Api get /:id catalogue config
    * @param filter
    * @param page
    * @param limit
@@ -47,6 +50,34 @@ export class CatalogueConfigController {
         getFilterDto,
       );
       return new SuccessCatalogueConfigResponse(catalogueConfigs);
+    } catch (error) {
+      throw new Error(ERROR_MESSAGE.BAD_REQUEST);
+    }
+  }
+
+  /**
+   * Api get list catalogue config by id site
+   * @param filter
+   * @param page
+   * @param limit
+   * @return array Site
+   * */
+  @Get('list/:id')
+  @ApiResponse({ status: HttpStatus.OK, type: SuccessCatalogueConfigResponse })
+  @ApiBadRequestResponse({
+    type: BadRequestResponse,
+  })
+  @ApiUnauthorizedResponse({ type: UnauthorizedResponse })
+  async filterListBySiteId(@Query() GetPaginateDto: GetPaginateDto, @Param('id') id: string) {
+    try {
+      const catalogueConfigs = await this.catalogueConfigService.paginateBySiteId(
+        id, GetPaginateDto
+      );
+      return {
+        status: CODES.SUCCESS,
+        message: SUCCESS_MESSAGE.DEFAULT,
+        ...catalogueConfigs,
+      };
     } catch (error) {
       throw new Error(ERROR_MESSAGE.BAD_REQUEST);
     }
@@ -93,7 +124,7 @@ export class CatalogueConfigController {
   /**
    * Api edit catalogue config
    * @params id
-   * @return catalogueConfig
+   * @return CatalogueConfig
    * */
   @Put(':id')
   @ApiResponse({ status: HttpStatus.OK, type: SuccessCatalogueConfigResponse })

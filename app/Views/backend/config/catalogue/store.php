@@ -13,20 +13,8 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Loại Website <span class="text-danger">(*)</span> </label>
-                            <span class="text-warning text-xs ">Dùng để thu thập toàn bộ URL</span>
-                            <?php  echo form_dropdown('type', [
-                                '' => 'Chọn loại Website',
-                                'SITEMAP' => 'Website có Sitemap',
-                                'NORMAL' => 'Website không có Sitemap',
-                            ], set_value('type', (isset($article['data']['type']) ? $article['data']['type'] : '')), 'onfocus="focused(this)" onfocusout="defocused(this)" class="form-control"') ; ?>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
                             <label for="example-text-input" class="form-control-label">Tiêu đề  <span class="text-danger">(*)</span></label>
-                            <?php echo form_input('website', validate_input(set_value('url', (isset($article['data']['url'])) ? $article['data']['url'] : '')), 'class="form-control" onfocus="focused(this)" onfocusout="defocused(this)"'); ?>
-                            <?php echo form_hidden('website_original ', (isset($article['data']['url']) ? $article['data']['url'] : ''), 'class="form-control" '); ?>
+                            <?php echo form_input('selector', validate_input(set_value('selector', (isset($catalogue['data']['selector'])) ? $catalogue['data']['selector'] : '')), 'class="form-control" onfocus="focused(this)" onfocusout="defocused(this)"'); ?>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -36,7 +24,7 @@
                                 '' => 'Chọn loại danh mục',
                                 'TITLE' => 'TITLE',
                                 
-                            ], set_value('type', (isset($article['data']['type']) ? $article['data']['type'] : '')), 'onfocus="focused(this)" onfocusout="defocused(this)" class="form-control"') ; ?>
+                            ], set_value('dataType', (isset($catalogue['data']['dataType']) ? $catalogue['data']['dataType'] : '')), 'onfocus="focused(this)" onfocusout="defocused(this)" class="form-control"') ; ?>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -54,7 +42,7 @@
                                 '8' => '8',
                                 '9' => '9',
                                 '10' => '10',
-                            ], set_value('typeCrawl', (isset($article['data']['typeCrawl']) ? $article['data']['typeCrawl'] : '')), 'onfocus="focused(this)" onfocusout="defocused(this)" class="form-control"') ; ?>
+                            ], set_value('group', (isset($catalogue['data']['group']) ? $catalogue['data']['group'] : '')), 'onfocus="focused(this)" onfocusout="defocused(this)" class="form-control"') ; ?>
                         </div>
                     </div>
                     <!--  -->

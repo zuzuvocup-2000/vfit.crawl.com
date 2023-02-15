@@ -31,6 +31,9 @@ export class Article {
   @Prop({ required: true })
   status: number;
 
+  @Prop({ required: false, default: 0 })
+  threadNumber: number;
+
   @Prop({ required: false, default: Date.now })
   createdAt: Date;
 }

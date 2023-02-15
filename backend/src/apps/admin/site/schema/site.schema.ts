@@ -23,6 +23,9 @@ export class Site {
   @Prop({ required: false })
   isCrawl: boolean;
 
+  @Prop({ required: false, default: 0 })
+  threadNumber: number;
+
   @Prop({ required: false })
   crawlUrlAt: Date;
 

@@ -58,7 +58,7 @@
                                     </td>
                                     <td>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm"><?php echo $value['url'] ?></h6>
+                                            <a href="<?php echo $value['url'] ?>" target="_blank" class="mb-0 text-sm"><?php echo $value['url'] ?></a>
                                         </div>
                                     </td>
                                     <td class="text-center">
@@ -85,7 +85,7 @@
                                     </td>
                                     <td class="align-middle">
                                         <div class="d-flex">
-                                            <a href="" class="btn bg-gradient-info mb-0" style="margin-right: 10px;"><i class="fa fa-globe" aria-hidden="true"></i></a>
+                                            <a href="/website/url/<?php echo $value['_id'] ?>" class="btn bg-gradient-info mb-0" style="margin-right: 10px;"><i class="fa fa-globe" aria-hidden="true"></i></a>
                                             <a href="/website/update/<?php echo $value['_id'] ?>" class="btn bg-gradient-success mb-0" style="margin-right: 10px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                             <a class="btn bg-gradient-danger btn-delete-website mb-0" data-id="<?php echo $value['_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                         </div>
@@ -95,6 +95,21 @@
                         </tbody>
                     </table>
                 </div>
+                <?php $actual_link = "$_SERVER[REQUEST_SCHEME]://$_SERVER[HTTP_HOST]$_SERVER[REDIRECT_URL]"; ?>
+                <?php if(isset($websiteList['pagination']) && is_array($websiteList['pagination']) && count($websiteList['pagination'])){ 
+                    if($websiteList['pagination']['limit'] < $websiteList['pagination']['total']){
+                    $pagination = ceil($websiteList['pagination']['total'] / $websiteList['pagination']['limit']);
+                ?>
+                    <ul class="pagination d-flex justify-content-center mt-3">
+                        <?php $current_page = (isset($_GET['page']) ? $_GET['page'] : 0) ?>
+                        <?php for ($i = 0; $i < $pagination; $i++) {   ?>
+                            <?php 
+                                $_GET['page'] = $i ;
+                             ?>
+                            <li class="page-item <?php echo $current_page == $i  ? 'active' : '' ?>"><a class="page-link " href="<?php echo $actual_link.'?'.http_build_query($_GET) ?>"><?php echo $i + 1 ?></a></li>
+                        <?php } ?>
+                    </ul>
+                <?php }} ?>
             </div>
         </div>
     </div>

@@ -13,6 +13,7 @@ import {
 import { GetFilterDto } from 'src/common/params/get-filter.dto';
 import { CreateCatalogueConfigRequest } from './dto/create-catalogue-config.request';
 import { UpdateCatalogueConfigRequest } from './dto/update-catalogue-config.request';
+import { GetPaginateDto } from 'src/common/params/get-paginate.dto';
 
 @Injectable()
 export class CatalogueConfigService {
@@ -21,6 +22,29 @@ export class CatalogueConfigService {
     @InjectModel(CatalogueConfig.name)
     private catalogueConfigModel: Model<CatalogueConfigDocument>,
   ) {}
+
+  /**
+   * Api get list users
+   * @param filter
+   * @param page
+   * @param limit
+   * @return array User
+   * */
+  async paginateBySiteId(
+    id, getPaginateDto: GetPaginateDto
+  ): Promise<CollectionResponse<CatalogueConfigDocument>> {
+    const collector = new DocumentCollector<CatalogueConfigDocument>(this.catalogueConfigModel);
+    return collector.find({
+      filter: {
+        $or: [
+          { selector: { $regex: new RegExp(getPaginateDto.keyword, 'i') } },
+        ],
+        siteId: id
+      },
+      page: getPaginateDto.page,
+      limit: getPaginateDto.limit,
+    });
+  }
 
   /**
    * Api get list catalogueConfig
@@ -59,7 +83,7 @@ export class CatalogueConfigService {
   /**
    * Api detail catalogue config
    * @params id
-   * @return catalogueConfig
+   * @return CatalogueConfig
    * */
   async getById(id: string): Promise<CatalogueConfigDocument> {
     const catalogueConfig = await this.catalogueConfigModel.findById(id).exec();

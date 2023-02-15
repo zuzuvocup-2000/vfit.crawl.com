@@ -64,7 +64,23 @@
                             <?php }} ?>
                         </tbody>
                     </table>
+
                 </div>
+                <?php $actual_link = "$_SERVER[REQUEST_SCHEME]://$_SERVER[HTTP_HOST]$_SERVER[REDIRECT_URL]"; ?>
+                <?php if(isset($userList['pagination']) && is_array($userList['pagination']) && count($userList['pagination'])){ 
+                    if($userList['pagination']['limit'] < $userList['pagination']['total']){
+                    $pagination = ceil($userList['pagination']['total'] / $userList['pagination']['limit']);
+                ?>
+                    <ul class="pagination d-flex justify-content-center mt-3">
+                        <?php $current_page = (isset($_GET['page']) ? $_GET['page'] : 0) ?>
+                        <?php for ($i = 0; $i < $pagination; $i++) {   ?>
+                            <?php 
+                                $_GET['page'] = $i ;
+                             ?>
+                            <li class="page-item <?php echo $current_page == $i  ? 'active' : '' ?>"><a class="page-link " href="<?php echo $actual_link.'?'.http_build_query($_GET) ?>"><?php echo $i + 1 ?></a></li>
+                        <?php } ?>
+                    </ul>
+                <?php }} ?>
             </div>
         </div>
     </div>

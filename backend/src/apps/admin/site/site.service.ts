@@ -17,16 +17,53 @@ import { HttpService } from '@nestjs/axios';
 import { STATUS_SITE } from 'src/common/constants/app';
 import { UpdateSiteRequest } from './dto/update-site.request';
 import { GetPaginateDto } from 'src/common/params/get-paginate.dto';
+import { Url, UrlDocument } from '../sitemap/schema/url.schema';
 
 @Injectable()
 export class SiteService {
   constructor(
     @InjectModel(Site.name) private siteModel: Model<SiteDocument>,
+    @InjectModel(Url.name) private urlModel: Model<UrlDocument>,
     private readonly httpService: HttpService,
   ) {}
 
   async findAll(): Promise<Site[]> {
     return this.siteModel.find().exec();
+  }
+
+  async updateStatusUrl(id, status): Promise<boolean> {
+    await this.urlModel.updateOne(
+      { _id: id },
+      {
+        $set: {
+          status: (status == 'true' ? true : false),
+        },
+      },
+    );
+    return true;
+  }
+
+  /**
+   * Api get list urls
+   * @param filter
+   * @param page
+   * @param limit
+   * @return array Urls
+   * */
+  async paginateUrls( id, getPaginateDto: GetPaginateDto ): Promise<CollectionResponse<UrlDocument>> {
+    const collector = new DocumentCollector<UrlDocument>(this.urlModel);
+    const filter = {
+      filter: {
+        // $or: [
+        //   { name: { $regex: new RegExp(getPaginateDto.keyword, 'i') } },
+        //   { email: { $regex: new RegExp(getPaginateDto.keyword, 'i') } }
+        // ],
+        siteId: id
+      },
+      page: getPaginateDto.page,
+      limit: getPaginateDto.limit,
+    };
+    return collector.find(filter);
   }
 
   /**

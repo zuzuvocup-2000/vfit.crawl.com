@@ -12,61 +12,101 @@ class Website extends BaseController{
 	}
 
 	public function index(){
-		$this->data['websiteList'] = $this->websiteService->getListWebsite();
-		$this->data['title'] = 'Danh sách Website';
-		$this->data['module'] = 'website';
-		$this->data['template'] = 'backend/website/website/index';
-		return view('backend/dashboard/layout/home', $this->data);
+		try {
+			$this->data['websiteList'] = $this->websiteService->getListWebsite();
+			$this->data['title'] = 'Danh sách Website';
+			$this->data['module'] = 'website';
+			$this->data['template'] = 'backend/website/website/index';
+			return view('backend/dashboard/layout/home', $this->data);
+		} catch (\Exception $e) {
+		    // handle the exception here
+		    echo $e->getMessage();
+		}
+	}
+
+	public function url($id){
+		try {
+			$this->data['website'] = $this->sendAPI(API_WEBSITE_GET_BY_ID.'/'.$id,'get');
+			$this->data['urlList'] = $this->websiteService->getListUrlFromWebsite($id);
+			$this->data['title'] = 'Danh sách Url của Website: '.$this->data['website']['data']['url'];
+			$this->data['module'] = 'website';
+			$this->data['template'] = 'backend/website/website/url';
+			return view('backend/dashboard/layout/home', $this->data);
+		} catch (\Exception $e) {
+		    // handle the exception here
+		    echo $e->getMessage();
+		}
+	}
+
+	public function update_status($id){
+		try {
+			$this->data['website'] = $this->sendAPI(API_UPDATE_STATUS_URL.'/'.$id,'get',[
+				'status' => $this->request->getPost('status')
+			]);
+		} catch (\Exception $e) {
+		    // handle the exception here
+		    echo $e->getMessage();
+		}
 	}
 
 	public function create(){
-		if($this->request->getMethod() == 'post'){
-			$session = session();
-			$validate = $this->validation('create');
-			if ($this->validate($validate['validate'], $validate['errorValidate'])){
-				$create = $this->websiteService->storeWebsite($this->request);
-        		$response = $this->sendAPI(API_WEBSITE_CREATE,'post', $create);
-        		if(isset($response['statusCode']) && $response['statusCode'] == 200){
-        			$session->setFlashdata('message-success', 'Thêm mới Url Website thành công!');
-        			return redirect()->to(BASE_URL.'website/create');
-        		}else{
-        			$session->setFlashdata('message-danger', 'Có lỗi xảy ra xin vui lòng thử lại!');
-        			return redirect()->to(BASE_URL.'website/index');
-        		}
-			}else{
-	        	$this->data['validate'] = $this->validator->listErrors();
-	        }
-		}
+		try {
+			if($this->request->getMethod() == 'post'){
+				$session = session();
+				$validate = $this->validation('create');
+				if ($this->validate($validate['validate'], $validate['errorValidate'])){
+					$create = $this->websiteService->storeWebsite($this->request);
+	        		$response = $this->sendAPI(API_WEBSITE_CREATE,'post', $create);
+	        		if(isset($response['statusCode']) && $response['statusCode'] == 200){
+	        			$session->setFlashdata('message-success', 'Thêm mới Url Website thành công!');
+	        			return redirect()->to(BASE_URL.'website/create');
+	        		}else{
+	        			$session->setFlashdata('message-danger', 'Có lỗi xảy ra xin vui lòng thử lại!');
+	        			return redirect()->to(BASE_URL.'website/index');
+	        		}
+				}else{
+		        	$this->data['validate'] = $this->validator->listErrors();
+		        }
+			}
 
-		$this->data['title'] = 'Thêm mới Website';
-		$this->data['module'] = 'website';
-		$this->data['template'] = 'backend/website/website/store';
-		return view('backend/dashboard/layout/home', $this->data);
+			$this->data['title'] = 'Thêm mới Website';
+			$this->data['module'] = 'website';
+			$this->data['template'] = 'backend/website/website/store';
+			return view('backend/dashboard/layout/home', $this->data);
+		} catch (\Exception $e) {
+		    // handle the exception here
+		    echo $e->getMessage();
+		}
 	}
 
 	public function update($id = ''){
-		$this->data['website'] = $this->sendAPI(API_WEBSITE_GET_BY_ID.'/'.$id,'get');
-		if($this->request->getMethod() == 'post'){
-			$validate = $this->validation('update');
-			$session = session();
-			if ($this->validate($validate['validate'], $validate['errorValidate'])){
-				$update = $this->websiteService->storeWebsite($this->request);
-        		$response = $this->sendAPI(API_WEBSITE_CREATE.'/'.$this->data['website']['data']['_id'],'put', $update);
-        		if(isset($response['statusCode']) && $response['statusCode'] == 200){
-        			$session->setFlashdata('message-success', 'Cập nhật Url Website thành công!');
-        			return redirect()->to(BASE_URL.'website/index');
-        		}else{
-        			$session->setFlashdata('message-danger', 'Có lỗi xảy ra xin vui lòng thử lại!');
-        			return redirect()->to(BASE_URL.'website/index');
-        		}
-			}else{
-	        	$this->data['validate'] = $this->validator->listErrors();
-	        }
+		try {
+			$this->data['website'] = $this->sendAPI(API_WEBSITE_GET_BY_ID.'/'.$id,'get');
+			if($this->request->getMethod() == 'post'){
+				$validate = $this->validation('update');
+				$session = session();
+				if ($this->validate($validate['validate'], $validate['errorValidate'])){
+					$update = $this->websiteService->storeWebsite($this->request);
+	        		$response = $this->sendAPI(API_WEBSITE_CREATE.'/'.$this->data['website']['data']['_id'],'put', $update);
+	        		if(isset($response['statusCode']) && $response['statusCode'] == 200){
+	        			$session->setFlashdata('message-success', 'Cập nhật Url Website thành công!');
+	        			return redirect()->to(BASE_URL.'website/index');
+	        		}else{
+	        			$session->setFlashdata('message-danger', 'Có lỗi xảy ra xin vui lòng thử lại!');
+	        			return redirect()->to(BASE_URL.'website/index');
+	        		}
+				}else{
+		        	$this->data['validate'] = $this->validator->listErrors();
+		        }
+			}
+			$this->data['title'] = 'Cập nhật Website';
+			$this->data['module'] = 'website';
+			$this->data['template'] = 'backend/website/website/store';
+			return view('backend/dashboard/layout/home', $this->data);
+		} catch (\Exception $e) {
+		    // handle the exception here
+		    echo $e->getMessage();
 		}
-		$this->data['title'] = 'Cập nhật Website';
-		$this->data['module'] = 'website';
-		$this->data['template'] = 'backend/website/website/store';
-		return view('backend/dashboard/layout/home', $this->data);
 	}
 
 	private function validation($method = ''){

@@ -23,11 +23,33 @@ export class CrawlerService {
   ) {}
 
   /**
+   * chunk site to thread number
+   * @return {unknown} response
+   */
+  async chunkSite(): Promise<unknown> {
+    const sites = await this.crawlerRepository.getAllSiteCrawl();
+    const numKeys = 5;
+    const numPartialKeys = sites.length % numKeys;
+    const siteList = Array.from({ length: numKeys }, (_, i) =>
+      sites.slice(i * Math.floor(sites.length / numKeys) + Math.min(i, numPartialKeys), (i + 1) * Math.floor(sites.length / numKeys) + Math.min(i + 1, numPartialKeys))
+    );
+
+    if (siteList.length > 0) {
+      for (let i = 0; i < siteList.length; i++) {
+        for await (const siteItem of siteList[i]) {
+          await this.crawlerRepository.updateThreadNumberSite(siteItem, i + 1);
+        }
+      }
+    }
+    return siteList;
+  }
+
+  /**
    * Crawler data from urls
    * @return {unknown} response
    */
-  async crawlDataFromUrls(): Promise<unknown> {
-    const sites = await this.crawlerRepository.getSiteCrawl();
+  async crawlDataFromUrls(thread : number): Promise<unknown> {
+    const sites = await this.crawlerRepository.getSiteCrawl(thread);
     sites.forEach(async (site) => {
       if (site['typeCrawl'] == TYPE_CRAWL.BROWSER) {
         await this.crawlingByBrowser(site);
@@ -46,7 +68,6 @@ export class CrawlerService {
 
     for (let index = 0; index < urls.length; index++) {
       const urlItem = urls[index];
-
       if ((typeof configCatalogue !== 'undefined' && configCatalogue.length > 0) || (typeof configArticle !== 'undefined' && configArticle.length > 0)) {
         const puppeteer = await this.setupPuppeteer(urlItem.url);
 
@@ -70,7 +91,6 @@ export class CrawlerService {
 
     for (let index = 0; index < urls.length; index++) {
       const urlItem = urls[index];
-
       if ((typeof configCatalogue !== 'undefined' && configCatalogue.length > 0) || (typeof configArticle !== 'undefined' && configArticle.length > 0)) {
         const responseSite = await this.getResponseAxios(urlItem.url);
         if (responseSite && responseSite['status'] === HttpStatus.OK) {
@@ -109,6 +129,7 @@ export class CrawlerService {
         const resultCatalogueCrawl = parse(data, config);
         if (resultCatalogueCrawl.title) {
           await this.crawlerRepository.upsertCatalogue(url, resultCatalogueCrawl);
+          await this.crawlerRepository.updateStatusCrawlUrl(url);
           isCrawl = true;
         }
       }
@@ -164,7 +185,7 @@ export class CrawlerService {
         const resultArticleCrawl:unknown = parse(data, config);
         if (resultArticleCrawl['title']) {
           resultArticleCrawl['rate'] = [];
-          if (resultArticleCrawl['comment'].length > 0) {
+          if (resultArticleCrawl['comment']?.length > 0) {
             for (let index = 0; index < resultArticleCrawl['comment'].length; index++) {
               resultArticleCrawl['rate'].push({
                 comment: resultArticleCrawl['comment'][index],
@@ -173,6 +194,7 @@ export class CrawlerService {
             }
           }
           await this.crawlerRepository.upsertArticle(url, resultArticleCrawl);
+          await this.crawlerRepository.updateStatusCrawlUrl(url);
           isCrawl = true;
         }
       }
@@ -195,6 +217,7 @@ export class CrawlerService {
       if (results.title) {
         checkCatalogue = true;
         await this.crawlerRepository.upsertCatalogue(urlItem, results);
+        await this.crawlerRepository.updateStatusCrawlUrl(urlItem);
       }
     }
 
@@ -205,27 +228,42 @@ export class CrawlerService {
     let checkArticle = false;
     for (let index = 0; index < configArticle.length; index++) {
       const element = configArticle[index];
+      let isExecutionCompleted = false;
+      let retryCount = 0;
+      let results = {};
+      while (!isExecutionCompleted && retryCount < 3) {
+        try {
+          results = await page.evaluate((element, ARTICLE_CONFIG_TYPE_ENUM) => {
+            const title = element.records.filter((obj) => { return obj.dataType === ARTICLE_CONFIG_TYPE_ENUM.TITLE; });
+            const catalogue = element.records.filter((obj) => { return obj.dataType === ARTICLE_CONFIG_TYPE_ENUM.CATALOGUE_TITLE; });
+            const description = element.records.filter((obj) => { return obj.dataType === ARTICLE_CONFIG_TYPE_ENUM.DESCRIPTION; });
+            const content = element.records.filter((obj) => { return obj.dataType === ARTICLE_CONFIG_TYPE_ENUM.CONTENT; });
+            const image = element.records.filter((obj) => { return obj.dataType === ARTICLE_CONFIG_TYPE_ENUM.IMAGE; });
+            return {
+              title: title.length > 0 && document.querySelector(title[0]['selector']) ? document.querySelector(title[0]['selector']).innerText : undefined,
+              catalogue: catalogue.length > 0 && document.querySelector(catalogue[0]['selector']) ? document.querySelector(catalogue[0]['selector']).innerText : undefined,
+              description: description.length > 0 && document.querySelector(description[0]['selector']) ? document.querySelector(description[0]['selector']).innerHTML : undefined,
+              content: content.length > 0 && document.querySelector(content[0]['selector']) ? document.querySelector(content[0]['selector']).innerHTML : undefined,
+              image: image.length > 0 && document.querySelector(image[0]['selector'] + ' img') ? Array.from(document.querySelectorAll(image[0]['selector'] + ' img'), img => img['src']) : undefined,
+            };
+          }, element, ARTICLE_CONFIG_TYPE_ENUM);
+          isExecutionCompleted = true;
+        } catch (error) {
+          if (error.message.includes('Execution context was destroyed')) {
+            retryCount++;
+            console.log(`Execution failed. Retrying... Attempt ${retryCount}`);
+          } else {
+            throw error;
+          }
+        }
+      }
 
-      const results = await page.evaluate((element, ARTICLE_CONFIG_TYPE_ENUM) => {
-        const title = element.records.filter((obj) => { return obj.dataType === ARTICLE_CONFIG_TYPE_ENUM.TITLE; });
-        const catalogue = element.records.filter((obj) => { return obj.dataType === ARTICLE_CONFIG_TYPE_ENUM.CATALOGUE_TITLE; });
-        const description = element.records.filter((obj) => { return obj.dataType === ARTICLE_CONFIG_TYPE_ENUM.DESCRIPTION; });
-        const content = element.records.filter((obj) => { return obj.dataType === ARTICLE_CONFIG_TYPE_ENUM.CONTENT; });
-        const image = element.records.filter((obj) => { return obj.dataType === ARTICLE_CONFIG_TYPE_ENUM.IMAGE; });
-        const article = {
-          title: title.length > 0 && document.querySelector(title[0]['selector']) ? document.querySelector(title[0]['selector']).innerText : undefined,
-          catalogue: catalogue.length > 0 && document.querySelector(catalogue[0]['selector']) ? document.querySelector(catalogue[0]['selector']).innerText : undefined,
-          description: description.length > 0 && document.querySelector(description[0]['selector']) ? document.querySelector(description[0]['selector']).innerHTML : undefined,
-          content: content.length > 0 && document.querySelector(content[0]['selector']) ? document.querySelector(content[0]['selector']).innerHTML : undefined,
-          image: image.length > 0 && document.querySelector(image[0]['selector'] + ' img') ? Array.from(document.querySelectorAll(image[0]['selector'] + ' img'), img => img['src']) : undefined,
-        };
-        return article;
-      }, element, ARTICLE_CONFIG_TYPE_ENUM);
       const rate = element.records.filter((obj) => { return obj.dataType === ARTICLE_CONFIG_TYPE_ENUM.RATE; });
-      if (rate.length > 0) results.rate = await this.crawlRateArticle(rate, page);
-      if (results.title) {
+      if (rate.length > 0) results['rate'] = await this.crawlRateArticle(rate, page);
+      if (results['title']) {
         checkArticle = true;
         await this.crawlerRepository.upsertArticle(urlItem, results);
+        await this.crawlerRepository.updateStatusCrawlUrl(urlItem);
       }
     }
 
@@ -251,14 +289,21 @@ export class CrawlerService {
 
   async crawlRateEventScroll(param, page) {
     const rates = [];
-    let condition = true;
-    let height = 0;
 
-    do {
-      await page.evaluate('window.scrollTo(0, document.body.scrollHeight)');
-      height = await page.evaluate('document.body.scrollHeight');
-      condition = await this.checkHeight(page, height);
-    } while (condition);
+    let previousHeight;
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+
+      const currentHeight = await page.evaluate('document.documentElement.scrollHeight');
+      console.log(currentHeight);
+
+      if (currentHeight === previousHeight) {
+        break;
+      }
+      previousHeight = currentHeight;
+      await page.evaluate('window.scrollTo(0, document.documentElement.scrollHeight)');
+      await page.waitForTimeout(2000); // Chờ 2 giây để load thêm comment
+    }
 
     const comments = await page.$$eval(param.comment, elements=> elements.map(item=>item.innerText));
     const names = await page.$$eval(param.name, elements=> elements.map(item=>item.innerText));
@@ -270,16 +315,21 @@ export class CrawlerService {
         });
       }
     }
+    console.log(rates);
     return rates;
   }
 
   async crawlRateEventClick(param, page) {
     let condition = true;
     do {
-      await Promise.all([
-        page.click(param.view_more),
-      ]);
-      condition = await this.isVisible(page, param.class_hide);
+      if (param.view_more) {
+        await Promise.all([
+          page.click(param.view_more),
+        ]);
+        condition = await this.isVisible(page, param.class_hide);
+      } else {
+        condition = false;
+      }
     } while (condition);
 
     const rates = [];
@@ -360,23 +410,31 @@ export class CrawlerService {
     });
     blockResourcesPlugin.blockedTypes.add('image');
     blockResourcesPlugin.blockedTypes.add('media');
-    blockResourcesPlugin.blockedTypes.add('font');
-    blockResourcesPlugin.blockedTypes.add('texttrack');
-    // blockResourcesPlugin.blockedTypes.add('xhr');
-    // blockResourcesPlugin.blockedTypes.add('fetch');
-    blockResourcesPlugin.blockedTypes.add('eventsource');
-    blockResourcesPlugin.blockedTypes.add('websocket');
-    blockResourcesPlugin.blockedTypes.add('manifest');
-    blockResourcesPlugin.blockedTypes.add('other');
     const page = await browser.newPage();
 
-    await page.goto(url, {
-      waitUntil: 'domcontentloaded',
-    });
-    await page.setViewport({
-      width: 1400,
-      height: 800
-    });
+    let isPageLoaded = false;
+    let retryCount = 0;
+    while (!isPageLoaded && retryCount < 3) {
+      try {
+        await page.goto(url, {
+          waitUntil: 'domcontentloaded',
+          timeout: 60000
+        });
+        await page.setViewport({
+          width: 1000,
+          height: 800
+        });
+        isPageLoaded = true;
+      } catch (error) {
+        if (error instanceof puppeteer.errors.TimeoutError) {
+          retryCount++;
+          console.log(`Page load failed. Retrying... Attempt ${retryCount}`);
+        } else {
+          throw error;
+        }
+      }
+    }
+
     return {
       browser: browser,
       page: page
@@ -394,8 +452,10 @@ export class CrawlerService {
   }
 
   async checkHeight(page, oldPage) {
-    await setTimeout(1500);
+    await setTimeout(2000);
     const height = await page.evaluate('document.body.scrollHeight');
+    console.log(oldPage);
+    console.log(height);
     return (oldPage === height) ? false : true;
   }
 }

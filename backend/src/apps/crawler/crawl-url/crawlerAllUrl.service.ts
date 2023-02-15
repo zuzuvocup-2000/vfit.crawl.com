@@ -6,11 +6,15 @@ import { TYPE_SITE } from 'src/common/constants/enum';
 import { CrawlerRepository } from '../crawler.repository';
 import { CheerioCrawler } from 'crawlee';
 import { Site } from '../../admin/site/schema/site.schema';
+import { Model } from 'mongoose';
+import { Url, UrlDocument } from 'src/apps/admin/sitemap/schema/url.schema';
+import { InjectModel } from '@nestjs/mongoose';
 @Injectable()
 export class CrawlerAllUrlsService {
   constructor(
     private readonly httpService: HttpService,
     private readonly crawlerRepository: CrawlerRepository,
+    @InjectModel(Url.name) public urlModel: Model<UrlDocument>,
   ) {}
 
   /*
@@ -23,18 +27,26 @@ export class CrawlerAllUrlsService {
         TYPE_SITE.NORMAL,
       );
       const hrefs = [];
+      const urlModel = this.urlModel;
       for (const site of sites) {
         const crawler = new CheerioCrawler({
-          async requestHandler({ request, enqueueLinks, log }) {
-            log.info(request.url);
-            hrefs.push(request.url);
-            // Add all links from page to RequestQueue
+          async requestHandler({ request, enqueueLinks }) {
+            console.log(request.url);
+            await urlModel.updateOne(
+              { url: request.url },
+              {
+                $set: {
+                  siteId: site['_id'],
+                  url: request.url,
+                },
+              },
+              { upsert: true },
+            );
             await enqueueLinks();
           },
         });
         // Run the crawler with initial request
         await crawler.run([site.url]);
-        if (hrefs.length > 0) await this.urlsBulkWriteUrl(hrefs, site);
       }
       return hrefs;
     } catch (error) {

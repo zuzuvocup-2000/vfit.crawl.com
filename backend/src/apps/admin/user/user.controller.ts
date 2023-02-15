@@ -21,7 +21,6 @@ import { CreateUserRequest } from './dto/create-user.request';
 import { AuthGuard } from '@nestjs/passport';
 import { ChangePasswordUserRequest } from './dto/chang-password.request';
 import { UpdateUserRequest } from './dto/update-user.request';
-import { SuccessResponse } from 'src/common/response/success.response';
 import { SUCCESS_MESSAGE } from 'src/common/constants/messages/success';
 import { CODES } from 'src/common/constants/code';
 import { GetPaginateDto } from 'src/common/params/get-paginate.dto';

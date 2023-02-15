@@ -23,7 +23,7 @@ $uriSegment = $uri->getSegment(1);
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?php echo $uriSegment == 'statistic' ? 'active' : '' ?>" href="template/pages/virtual-reality.html">
+                <a class="nav-link <?php echo $uriSegment == 'statistic' ? 'active' : '' ?>" href="/statistic/list">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-chart-pie-35 text-info text-sm opacity-10"></i>
                         <i class="ni ni-app text-info text-sm opacity-10"></i>

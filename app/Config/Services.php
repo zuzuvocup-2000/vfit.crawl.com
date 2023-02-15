@@ -53,4 +53,11 @@ class Services extends CoreServices{
         }
         return new \App\Services\ConfigCatalogueService($param);
     }
+
+    public static function CriteriaService($param = [], $getShared = true){
+        if ($getShared){
+            return static::getSharedInstance('CriteriaService', $param);
+        }
+        return new \App\Services\CriteriaService($param);
+    }
 }

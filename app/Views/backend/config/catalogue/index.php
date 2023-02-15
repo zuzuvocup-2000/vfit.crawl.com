@@ -17,7 +17,7 @@
                                 <input type="text" name="keyword" class="form-control keyword-search" placeholder="Nhập từ khóa để tìm kiếm..." aria-label="Nhập từ khóa để tìm kiếm" aria-describedby="button-addon2" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : '' ?>">
                                 <button class="btn btn-outline-primary mb-0 btn-click-search-user" type="submit" id="button-addon2">Tìm kiếm</button>
                             </div>
-                            <a href="config/article/create/<?php echo $website['data']['_id'] ?>" class="btn btn-primary m-0 ms-3">Thêm mới</a>
+                            <a href="config/catalogue/create/<?php echo $website['data']['_id'] ?>" class="btn btn-primary m-0 ms-3">Thêm mới</a>
                         </div>
                     </form>  
                 </div>
@@ -25,19 +25,17 @@
             <div class="card-body px-0 pt-0 pb-0">
                 <div class="table-responsive p-0">
                     <table class="table align-items-center mb-0">
-                        <thead>
-                            <tr>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 40px;"></th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Bộ chọn HTML</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center" style="width: 120px;">Loại Bài Viết</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center" style="width: 120px;">Nhóm Bài Viết</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">Website gốc</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="width: 150px;">Thao tác</th>
-                            </tr>
-                        </thead>
+                        <tr>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 40px;"></th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Bộ chọn HTML</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center" style="width: 120px;">Loại Danh mục</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center" style="width: 120px;">Nhóm Danh mục</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center" style="width: 120px;">Website gốc</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="width: 150px;">Thao tác</th>
+                        </tr>
                         <tbody>
-                            <?php if(isset($configArticleList['data']) && is_array($configArticleList['data']) && count($configArticleList['data'])){ 
-                                foreach ($configArticleList['data'] as $key => $value) {
+                            <?php if(isset($configCatalogueList['data']) && is_array($configCatalogueList['data']) && count($configCatalogueList['data'])){ 
+                                foreach ($configCatalogueList['data'] as $key => $value) {
                             ?>
                                 <tr class="list-item">
                                     <td class="text-center">
@@ -57,13 +55,13 @@
                                         <?php echo $value['group'] ?>                                    
                                     </td>
                                     <td class="text-center">
-                                        <?php echo $website['data']['url'] ?>                                      
+                                        <?php echo $website['data']['url'] ?>                                    
                                     </td>
                                     <td class="align-middle">
                                         <div class="d-flex">
                                             
-                                            <a href="/config/article/update/<?php echo $website['data']['_id'] ?>/<?php echo $value['_id'] ?>" class="btn bg-gradient-success mb-0" style="margin-right: 10px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                            <a class="btn bg-gradient-danger btn-delete-article mb-0" data-id="<?php echo $value['_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                            <a href="/config/catalogue/update/<?php echo $website['data']['_id'] ?>/<?php echo $value['_id'] ?>" class="btn bg-gradient-success mb-0" style="margin-right: 10px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                            <a class="btn bg-gradient-danger btn-delete-catalogue mb-0" data-id="<?php echo $value['_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -72,9 +70,9 @@
                     </table>
                 </div>
                 <?php $actual_link = "$_SERVER[REQUEST_SCHEME]://$_SERVER[HTTP_HOST]$_SERVER[REDIRECT_URL]"; ?>
-                <?php if(isset($configArticleList['pagination']) && is_array($configArticleList['pagination']) && count($configArticleList['pagination'])){ 
-                    if($configArticleList['pagination']['limit'] < $configArticleList['pagination']['total']){
-                    $pagination = ceil($configArticleList['pagination']['total'] / $configArticleList['pagination']['limit']);
+                <?php if(isset($configCatalogueList['pagination']) && is_array($configCatalogueList['pagination']) && count($configCatalogueList['pagination'])){ 
+                    if($configCatalogueList['pagination']['limit'] < $configCatalogueList['pagination']['total']){
+                    $pagination = ceil($configCatalogueList['pagination']['total'] / $configCatalogueList['pagination']['limit']);
                 ?>
                     <ul class="pagination d-flex justify-content-center mt-3">
                         <?php $current_page = (isset($_GET['page']) ? $_GET['page'] : 0) ?>

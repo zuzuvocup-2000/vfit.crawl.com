@@ -8,7 +8,6 @@ import {
 } from '../admin/sitemap/schema/sitemap.schema';
 import { Site, SiteDocument } from '../admin/site/schema/site.schema';
 import {
-  ASC_FILTER,
   STATUS_ARTICLE,
   STATUS_SITE,
   STATUS_SITE_MAP,
@@ -49,11 +48,11 @@ export class CrawlerRepository {
   ) {}
 
   /*
-   * get site
+   * get all site
    * @return {site[]}
    */
 
-  async getSiteCrawl(): Promise<Site[]> {
+  async getAllSiteCrawl(): Promise<Site[]> {
     try {
       return await this.siteModel.find({ status: STATUS_SITE.ACTIVE });
     } catch (error) {
@@ -66,9 +65,23 @@ export class CrawlerRepository {
    * @return {site[]}
    */
 
+  async getSiteCrawl(threadNumber: number): Promise<Site[]> {
+    try {
+      return await this.siteModel.find({ status: STATUS_SITE.ACTIVE, threadNumber });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  /*
+   * get site
+   * @return {site[]}
+   */
+
   async getUrlCrawlBySite(site: Site): Promise<Url[]> {
     try {
-      return await this.urlModel.find({ siteId: site['_id'], status: STATUS_URL.ACTIVE });
+      // return await this.urlModel.find({ siteId: site['_id'], status: STATUS_URL.ACTIVE });
+      return await this.urlModel.find({ siteId: site['_id'] });
     } catch (error) {
       console.log(error);
     }
@@ -281,7 +294,7 @@ export class CrawlerRepository {
    */
   async urlsBulkWriteBySitemap(sitemaps, site: Site): Promise<boolean> {
     try {
-      const updateSitemap = sitemaps.map((url) => ({
+      const updateSitemap = sitemaps.map(url => ({
         updateOne: {
           filter: {
             $and: [
@@ -314,7 +327,7 @@ export class CrawlerRepository {
    */
   async urlsBulkWriteByBrowser(urls: [], site: Site): Promise<boolean> {
     try {
-      const updateSite = await urls.map((url) => ({
+      const updateSite = await urls.map(url => ({
         updateOne: {
           filter: { url: url },
           update: {
@@ -343,7 +356,7 @@ export class CrawlerRepository {
    */
   async sitemapBulkWrite(sitemaps, site: Site): Promise<boolean> {
     try {
-      const updateSitemap = sitemaps.map((url) => ({
+      const updateSitemap = sitemaps.map(url => ({
         updateOne: {
           filter: { url: url.loc ? url.loc.replace('.gz', '') : url },
           update: {
@@ -371,6 +384,20 @@ export class CrawlerRepository {
   async updateStatusSitemap(url: string, status: number): Promise<void> {
     try {
       await this.sitemapModel.updateOne({ url }, { $set: { status } });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  /**
+   * Update thread number site.
+   * @param {url} list sitemap.
+   * @param {status} status.
+   * @return {void}
+   */
+  async updateThreadNumberSite(site: Site, threadNumber: number): Promise<void> {
+    try {
+      await this.siteModel.updateOne({ _id: site['_id'] }, { $set: { threadNumber } });
     } catch (error) {
       console.log(error);
     }

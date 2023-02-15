@@ -23,6 +23,9 @@ import { ERROR_MESSAGE } from 'src/common/constants/messages/error';
 import { GetFilterDto } from './dto/get-filter.dto';
 import { SuccessCriteriaResponse } from './dto/success-criteria.response';
 import { UpdateCriteriaRequest } from './dto/update-criteria.request';
+import { GetPaginateDto } from 'src/common/params/get-paginate.dto';
+import { CODES } from 'src/common/constants/code';
+import { SUCCESS_MESSAGE } from 'src/common/constants/messages/success';
 
 @Controller('criteria')
 export class CriteriaController {
@@ -33,23 +36,16 @@ export class CriteriaController {
    * @param filter
    * @param page
    * @param limit
-   * @return array Site
+   * @return array Users
    * */
   @Get()
-  @ApiResponse({ status: HttpStatus.OK, type: SuccessCriteriaResponse })
-  @ApiBadRequestResponse({
-    type: BadRequestResponse,
-  })
-  @ApiUnauthorizedResponse({ type: UnauthorizedResponse })
-  async filterHandle(@Query() getFilterDto: GetFilterDto) {
-    try {
-      const criterias = await this.criteriaService.paginate(
-        getFilterDto,
-      );
-      return new SuccessCriteriaResponse(criterias);
-    } catch (error) {
-      throw new Error(ERROR_MESSAGE.BAD_REQUEST);
-    }
+  async filterHandle(@Query() getPaginateDto: GetPaginateDto) {
+    const website = await this.criteriaService.paginate(getPaginateDto);
+    return {
+      status: CODES.SUCCESS,
+      message: SUCCESS_MESSAGE.DEFAULT,
+      ...website,
+    };
   }
 
   /**
@@ -84,33 +80,11 @@ export class CriteriaController {
   })
   @ApiUnauthorizedResponse({ type: UnauthorizedResponse })
   async create(@Body() createCriteriaRequest: CreateCriteriaRequest) {
-    const criteria = await this.criteriaService.create(
+    await this.criteriaService.upsert(
       createCriteriaRequest,
     );
+    const criteria = await this.criteriaService.getByType(createCriteriaRequest);
     return new SuccessCriteriaResponse(criteria);
-  }
-
-  /**
-   * Api edit criteria
-   * @params id
-   * @return criteria
-   * */
-  @Put(':id')
-  @ApiResponse({ status: HttpStatus.OK, type: SuccessCriteriaResponse })
-  @ApiBadRequestResponse({
-    type: BadRequestResponse,
-  })
-  @ApiUnauthorizedResponse({ type: UnauthorizedResponse })
-  async update(
-    @Param('id') id: string,
-    @Body() updateCriteriaRequest: UpdateCriteriaRequest,
-  ) {
-    const updateCriteria = await this.criteriaService.update(
-      id,
-      updateCriteriaRequest,
-    );
-    if (!updateCriteria) throw new Error(ERROR_MESSAGE.NOT_FOUND);
-    return new SuccessCriteriaResponse(null);
   }
 
   /**

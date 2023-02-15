@@ -30,7 +30,6 @@ import { CODES } from 'src/common/constants/code';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ReadExcelSiteResponse } from './dto/read-excel.response';
 import { FormDataRequest, SwaggerFileRequest } from './dto/read-excel.request';
-import { GetFilterDto } from '../../../common/params/get-filter.dto';
 import { ERROR_MESSAGE } from 'src/common/constants/messages/error';
 import { SuccessSiteResponse } from './dto/success-site.response';
 import { UpdateSiteRequest } from './dto/update-site.request';
@@ -41,6 +40,23 @@ import { GetPaginateDto } from 'src/common/params/get-paginate.dto';
 @ApiTags('Site')
 export class SiteController {
   constructor(private readonly siteService: SiteService) {}
+
+  /**
+   * Api get list urls
+   * @param filter
+   * @param page
+   * @param limit
+   * @return array Urls
+   * */
+  @Get('/list/:id')
+  async getListUrls(@Query() getPaginateDto: GetPaginateDto, @Param('id') id: string) {
+    const website = await this.siteService.paginateUrls(id, getPaginateDto);
+    return {
+      status: CODES.SUCCESS,
+      message: SUCCESS_MESSAGE.DEFAULT,
+      ...website,
+    };
+  }
 
   /**
    * Api get detail site
@@ -61,6 +77,17 @@ export class SiteController {
     } catch (error) {
       throw new Error(ERROR_MESSAGE.BAD_REQUEST);
     }
+  }
+
+  /**
+   * Update status url
+   * @param id
+   * @param status
+   * @return array Urls
+   * */
+  @Get('/update-status/:id')
+  async updateStatus(@Param('id') id: string, @Body() data) {
+    return await this.siteService.updateStatusUrl(id, data.status);
   }
 
   /**

@@ -1,9 +1,17 @@
 
 
-$(document).on('change', '.select-website', function(){
-    let val = $(this).val();
-    window.location.href = val;
+$(document).on('click', '.onoffswitch-checkbox', function(){
+    let val = $(this).is(":checked");
+    let id = $(this).attr('data-id');
+    var formURL = '/website/url/update-status/'+id;
+	$.post(formURL, {status: val},
+	function(data){});
 })
+
+// $(document).on('change', '.select-website', function(){
+//     let val = $(this).val();
+//     window.location.href = val;
+// })
 
 $(document).on('click','.btn-delete-website',function(){
 	let _this = $(this);

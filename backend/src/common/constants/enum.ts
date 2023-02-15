@@ -12,11 +12,8 @@ export enum CATALOGUE_CONFIG_TYPE_ENUM {
 }
 
 export enum STATUS_STATISTIC {
-  VERY_BAD = 'VERY BAD',
   BAD = 'BAD',
-  NORMAL = 'NORMAL',
   GOOD = 'GOOD',
-  VERY_GOOD = 'VERY GOOD',
 }
 
 export enum TYPE_CRITERIA {

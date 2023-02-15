@@ -2,17 +2,17 @@
 namespace App\Services;
 use CodeIgniter\HTTP\Response;
 
-class WebsiteService{
+class ConfigCatalogueService{
 
    public function __construct($param){
       $this->client = \Config\Services::curlrequest();
    }
 
-   public function getListWebsite(){
+   public function getListConfigCatalogue($id){
       try{
          $headers = ['Authorization' => "Bearer ".session()->get('accessToken')];
-         $url = API_WEBSITE_LIST.'?keyword='.(isset($_GET['keyword']) ? $_GET['keyword'] : '').'&page='.(isset($_GET['page']) ? $_GET['page'] : '0').'&limit='.(isset($_GET['limit']) ? $_GET['limit'] : '20');
-         $result = $this->client->get($url, [
+         $configCatalogues = API_CONFIG_CATALOGUE_GET_BY_SITEID.'/'.$id.'?keyword='.(isset($_GET['keyword']) ? $_GET['keyword'] : '').'&page='.(isset($_GET['page']) ? $_GET['page'] : '0').'&limit='.(isset($_GET['limit']) ? $_GET['limit'] : '20');
+         $result = $this->client->get($configCatalogues, [
             'debug' => true,
             'headers'=>$headers,
          ]);
@@ -27,15 +27,21 @@ class WebsiteService{
       }
    }
 
-   public function storeWebsite($request){
+   public function storeConfigCatalogue($request, $id){
       try{
          helper('text');
-         return [
-            'url' => $request->getPost('url'),
-            'type' => $request->getPost('type'),
-            'typeCrawl' => $request->getPost('typeCrawl'),
-            'status' => $request->getPost('status'),
+         $store = [
+            'group' => $request->getPost('group'),
+            'dataType' => $request->getPost('dataType'),
+            'siteId' => $id,
          ];
+
+         if($store['dataType'] == 'RATE'){
+            $store['selector'] = json_encode($request->getPost('selector'));
+         }else{
+            $store['selector'] = $request->getPost('selector');
+         }
+         return $store;
       }catch(\Exception $e ){
          echo $e->getMessage();die();
       }

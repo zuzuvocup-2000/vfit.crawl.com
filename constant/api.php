@@ -21,6 +21,8 @@ const API_WEBSITE_CREATE = 'http://localhost:3001/admin/sites';
 const API_WEBSITE_UPDATE = 'http://localhost:3001/admin/sites'; 
 const API_WEBSITE_GET_BY_URL = 'http://localhost:3001/admin/sites/site'; 
 const API_WEBSITE_GET_BY_ID = 'http://localhost:3001/admin/sites';
+const API_WEBSITE_GET_ALL_URLS = 'http://localhost:3001/admin/sites/list';
+const API_UPDATE_STATUS_URL = 'http://localhost:3001/admin/sites/update-status';
 
 const API_CONFIG_ARTICLE_LIST = 'http://localhost:3001/admin/article-config'; 
 const API_CONFIG_ARTICLE_CREATE = 'http://localhost:3001/admin/article-config'; 
@@ -29,7 +31,17 @@ const API_CONFIG_ARTICLE_UPDATE = 'http://localhost:3001/admin/article-config';
 const API_CONFIG_ARTICLE_GET_BY_SITEID = 'http://localhost:3001/admin/article-config/list';  
 const API_CONFIG_ARTICLE_GET_BY_ID = 'http://localhost:3001/admin/article-config';  
 
+const API_CONFIG_CATALOGUE_LIST = 'http://localhost:3001/admin/catalogue-config'; 
+const API_CONFIG_CATALOGUE_CREATE = 'http://localhost:3001/admin/catalogue-config'; 
+const API_CONFIG_CATALOGUE_UPDATE = 'http://localhost:3001/admin/catalogue-config'; 
+// const API_CONFIG_CATALOGUE_GET_BY_URL = 'http://localhost:3001/admin/catalogue-config/site'; 
+const API_CONFIG_CATALOGUE_GET_BY_SITEID = 'http://localhost:3001/admin/catalogue-config/list';  
+const API_CONFIG_CATALOGUE_GET_BY_ID = 'http://localhost:3001/admin/catalogue-config'; 
+
 const API_CRAWL_SITEMAP = 'http://localhost:3002/crawler'; 
 const API_CRAWL_JAVASCRIPT = 'http://localhost:3002/crawler/crawl-url-javascript'; 
 const API_CRAWL_NORMAL = 'http://localhost:3002/crawler/crawl-url-normal'; 
 
+const API_CRITERIA_UPSERT = 'http://localhost:3001/admin/criteria'; 
+const API_CRITERIA_LIST = 'http://localhost:3001/admin/criteria'; 
+const API_CRITERIA_GET_BY_ID = 'http://localhost:3001/admin/criteria'; 

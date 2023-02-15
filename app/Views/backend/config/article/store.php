@@ -1,3 +1,8 @@
+<?php 
+    if(isset($article['data']['dataType']) || isset($_POST['dataType'])){
+        $selector = (isset($article['data']['dataType']) && $article['data']['dataType'] == 'RATE' ? json_decode($article['data']['selector'],true) : $article['data']['selector']); 
+    }
+?>
 <div class="container-fluid py-4">
     <div class="card">
         <form action="" method="post">
@@ -42,38 +47,56 @@
                             ], set_value('group', (isset($article['data']['group']) ? $article['data']['group'] : '')), 'onfocus="focused(this)" onfocusout="defocused(this)" class="form-control"') ; ?>
                         </div>
                     </div>
-                    <div class="col-md-6 wrap-selector-normal">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Bộ chọn HTML  <span class="text-danger">(*)</span></label>
-                            <?php echo form_input('selector', validate_input(set_value('selector', (isset($article['data']['selector'])) ? $article['data']['selector'] : '')), 'class="form-control" onfocus="focused(this)" onfocusout="defocused(this)"'); ?>
+                    <?php if(!isset($article['data']['dataType']) || $article['data']['dataType'] != 'RATE'){ ?>
+                        <div class="col-md-6 wrap-selector-normal">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Bộ chọn HTML  <span class="text-danger">(*)</span></label>
+                                <?php echo form_input('selector', validate_input(set_value('selector', (isset($article['data']['selector'])) ? $article['data']['selector'] : '')), 'class="form-control" onfocus="focused(this)" onfocusout="defocused(this)"'); ?>
+                            </div>
                         </div>
-                    </div>
-                    <!-- <div class="col-md-6 wrap-selector-type-rate">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Loại đánh giá</label>
-                            <?php  echo form_dropdown('selector[type]', [
-                                '' => 'Chọn loại đánh giá',
-                                'PLUGIN' => 'PLUGIN',
-                                'CLICK' => 'CLICK',
-                                'SCROLL' => 'SCROLL',
-                            ], set_value('type', (isset($article['data']['selector']['type']) ? $article['data']['selector']['type'] : '')), 'onfocus="focused(this)" onfocusout="defocused(this)" class="form-control selector-type-rate"') ; ?>
+                    <?php } ?>
+                    <?php if(isset($article['data']['dataType']) && $article['data']['dataType'] == 'RATE' && $website['data']['typeCrawl'] != 'DOM'){ ?>
+                        <div class="col-md-6 wrap-selector-type-rate">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Loại đánh giá</label>
+                                <?php  echo form_dropdown('selector[type]', [
+                                    '' => 'Chọn loại đánh giá',
+                                    'PLUGIN' => 'PLUGIN',
+                                    'CLICK' => 'CLICK',
+                                    'SCROLL' => 'SCROLL',
+                                ], set_value('type', (isset($selector['type']) ? $selector['type'] : '')), 'onfocus="focused(this)" onfocusout="defocused(this)" class="form-control selector-type-rate"') ; ?>
+                            </div>
                         </div>
-                    </div> -->
+                    <?php } ?>
                 </div>
                 <div class="js-open-plugin-rate">
-                    <?php // echo view('backend/config/article/common/plugin') ?>
+                    <?php 
+                        if(isset($selector['type']) && $selector['type'] == 'PLUGIN'){
+                            echo view('backend/config/article/common/plugin',['selector' => $selector]);
+                        } 
+                    ?>
                 </div>
                 <div class="js-open-click-rate">
-                    <?php // echo view('backend/config/article/common/click') ?>
+                    <?php 
+                        if(isset($selector['type']) && $selector['type'] == 'CLICK'){
+                            echo view('backend/config/article/common/click',['selector' => $selector]);
+                        } 
+                    ?>
                 </div>
                 <div class="js-open-scroll-rate">
-                    <?php // echo view('backend/config/article/common/scroll') ?>
+                    <?php 
+                        if(isset($selector['type']) && $selector['type'] == 'SCROLL'){
+                            echo view('backend/config/article/common/scroll',['selector' => $selector]);
+                        } 
+                    ?>
                 </div>
-
                 <div class="js-open-normal-rate">
-                    <?php // echo view('backend/config/article/common/normal') ?>
+                    <?php 
+                        if(isset($article['data']['dataType']) && $article['data']['dataType'] == 'RATE' && $website['data']['typeCrawl'] == 'DOM' ){
+                            echo view('backend/config/article/common/normal',['selector' => $selector]);
+                        } 
+                    ?>
                 </div>
-                
             </div>
         </form>
     </div>
