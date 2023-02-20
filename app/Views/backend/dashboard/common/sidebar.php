@@ -14,14 +14,7 @@ $uriSegment = $uri->getSegment(1);
     <hr class="horizontal dark mt-0" />
     <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link <?php echo $uriSegment == 'dashboard' ? 'active' : '' ?>" href="">
-                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Trang chủ</span>
-                </a>
-            </li>
+            
             <li class="nav-item">
                 <a class="nav-link <?php echo $uriSegment == 'statistic' ? 'active' : '' ?>" href="/statistic/list">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -69,8 +62,9 @@ $uriSegment = $uri->getSegment(1);
         </ul>
     </div>
     <div class="sidenav-footer mx-3 ">
-        <a href="https://www.creative-tim.com/learning-lab/bootstrap/license/argon-dashboard" target="_blank" class="btn btn-dark btn-sm w-100 mb-3">Documentation</a>
         <a href="resources/get-element-main.zip" download class="btn btn-dark btn-sm w-100 mb-3">Download Extension</a>
-        <a href="/support"  class="btn btn-sm w-100 mb-3">Hướng dẫn cài đặt</a>
+        <a href="/support/system"  class="btn btn-sm w-100 mb-3 btn-primary">Hướng dẫn cài đặt hệ thống</a>
+        <a href="/support"  class="btn btn-sm w-100 mb-3 btn-info">Hướng dẫn cài đặt Extension</a>
+        <a href="/support/use"  class="btn btn-sm w-100 mb-3 ">Hướng dẫn sử dụng</a>
     </div>
 </aside>

@@ -10,7 +10,7 @@ define('AUTH', 'VFIT_');
 define('ASSET_BACKEND', 'public/backend/');
 define('ASSET_BACKEND_TEMPLATE', 'template/');
 
-define('BASE_URL', 'http://vfit.com/');
+define('BASE_URL', 'http://vfit.crawl.com/');
 define('HTSUFFIX', '.html');
 
 define('DEBUG', 0);

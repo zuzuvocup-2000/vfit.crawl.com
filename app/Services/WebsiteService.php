@@ -44,7 +44,7 @@ class WebsiteService{
    public function getListUrlFromWebsite($id){
       try{
          $headers = ['Authorization' => "Bearer ".session()->get('accessToken')];
-         $urls = API_WEBSITE_GET_ALL_URLS.'/'.$id.'?keyword='.(isset($_GET['keyword']) ? $_GET['keyword'] : '').'&page='.(isset($_GET['page']) ? $_GET['page'] : '0').'&limit='.(isset($_GET['limit']) ? $_GET['limit'] : '20');
+         $urls = API_WEBSITE_GET_ALL_URLS.'/'.$id.'?keyword='.(isset($_GET['keyword']) ? $_GET['keyword'] : '').'&page='.(isset($_GET['page']) ? $_GET['page'] : '0').'&limit='.(isset($_GET['limit']) ? $_GET['limit'] : '100');
          $result = $this->client->get($urls, [
             'debug' => true,
             'headers'=>$headers,

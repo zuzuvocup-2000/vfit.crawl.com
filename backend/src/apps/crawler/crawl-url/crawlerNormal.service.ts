@@ -53,10 +53,10 @@ export class CrawlerNormalService {
             disableUrls.push(uniqueHrefs[index]);
         });
       }
-      const urlsAccept = uniqueHrefs.filter((x) => !disableUrls.includes(x));
-      const lists = urlsAccept.filter((i) => i.includes(currentUrl.origin));
+      const urlsAccept = uniqueHrefs.filter(x => !disableUrls.includes(x));
+      const lists = urlsAccept.filter(i => i.includes(currentUrl.origin));
       for (const url of urlsAccept.filter(
-        (i) => !i.includes(currentUrl.origin),
+        i => !i.includes(currentUrl.origin),
       )) {
         if (this.isValidUrl(currentUrl.origin + url))
           lists.push(currentUrl.origin);

@@ -35,7 +35,6 @@ class ConfigArticleService{
             'dataType' => $request->getPost('dataType'),
             'siteId' => $id,
          ];
-
          if($store['dataType'] == 'RATE'){
             $store['selector'] = json_encode($request->getPost('selector'));
          }else{

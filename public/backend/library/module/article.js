@@ -123,7 +123,7 @@ function add_wrap_rate_click(){
 	    html = html + '<div class="col-md-6">';
 	        html = html + '<div class="form-group">';
 	            html = html + '<label for="example-text-input" class="form-control-label">Bộ chọn HTML nút xem thêm  </label>';
-	            html = html + '<input type="text" name="selector[selector]" value="" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">';
+	            html = html + '<input type="text" name="selector[view_more]" value="" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)">';
 	        html = html + '</div>';
 	    html = html + '</div>';
 	    html = html + '<div class="col-md-6">';

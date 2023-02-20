@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-await-in-loop */
-import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { CHECK_URL_DISABLED } from 'src/common/constants/app';
-import { CRITERIA_TYPE_ENUM, TYPE_SITE } from 'src/common/constants/enum';
-import { CrawlerRepository } from '../crawler.repository';
+import { CRITERIA_TYPE_ENUM } from 'src/common/constants/enum';
 import { StatisticRepository } from '../statistic.repository';
 
 @Injectable()
@@ -154,23 +151,5 @@ export class StatisticArticle {
     }
     const point = 5 + totalGood * 0.5 - totalBad * 0.5;
     return Math.max(0, Math.min(point, 10));
-  }
-
-  calculateAverage(obj) {
-    let totalGood = 0;
-    let totalBad = 0;
-    let total = 0;
-    for (const key in obj.good) {
-      totalGood += obj.good[key];
-      total += obj.good[key];
-    }
-    for (const key in obj.bad) {
-      totalBad += obj.bad[key];
-      total += obj.bad[key];
-    }
-    return {
-      good: totalGood / total,
-      bad: totalBad / total,
-    };
   }
 }

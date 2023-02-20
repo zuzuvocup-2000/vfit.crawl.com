@@ -1,3 +1,4 @@
+
 <div class="row">
     <div class="col-12">
         <div class="card mb-4">
@@ -5,18 +6,21 @@
                 <h6><?php echo $title ?></h6>
                 <div class="wrap-search ">
                     <form class="d-flex justify-content-between mb-3" action="" method="get">
-                        <select class="form-control select-user" style="width: 200px;" name="limit">
-                            <option value='20' <?php echo isset($_GET['limit']) && $_GET['limit'] == '20' ? 'selected' : ''  ?>>20 bản ghi</option>
-                            <option value='30' <?php echo isset($_GET['limit']) && $_GET['limit'] == '30' ? 'selected' : ''  ?>>30 bản ghi</option>
-                            <option value='40' <?php echo isset($_GET['limit']) && $_GET['limit'] == '40' ? 'selected' : ''  ?>>40 bản ghi</option>
-                            <option value='50' <?php echo isset($_GET['limit']) && $_GET['limit'] == '50' ? 'selected' : ''  ?>>50 bản ghi</option>
-                            <option value='100' <?php echo isset($_GET['limit']) && $_GET['limit'] == '100' ? 'selected' : ''  ?>>100 bản ghi</option>
-                        </select>
+                        <div class="d-flex">
+                            <select class="form-control select-user" style="width: 200px;" name="limit">
+                                <option value='100' <?php echo isset($_GET['limit']) && $_GET['limit'] == '100' ? 'selected' : ''  ?>>100 bản ghi</option>
+                                <option value='200' <?php echo isset($_GET['limit']) && $_GET['limit'] == '200' ? 'selected' : ''  ?>>200 bản ghi</option>
+                                <option value='500' <?php echo isset($_GET['limit']) && $_GET['limit'] == '500' ? 'selected' : ''  ?>>500 bản ghi</option>
+                            </select>
+                            <select class="form-control select-user" style="width: 200px;margin-left: 15px;" name="point">
+                                <option value="">Chọn trạng thái báo cáo</option>
+                                <option value='bad' <?php echo isset($_GET['point']) && $_GET['point'] == 'bad' ? 'selected' : ''  ?>>Không tốt</option>
+                                <option value='normal' <?php echo isset($_GET['point']) && $_GET['point'] == 'normal' ? 'selected' : ''  ?>>Bình thường</option>
+                                <option value='good' <?php echo isset($_GET['point']) && $_GET['point'] == 'good' ? 'selected' : ''  ?>>Tốt</option>
+                            </select>
+                        </div>
                         <div class="d-flex flex-middle">
-                            <div class="input-group " style="width: 500px;">
-                                <input type="text" name="keyword" class="form-control keyword-search" placeholder="Nhập từ khóa để tìm kiếm..." aria-label="Nhập từ khóa để tìm kiếm" aria-describedby="button-addon2" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : '' ?>">
-                                <button class="btn btn-outline-primary mb-0 btn-click-search-user" type="submit" id="button-addon2">Tìm kiếm</button>
-                            </div>
+                            <button class="btn btn-outline-primary mb-0 btn-click-search-user" type="submit" id="button-addon2">Tìm kiếm</button>
                             <a href="/user/create" class="btn btn-primary m-0 ms-3">Thêm mới</a>
                         </div>
                     </form>  
@@ -31,104 +35,15 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 40px;"></th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" style="width: 400px;">Tiêu đề</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 40px;">Điểm </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 200px;">Thông tin </th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 250px;">Thông tin </th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Biểu đồ</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center" style="width: 150px;">Tổng kết</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="list-item" >
-                                <td class="text-center">
-                                    <div class="form-check text-center p-0 m-0 d-flex align-items-center justify-content-center click ">
-                                        <input class="form-check-input m-auto" type="checkbox" value="" onchange="$(this).parents('.list-item').toggleClass('change-bg')">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="wrap-flex-title" style="width: calc( 100% - 65px);">
-                                            <a href="http://vfit.com/" class="">Tiêu đề</a>
-                                            <br>
-                                            <span class="text-xs">URL: <a href="http://vfit.com/" class="text-warning">http://vfit.com/</a></span>
-                                        </div>
-                                        <div class="wrap-btn" style="width: 55px;margin-left: 10px;">
-                                            <a href="/user/update/1" target="_blank" class="btn bg-gradient-info mb-0" style="margin-right: 10px;"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="align-middle text-center">
-                                    10
-                                </td>
-                                <td>
-                                    <div class="content-keyword mb-2">
-                                        <div class="title text-sm">Nội dung:</div>
-                                        <ul class="list-keyword">
-                                            <li class="danger">dmm: 1</li>
-                                            <li class="success">abc: 1</li>
-                                        </ul>
-                                    </div>
-                                    <div class="rate-keyword ">
-                                        <div class="title text-sm">Đánh giá:</div>
-                                        <ul class="list-keyword">
-                                            <li class="danger">dmm: 1</li>
-                                            <li class="success">abc: 1</li>
-                                        </ul>
-                                    </div>
-                                </td>
-                                <td class="align-middle ">
-                                    <div class="chart-wrap">
-                                        <div class="title text-sm">Nội dung:</div>
-                                        <div class="progress-wrapper d-flex align-items-center">
-                                            <div class="progress-info" style="width: 50px">
-                                                <div class="progress-percentage">
-                                                    <span class="text-sm font-weight-bold text-success">60%</span>
-                                                </div>
-                                            </div>
-                                            <div class="progress" style="width: calc(100% - 50px)">
-                                                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                                            </div>
-                                        </div>
-                                        <div class="progress-wrapper d-flex align-items-center">
-                                            <div class="progress-info" style="width: 50px">
-                                                <div class="progress-percentage">
-                                                    <span class="text-sm font-weight-bold text-danger">40%</span>
-                                                </div>
-                                            </div>
-                                            <div class="progress" style="width: calc(100% - 50px)">
-                                                <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="chart-wrap">
-                                        <div class="title text-sm">Đánh giá:</div>
-                                        <div class="progress-wrapper d-flex align-items-center">
-                                            <div class="progress-info" style="width: 50px">
-                                                <div class="progress-percentage">
-                                                    <span class="text-sm font-weight-bold text-success">60%</span>
-                                                </div>
-                                            </div>
-                                            <div class="progress" style="width: calc(100% - 50px)">
-                                                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                                            </div>
-                                        </div>
-                                        <div class="progress-wrapper d-flex align-items-center">
-                                            <div class="progress-info" style="width: 50px">
-                                                <div class="progress-percentage">
-                                                    <span class="text-sm font-weight-bold text-danger">40%</span>
-                                                </div>
-                                            </div>
-                                            <div class="progress" style="width: calc(100% - 50px)">
-                                                <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-center text-success">
-                                    Rất tốt
-                                </td>
-                            </tr>
-
-                            <?php if(isset($userList['data']) && is_array($userList['data']) && count($userList['data'])){ 
-                                foreach ($userList['data'] as $key => $value) {
+                            <?php if(isset($statisticList['data']) && is_array($statisticList['data']) && count($statisticList['data'])){ 
+                                foreach ($statisticList['data'] as $key => $value) {
+                                    $point = $value['point'];
                             ?>
                                 <tr class="list-item" >
                                     <td class="text-center">
@@ -136,43 +51,181 @@
                                             <input class="form-check-input m-auto" type="checkbox" value="" onchange="$(this).parents('.list-item').toggleClass('change-bg')">
                                         </div>
                                     </td>
-                                    <td class="text-center">
-                                        <?php echo $value['name']  ?>
-                                    </td>
-                                    <td class="text-center">
-                                        <?php echo $value['email']  ?>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="wrap-flex-title" style="width: calc( 100% - 65px);">
+                                                <a href="statistic/article/<?php echo $value['articleId']['_id'] ?>" target="_blank" class=""><?php echo $value['articleId']['title'] ?></a>
+                                                <br>
+                                                <span class="text-xs">URL: <a target="_blank" href="<?php echo $value['articleId']['url'] ?>" class="text-warning"><?php echo $value['articleId']['url'] ?></a></span>
+                                            </div>
+                                            <div class="wrap-btn" style="width: 55px;margin-left: 10px;">
+                                                <a href="statistic/article/<?php echo $value['articleId']['_id'] ?>" target="_blank" class="btn bg-gradient-info mb-0" style="margin-right: 10px;"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            </div>
+                                        </div>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold"><?php echo isset($value['createdAt']) ? date('d-m-Y H:i:s', strtotime($value['createdAt'])) : '-' ?></span>
+                                        <span class="<?php echo $point > 7 ? 'text-success' : ($point < 4 ? 'text-danger' : 'text-primary') ?>"><?php echo $point ?></span>
                                     </td>
-                                    <td class="align-middle">
-                                        <div class="d-flex">
-                                            <a href="/user/update/<?php echo $value['_id'] ?>" class="btn bg-gradient-success mb-0" style="margin-right: 10px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                            <a class="btn bg-gradient-danger btn-delete-user mb-0" data-id="<?php echo $value['_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                    <td>
+                                        <div class="content-keyword mb-2">
+                                            <div class="title text-sm">Nội dung:</div>
+                                            <ul class="list-keyword">
+                                                <?php 
+                                                    $bad = reset($value['bad']);
+                                                    $good = reset($value['good']);
+                                                 ?>
+                                                <?php if(isset($good['content']) && is_array($good['content']) && count($good['content'])){
+                                                    foreach ($good['content'] as $keyContent => $valueContent) {
+                                                 ?>
+                                                    <li class="success mb-2"><?php echo key($valueContent) ?>: <?php echo $valueContent[key($valueContent)] ?></li>
+                                                <?php }} ?>
+                                                <?php if(isset($bad['content']) && is_array($bad['content']) && count($bad['content'])){
+                                                    foreach ($bad['content'] as $keyContent => $valueContent) {
+                                                 ?>
+                                                    <li class="danger mb-2"><?php echo key($valueContent) ?>: <?php echo $valueContent[key($valueContent)] ?></li>
+                                                <?php }} ?>
+                                            </ul>
                                         </div>
+                                        <div class="rate-keyword ">
+                                            <div class="title text-sm">Đánh giá:</div>
+                                            <ul class="list-keyword">
+                                                <?php if(isset($good['rate']) && is_array($good['rate']) && count($good['rate'])){
+                                                    foreach ($good['rate'] as $keyRate => $valueRate) {
+                                                 ?>
+                                                    <li class="success mb-2"><?php echo key($valueRate) ?>: <?php echo $valueRate[key($valueRate)] ?></li>
+                                                <?php }} ?>
+                                                <?php if(isset($bad['rate']) && is_array($bad['rate']) && count($bad['rate'])){
+                                                    foreach ($bad['rate'] as $keyRate => $valueRate) {
+                                                 ?>
+                                                    <li class="danger mb-2"><?php echo key($valueRate) ?>: <?php echo $valueRate[key($valueRate)] ?></li>
+                                                <?php }} ?>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <?php 
+                                        $total = 0;
+                                        $total_content_good = 0;
+                                        $total_content_bad = 0;
+                                        $total_rate_good = 0;
+                                        $total_rate_bad = 0;
+                                        if(isset($good['content']) && is_array($good['content']) && count($good['content'])){
+                                            foreach ($good['content'] as $value) {
+                                                if(isset($value) && is_array($value) && count($value)) {
+                                                    $total += $value[key($value)];
+                                                    $total_content_good += $value[key($value)];
+                                                }
+                                            }
+                                        }
+                                        if(isset($good['rate']) && is_array($good['rate']) && count($good['rate'])){
+                                            foreach ($good['rate'] as $value) {
+                                                if(isset($value) && is_array($value) && count($value)) {
+                                                    $total += $value[key($value)];
+                                                    $total_rate_good += $value[key($value)];
+                                                }
+                                            }
+                                        }
+                                        if(isset($bad['content']) && is_array($bad['content']) && count($bad['content'])){
+                                            foreach ($bad['content'] as $value) {
+                                                if(isset($value) && is_array($value) && count($value)) {
+                                                    $total += $value[key($value)];
+                                                    $total_content_bad += $value[key($value)];
+                                                }
+                                            }
+                                        }
+                                        if(isset($bad['rate']) && is_array($bad['rate']) && count($bad['rate'])){
+                                            foreach ($bad['rate'] as $value) {
+                                                if(isset($value) && is_array($value) && count($value)) {
+                                                    $total += $value[key($value)];
+                                                    $total_rate_bad += $value[key($value)];
+                                                }
+                                            }
+                                        }
+                                    ?>
+                                    <td class="align-middle ">
+                                        <div class="chart-wrap">
+                                            <div class="title text-sm">Nội dung:</div>
+                                            <div class="progress-wrapper d-flex align-items-center">
+                                                <div class="progress-info" style="width: 50px">
+                                                    <div class="progress-percentage">
+                                                        <span class="text-sm font-weight-bold text-success"><?php echo $total != 0 ? round($total_content_good / $total * 100, 1) : 0 ?>%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="progress" style="width: calc(100% - 50px)">
+                                                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="<?php echo $total != 0 ? round($total_content_good / $total * 100, 1) : 0 ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $total != 0 ? round($total_content_good / $total * 100, 1) : 0 ?>%;"></div>
+                                                </div>
+                                            </div>
+                                            <div class="progress-wrapper d-flex align-items-center">
+                                                <div class="progress-info" style="width: 50px">
+                                                    <div class="progress-percentage">
+                                                        <span class="text-sm font-weight-bold text-danger"><?php echo $total == 0 ? 0 : round($total_content_bad / $total * 100, 1) ?>%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="progress" style="width: calc(100% - 50px)">
+                                                    <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="<?php echo $total == 0 ? 0 : round($total_content_bad / $total * 100, 1) ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $total == 0 ? 0 : round($total_content_bad / $total * 100, 1) ?>%;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="chart-wrap">
+                                            <div class="title text-sm">Đánh giá:</div>
+                                            <div class="progress-wrapper d-flex align-items-center">
+                                                <div class="progress-info" style="width: 50px">
+                                                    <div class="progress-percentage">
+                                                        <span class="text-sm font-weight-bold text-success"><?php echo $total == 0 ? 0 : round($total_rate_good / $total * 100, 1) ?>%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="progress" style="width: calc(100% - 50px)">
+                                                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="<?php echo $total == 0 ? 0 : round($total_rate_good / $total * 100, 1) ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $total == 0 ? 0 : round($total_rate_good / $total * 100, 1) ?>%;"></div>
+                                                </div>
+                                            </div>
+                                            <div class="progress-wrapper d-flex align-items-center">
+                                                <div class="progress-info" style="width: 50px">
+                                                    <div class="progress-percentage">
+                                                        <span class="text-sm font-weight-bold text-danger"><?php echo $total == 0 ? 0 : round($total_rate_bad / $total * 100, 1) ?>%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="progress" style="width: calc(100% - 50px)">
+                                                    <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="<?php echo $total == 0 ? 0 : round($total_rate_bad / $total * 100, 1) ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $total == 0 ? 0 : round($total_rate_bad / $total * 100, 1) ?>%;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center text-success">
+                                        <span class="<?php echo $point > 7 ? 'text-success' : ($point < 4 ? 'text-danger' : 'text-primary') ?>"><?php echo $point > 7 ? 'Tốt' : ($point < 4 ? 'Không tốt' : 'Bình thường') ?></span>
                                     </td>
                                 </tr>
                             <?php }} ?>
                         </tbody>
                     </table>
-
                 </div>
                 <?php $actual_link = "$_SERVER[REQUEST_SCHEME]://$_SERVER[HTTP_HOST]$_SERVER[REDIRECT_URL]"; ?>
-                <?php if(isset($userList['pagination']) && is_array($userList['pagination']) && count($userList['pagination'])){ 
-                    if($userList['pagination']['limit'] < $userList['pagination']['total']){
-                    $pagination = ceil($userList['pagination']['total'] / $userList['pagination']['limit']);
+                <?php if(isset($statisticList['paginate']) && is_array($statisticList['paginate']) && count($statisticList['paginate'])){ 
+                    if($statisticList['paginate']['limit'] < $statisticList['paginate']['total']){
+                    $pagination = ceil($statisticList['paginate']['total'] / $statisticList['paginate']['limit']);
                 ?>
-                    <ul class="pagination d-flex justify-content-center mt-3">
-                        <?php $current_page = (isset($_GET['page']) ? $_GET['page'] : 0) ?>
-                        <?php for ($i = 0; $i < $pagination; $i++) {   ?>
-                            <?php 
-                                $_GET['page'] = $i ;
-                             ?>
-                            <li class="page-item <?php echo $current_page == $i  ? 'active' : '' ?>"><a class="page-link " href="<?php echo $actual_link.'?'.http_build_query($_GET) ?>"><?php echo $i + 1 ?></a></li>
-                        <?php } ?>
-                    </ul>
+                    <?php if($statisticList['paginate']['total'] <= 7){ ?>
+                        <ul class="pagination d-flex justify-content-center mt-3">
+                            <?php $current_page = (isset($_GET['page']) ? $_GET['page'] : 0) ?>
+                            <?php for ($i = 0; $i < $pagination; $i++) {   ?>
+                                <?php 
+                                    $_GET['page'] = $i ;
+                                 ?>
+                                <li class="page-item <?php echo $current_page == $i  ? 'active' : '' ?>"><a class="page-link " href="<?php echo $actual_link.'?'.http_build_query($_GET) ?>"><?php echo $i + 1 ?></a></li>
+                            <?php } ?>
+                        </ul>
+                    <?php } else { ?>
+                        <ul class="pagination d-flex justify-content-center mt-3">
+                            <?php $current_page = (isset($_GET['page']) ? $_GET['page'] : 0) ?>
+                            <?php for ($i = 0; $i < $pagination; $i++) {   ?>
+                                <?php 
+                                    $_GET['page'] = $i ;
+                                 ?>
+                                <li class="page-item <?php echo $current_page == $i  ? 'active' : '' ?>"><a class="page-link " href="<?php echo $actual_link.'?'.http_build_query($_GET) ?>"><?php echo $i + 1 ?></a></li>
+                            <?php } ?>
+                        </ul>
+                    <?php } ?>
                 <?php }} ?>
             </div>
         </div>
     </div>
 </div>
+

@@ -42,7 +42,7 @@ class Auth extends BaseController{
 	                    'email' => $dataLogin['email'],
 	                ];
 	                $session->set($ses_data);
-	                return redirect()->to(BASE_URL.'dashboard');
+	                return redirect()->to(BASE_URL.'statistic/list');
 		        }else{
 		           $this->data['validate'] = $dataLogin['message'];
 		        }

@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0 mb-3">
-                <h6><?php echo $title ?></h6>
+                <h6><?php echo $title ?>: <?php echo $website['data']['url'] ?></h6>
                 <div class="wrap-search ">
                     <form class="d-flex justify-content-between mb-3" action="" method="get">
                         <select class="form-control select-user" style="width: 200px;" name="limit">

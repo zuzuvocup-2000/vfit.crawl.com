@@ -80,7 +80,7 @@ export class SiteService {
     return collector.find({
       filter: {
         $or: [
-          { url: { $regex: new RegExp(getPaginateDto.keyword, "i") } },
+          { url: { $regex: new RegExp(getPaginateDto.keyword, 'i') } },
         ]
       },
       page: getPaginateDto.page,

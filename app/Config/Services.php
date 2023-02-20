@@ -60,4 +60,11 @@ class Services extends CoreServices{
         }
         return new \App\Services\CriteriaService($param);
     }
+
+    public static function StatisticService($param = [], $getShared = true){
+        if ($getShared){
+            return static::getSharedInstance('StatisticService', $param);
+        }
+        return new \App\Services\StatisticService($param);
+    }
 }

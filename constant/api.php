@@ -39,9 +39,17 @@ const API_CONFIG_CATALOGUE_GET_BY_SITEID = 'http://localhost:3001/admin/catalogu
 const API_CONFIG_CATALOGUE_GET_BY_ID = 'http://localhost:3001/admin/catalogue-config'; 
 
 const API_CRAWL_SITEMAP = 'http://localhost:3002/crawler'; 
-const API_CRAWL_JAVASCRIPT = 'http://localhost:3002/crawler/crawl-url-javascript'; 
 const API_CRAWL_NORMAL = 'http://localhost:3002/crawler/crawl-url-normal'; 
+const API_CRAWL_SITEMAP_PENDING = 'http://localhost:3002/crawler/check-sitemap-pending'; 
+const API_CHUNK_ARTICLE = 'http://localhost:3002/crawler/chunk-article'; 
+const API_CHUNK_SITE = 'http://localhost:3002/crawler/chunk'; 
+const API_CRAWL_DATA = 'http://localhost:3002/crawler/crawl-site'; 
+const API_STATISTIC_ARTICLE = 'http://localhost:3002/crawler/statistic-article'; 
+const API_START_RESULT = 'http://localhost:3001/admin/statistic/calculate-statistic'; 
 
 const API_CRITERIA_UPSERT = 'http://localhost:3001/admin/criteria'; 
 const API_CRITERIA_LIST = 'http://localhost:3001/admin/criteria'; 
 const API_CRITERIA_GET_BY_ID = 'http://localhost:3001/admin/criteria'; 
+
+const API_STATISTIC_LIST = 'http://localhost:3001/admin/statistic'; 
+const API_GET_ARTICLE = 'http://localhost:3001/admin/statistic/article'; 

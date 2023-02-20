@@ -4,11 +4,56 @@
             <div class="card-header pb-0 mb-3">
                 <h6><?php echo $title ?></h6>
                 <div class="note-table">
-                    <div class="note-table-title text-xs">Chú thích:</div>
-                    <ul>
-                        <li class="text-danger text-xs">TLBV: Thiết lập bài viết</li>
-                        <li class="text-danger text-xs">TLDM: Thiết lập danh mục</li>
-                    </ul>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <div class="note-table-title text-xs">Chú thích:</div>
+                            <ul>
+                                <li class="text-danger text-xs">TLBV: Thiết lập bài viết</li>
+                                <li class="text-danger text-xs">TLDM: Thiết lập danh mục</li>
+                            </ul>
+                        </div>
+                        <button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Cài đặt hệ thống
+                        </button>
+                    </div>
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div>
+                                        <h5 class="modal-title" id="exampleModalLabel">Cài đặt hệ thống</h5>
+                                        <div class="text-warning text-xs">Lưu ý: Hệ thống chạy ẩn, xin vui lòng chờ ít phút để tiếp tục sử dụng chức năng hệ thống!</div>
+                                    </div>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="wrap-crawl-modal mb3">
+                                        <div class="title-modal mb-2">Thu thập toàn bộ Url của các Website</div>
+                                        <div class="wrap-btn">
+                                            <button class="btn-crawl-url-sitemap btn me-3 btn-primary">1. Thu thập Url bằng Sitemap</button>
+                                            <button class="btn-crawl-url-normal btn btn-secondary me-3">2. Thu thập Url bình thường</button>
+                                            <button class="btn-crawl-url-sitemap-pending btn btn-info">3. Thu thập Sitemap chờ</button>
+                                        </div>
+                                    </div>
+                                    <div class="wrap-crawl-modal mb3">
+                                        <div class="title-modal mb-2">Thu thập dữ liệu bài viết và danh mục</div>
+                                        <div class="wrap-btn">
+                                            <button class="btn-crawl-url-chunk-site btn me-3 btn-primary">1. Chia đều Website theo 5 luồng</button>
+                                            <button class="btn-crawl-data btn me-3 btn-secondary">2. Thu thập dữ liệu</button>
+                                        </div>
+                                    </div>
+                                    <div class="wrap-crawl-modal mb3">
+                                        <div class="title-modal mb-2">Phân tích và đánh giá dữ liệu</div>
+                                        <div class="wrap-btn">
+                                            <button class="btn-crawl-url-chunk-article btn me-3 btn-primary">1. Chia đều bài viết theo 10 luồng</button>
+                                            <button class="btn-statistic btn me-3 btn-secondary">2. Phân tích dữ liệu</button>
+                                            <button class="btn-result btn me-3 btn-info">3. Tổng kết dữ liệu</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="wrap-search ">
                     <form class="d-flex justify-content-between mb-3" action="" method="get">

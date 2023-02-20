@@ -19,7 +19,7 @@ class Login implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         if(session()->get('isLoggedIn') == true){
-            return redirect()->to(BASE_URL.'dashboard');
+            return redirect()->to(BASE_URL.'statistic/list');
         }
     }
 

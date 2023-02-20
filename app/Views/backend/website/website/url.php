@@ -7,11 +7,9 @@
                 <div class="wrap-search ">
                     <form class="d-flex justify-content-between mb-3" action="" method="get">
                         <select class="form-control select-website" style="width: 200px;" name="limit">
-                            <option value='20' <?php echo isset($_GET['limit']) && $_GET['limit'] == '20' ? 'selected' : ''  ?>>20 bản ghi</option>
-                            <option value='30' <?php echo isset($_GET['limit']) && $_GET['limit'] == '30' ? 'selected' : ''  ?>>30 bản ghi</option>
-                            <option value='40' <?php echo isset($_GET['limit']) && $_GET['limit'] == '40' ? 'selected' : ''  ?>>40 bản ghi</option>
-                            <option value='50' <?php echo isset($_GET['limit']) && $_GET['limit'] == '50' ? 'selected' : ''  ?>>50 bản ghi</option>
                             <option value='100' <?php echo isset($_GET['limit']) && $_GET['limit'] == '100' ? 'selected' : ''  ?>>100 bản ghi</option>
+                            <option value='200' <?php echo isset($_GET['limit']) && $_GET['limit'] == '200' ? 'selected' : ''  ?>>200 bản ghi</option>
+                            <option value='500' <?php echo isset($_GET['limit']) && $_GET['limit'] == '500' ? 'selected' : ''  ?>>500 bản ghi</option>
                         </select>
                         <div class="d-flex flex-middle">
                             <div class="input-group " style="width: 500px;">

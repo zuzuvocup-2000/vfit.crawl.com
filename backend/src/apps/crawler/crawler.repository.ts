@@ -80,8 +80,7 @@ export class CrawlerRepository {
 
   async getUrlCrawlBySite(site: Site): Promise<Url[]> {
     try {
-      // return await this.urlModel.find({ siteId: site['_id'], status: STATUS_URL.ACTIVE });
-      return await this.urlModel.find({ siteId: site['_id'] });
+      return await this.urlModel.find({ siteId: site['_id'], status: STATUS_URL.ACTIVE });
     } catch (error) {
       console.log(error);
     }
@@ -128,9 +127,6 @@ export class CrawlerRepository {
 
   async getConfigArticleBySiteId(site: Site): Promise<any[]> {
     try {
-      // return await this.articleConfigModel.find({
-      //   siteId: url.siteId,
-      // });
       return await this.articleConfigModel.aggregate([
         { $match: { siteId: site['_id'] } },
         {

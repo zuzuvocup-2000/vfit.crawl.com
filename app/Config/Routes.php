@@ -34,8 +34,10 @@ $routes->get('/logout', 'Backend\Authentication\Auth::logout', ['filter' => 'aut
 $routes->get(BACKEND_DIRECTORY, 'Backend\Authentication\Auth::login', ['filter' => 'login' ]);
 $routes->match(['get','post'],'forgot', 'Backend\Authentication\Auth::forgot', ['filter' => 'login' ]);
 $routes->match(['get','post'],'verify', 'Backend\Authentication\Auth::verify', ['filter' => 'login' ]);
-$routes->get('/dashboard', 'Backend\Dashboard\Dashboard::index',['filter' => 'auth' ]);
+$routes->get('/dashboard', 'Backend\Statistic\Statistic::index',['filter' => 'auth' ]);
 $routes->get('/support', 'Backend\Dashboard\Dashboard::support',['filter' => 'auth' ]);
+$routes->get('/support/system', 'Backend\Dashboard\Dashboard::system',['filter' => 'auth' ]);
+$routes->get('/support/use', 'Backend\Dashboard\Dashboard::use',['filter' => 'auth' ]);
 
 
 // User
@@ -52,9 +54,6 @@ $routes->group('/website', ['filter' => 'auth'] , function($routes){
     $routes->add('url/update-status/([a-zA-Z0-9-]+)', 'Backend\Website\Website::update_status/$1');
     $routes->add('update/([a-zA-Z0-9-]+)', 'Backend\Website\Website::update/$1');
     $routes->add('delete/([a-zA-Z0-9-]+)', 'Ajax\Website\Website::delete/$1');
-    $routes->add('crawl-sitemap', 'Ajax\Website\Website::crawl_sitemap');
-    $routes->add('crawl-normal', 'Ajax\Website\Website::crawl_normal');
-    $routes->add('crawl-javascript', 'Ajax\Website\Website::crawl_javascript');
 });
 
 //criteria
@@ -68,6 +67,7 @@ $routes->group('/criteria', ['filter' => 'auth'] , function($routes){
 //criteria
 $routes->group('/statistic', ['filter' => 'auth'] , function($routes){
     $routes->add('list', 'Backend\Statistic\Statistic::index');
+    $routes->add('article/([a-zA-Z0-9-]+)', 'Backend\Statistic\Statistic::article/$1');
 });
 
 // Config
